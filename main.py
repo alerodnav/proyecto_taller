@@ -1,3 +1,5 @@
+import funciones.funciones as func
+
 administradores = [
     {
     'nombre_completo':'Gabriel Alfonso Blanco Ruiz',
@@ -37,3 +39,23 @@ carreras = {
     
     'Ingeniería En Agronomía':['Introducción A La Agronomía','Agromática I','Botánica General','Introducción A Plagas Agropecuarias','Fisiología Vegetal']
 } #Faltaría agregar más si el profe pide más
+
+# PRUEBAS DE LAS FUNCIONES
+
+#Agregar curso
+carrera = input("Ingrese la carrera a agregar nuevos cursos: ")
+nuevo_curso = input("Ingrese el nuevo curso: ")
+print(func.agregar_curso(carrera,carreras,nuevo_curso))
+
+
+#Modificar Curso
+carrera = input("Ingrese la carrera a agregar nuevos cursos: ")
+curso_a_modificar = input("Ingrese el curso a modificar: ")
+nuevo_curso = input("Ingrese el nuevo curso: ")
+print(func.modificar_curso(carrera,carreras,curso_a_modificar,nuevo_curso))
+
+#Agregar Carrera
+print(func.agregar_carrera("Biología En Fauna",carreras))
+
+#Modificar Carrera
+print(func.modificar_carrera("Ingeniería En Computación","Desarrollo De Software",carreras)) 
