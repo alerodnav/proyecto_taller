@@ -1,4 +1,18 @@
 #Funciones
+from hashlib import md5
+
+def cifrar_contrasena(passwd):
+    """Esta funcion encripta la contrasena del usuario
+    
+    args:
+        passwd (string): Contrasena que va ser encriptada
+    """
+    entrada_binaria=passwd.encode('ascii')
+    resultado = md5(entrada_binaria)
+    return (resultado.hexdigest())
+
+print(cifrar_contrasena("hola123"))
+
 
 def agregar_curso(carrera,diccionario,curso):
     """Esta funcion se encarga de agregar cursos a una carrera
@@ -57,3 +71,5 @@ def modificar_carrera(carrera1,carrera2,diccionario):
     del diccionario[carrera1]
     diccionario = sorted(diccionario.items())
     return diccionario
+
+
