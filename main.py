@@ -1,5 +1,38 @@
 import funciones.funciones as func
 
+#Lista de los estudiantes registrados
+estudiantes = [
+    {
+    'nombre_completo':'Jose Alejandro Rodriguez Navarro',
+    'carreras': [],
+    'cursos':[],
+    'usuario': 'arodri',
+    'contrasena': func.cifrar_contrasena('ar123')
+    },
+    {
+    'nombre_completo':'Deivid Matute Guerrero',
+    'carreras': [],
+    'cursos':[],
+    'usuario': 'dmatute',
+    'contrasena': func.cifrar_contrasena('dmcr7')
+    },
+    {
+    'nombre_completo':'Andres Dinarte Castro',
+    'carreras': [],
+    'cursos':[],
+    'usuario': 'dini',
+    'contrasena': func.cifrar_contrasena('adin69')
+    },
+    {
+    'nombre_completo':'Leonardo Alpizar',
+    'carreras': [],
+    'cursos':[],
+    'usuario': 'leoalp',
+    'contrasena': func.cifrar_contrasena('lp7178')
+    }
+
+]
+
 administradores = [
     {
     'nombre_completo':'Gabriel Alfonso Blanco Ruiz',

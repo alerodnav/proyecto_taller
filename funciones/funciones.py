@@ -1,4 +1,5 @@
 #Funciones
+#Imports
 from hashlib import md5
 
 def cifrar_contrasena(passwd):
@@ -71,5 +72,3 @@ def modificar_carrera(carrera1,carrera2,diccionario):
     del diccionario[carrera1]
     diccionario = sorted(diccionario.items())
     return diccionario
-
-
