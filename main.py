@@ -38,25 +38,25 @@ administradores = [
     'nombre_completo':'Gabriel Alfonso Blanco Ruiz',
     'telefono': '87657890',
     'usuario': 'gblanco',
-    'contrasena': '192Gabriel_168'
+    'contrasena': func.cifrar_contrasena('192Gabriel_168')
     },
     {
     'nombre_completo':'Jorge José Hernandez Pérez',
     'telefono': '87604152',
     'usuario': 'jquiros',
-    'contrasena': 'jorginho0777'
+    'contrasena': func.cifrar_contrasena('jorginho0777')
     },
     {
     'nombre_completo':'Daniel Josué Quirós Ampieé',
     'telefono': '88024367',
     'usuario': 'dquiros',
-    'contrasena': 'daniTurtle00'
+    'contrasena': func.cifrar_contrasena('daniTurtle00')
     },
     {
     'nombre_completo':'Sofía Jimena Alfaro Jiménez',
     'telefono': '89076444',
     'usuario': 'salfaro',
-    'contrasena': 'minny02x02'
+    'contrasena': func.cifrar_contrasena('minny02x02')
     }
 ]
 
