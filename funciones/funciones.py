@@ -15,60 +15,98 @@ def cifrar_contrasena(passwd):
 print(cifrar_contrasena("hola123"))
 
 
-def agregar_curso(carrera,diccionario,curso):
-    """Esta funcion se encarga de agregar cursos a una carrera
+def agregar_curso(l,n,cre,hl,fi,ff,hc,c):
+    """Esta funcion se encarga de agregar un curso
     
     args:
-        carrera (string): valor con nombre de la carrera
-        diccionario (diccionario): diccionario que contiene las carreras y cursos
-        curso (string): valor con el nuevo curso a agregar
+        l (lista): Lista de los cursos
+        n (string): Nombre del curso
+        cre (int): Numero de creditos del curso
+        hl (int): Numero de horas lectivas del curso
+        fi (string): Fecha de inicio del curso
+        ff (string): Fecha final del curso
+        hc (lista): El o los horarios del curso
+        c (lista): La o las carreras que tienen ese curso  
     """
-    for key, value in diccionario.items():
-        if(key==carrera):
-            value.append(curso)
-    diccionario = sorted(diccionario.items())
-    return diccionario
+    l.append(
+        {
+        'nombre': n,
+        'creditos': cre,
+        'horas lectivas': hl,
+        'fecha_inicio': fi,
+        'fecha_final': ff,
+        'horario_clases': hc,
+        'carreras': c
+        }
+    )
+    return l
 
     
 
-def modificar_curso(carrera,diccionario,curso1,curso2):
-    """Esta funcion se encarga de modificar cursos de una carrera
+def modificar_curso(l,n1,n2,cre,hl,fi,ff,hc,c):
+    """Esta funcion se encarga de agregar un curso
     
     args:
-        carrera (string): valor con nombre de la carrera
-        diccionario (diccionario): diccionario que contiene las carreras y cursos
-        curso1 (string): valor con el curso a modificar
-        curso2 (string): valor con el nuevo curso
+        l (lista): Listas de los cursos
+        n1 (string): Nombre del curso a modificar
+        n2 (string): Nuevo nombre del curso
+        cre (int): Numero de creditos del curso
+        hl (int): Numero de horas lectivas del curso
+        fi (string): Fecha de inicio del curso
+        ff (string): Fecha final del curso
+        hc (lista): El o los horarios del curso
+        c (lista): La o las carreras que tienen ese curso  
     """
-    for key, value in diccionario.items():
-        if(key==carrera):
-            tam=len(value)-1
-            for i in range(tam):
-                if (value[i]==curso1):
-                    value[i]=curso2
-    diccionario = sorted(diccionario.items())
-    return diccionario
+    for i in l:
+        if(i['nombre']==n1):
+            i['nombre']=n2
 
-def agregar_carrera(carrera,diccionario):
+    return l
+
+def agregar_carrera(lista,carrera):
     """Esta funcion se encarga de agregar una nueva carrera
     
     args:
-        carrera (string): valor con nombre de la carrera que se agregará
-        diccionario (diccionario): diccionario que contiene las carreras y cursos
+        lista (lista): Lista de carreras
+        carrera (string): Nombre de la carrera que se agregará
     """
-    diccionario[carrera] = []
-    diccionario = sorted(diccionario.items())
-    return diccionario
+    lista.append(carrera)
+    return lista
 
-def modificar_carrera(carrera1,carrera2,diccionario):
+def modificar_carrera(lista,carrera1,carrera2):
     """Esta funcion se encarga de modificar una carrera
     
     args:
-        carrera1 (string): valor con nombre de la carrera que se modificará
-        carrera2 (string): valor con nombre de la carrera modificada         
-        diccionario (diccionario): diccionario que contiene las carreras y cursos
+        lista (lista): Lista de las carreras
+        carrera1 (string): Nombre de la carrera que se modificará
+        carrera2 (string): Nuevo nombre de la carrera        
     """
-    diccionario[carrera2]=diccionario[carrera1]
-    del diccionario[carrera1]
-    diccionario = sorted(diccionario.items())
-    return diccionario
+    tam=len(lista)
+    for i in range(tam):
+        if(lista[i]==carrera1):
+            lista[i]=carrera2
+    return lista
+
+def agregar_actividad(lista, actividad):
+    """Esta funcion agrega una nueva actividad a la lista actividades
+
+    args:
+        lista (lista): Lista de actividades
+        actividad (string): Actividad que se agregará
+    """
+    lista.append(actividad)
+    return lista
+
+def modificar_actividad(lista,act1,act2):
+    """Esta funcion se encarga de modificar una actividad
+    
+    args:
+        lista (lista): Lista de actividades
+        act1 (string): Actividad que se modificará
+        act2 (string): Nuevo nombre de la actividad          
+    """
+    tam=len(lista)
+    for i in range(tam):
+        if(lista[i]==act1):
+            lista[i]=act2
+    return lista
