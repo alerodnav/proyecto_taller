@@ -28,6 +28,10 @@ def agregar_curso(l,n,cre,hl,fi,ff,hc,c):
         hc (lista): El o los horarios del curso
         c (lista): La o las carreras que tienen ese curso  
     """
+    for i in l:
+        if i['nombre']==n:
+            return "Este curso ya existe"
+    
     l.append(
         {
         'nombre': n,
@@ -70,6 +74,8 @@ def agregar_carrera(lista,carrera):
         lista (lista): Lista de carreras
         carrera (string): Nombre de la carrera que se agregará
     """
+    if carrera in lista:
+        return "Esta carrera ya existe"
     lista.append(carrera)
     return lista
 
@@ -94,6 +100,8 @@ def agregar_actividad(lista, actividad):
         lista (lista): Lista de actividades
         actividad (string): Actividad que se agregará
     """
+    if actividad in lista:
+        return "Esta actividad ya existe"
     lista.append(actividad)
     return lista
 
