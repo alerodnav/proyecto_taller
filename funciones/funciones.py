@@ -2,6 +2,12 @@
 #Imports
 from hashlib import md5
 
+def limpiar_terminal():
+    """Esta funcion se encarga de limpiar la terminal
+    """
+    print (chr(27) + "[2J")
+
+
 def cifrar_contrasena(passwd):
     """Esta funcion encripta la contrasena del usuario
     
@@ -11,8 +17,6 @@ def cifrar_contrasena(passwd):
     entrada_binaria=passwd.encode('ascii')
     resultado = md5(entrada_binaria)
     return (resultado.hexdigest())
-
-print(cifrar_contrasena("hola123"))
 
 
 def agregar_curso(l,n,cre,hl,fi,ff,hc,c):

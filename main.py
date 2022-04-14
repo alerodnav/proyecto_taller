@@ -38,7 +38,7 @@ administradores = [
     'nombre_completo':'Gabriel Alfonso Blanco Ruiz',
     'telefono': '87657890',
     'usuario': 'gblanco',
-    'contrasena': func.cifrar_contrasena('192Gabriel_168')
+    'contrasena': func.cifrar_contrasena('g123')
     },
     {
     'nombre_completo':'Jorge José Hernandez Pérez',
