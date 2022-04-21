@@ -2,6 +2,16 @@
 #Imports
 from hashlib import md5
 
+def convertir_tupla_lista (tupla):
+    """Esta funcion se encarga de convertir una tupla a una lista
+
+    args:
+        tupla (tuple): tupla que se va a convertir
+    """
+    return (list(tupla))
+
+
+
 def limpiar_terminal():
     """Esta funcion se encarga de limpiar la terminal
     """

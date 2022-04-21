@@ -39,7 +39,8 @@ def validar_usuario_contrasena(user,pswd,tipo):
     else:
         user_dic = estudiantes 
     validar = False
-    for x in range(len(user_dic)):
+    largo_dic = len(user_dic)
+    for x in range(largo_dic):
         if ((user_dic[x]['usuario'] == user) and (user_dic[x]['contrasena'] == pswd)):
             global sesion_actual #Esta variable guarda la persona que ha iniciado sesion
             sesion_actual = x
