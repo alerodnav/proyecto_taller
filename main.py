@@ -4,7 +4,7 @@ import funciones.funciones as func
 estudiantes = [
     {
     'nombre_completo':'Jose Alejandro Rodriguez Navarro',
-    'carreras': [],
+    'carreras': ['Ingeniería En Computación','Administración De Empresas'],
     'cursos':[],
     'usuario': 'arodri',
     'contrasena': func.cifrar_contrasena('ar123')
@@ -71,7 +71,7 @@ actividades = ['Estudiar','Repasar','Hacer ejercicio','Practicar deporte','Leer 
 #     }
 # ] #Después...
 
-cursos = [
+cursos = (
     {
         'nombre': 'Comunicación Escrita',
         'creditos': 2,
@@ -79,7 +79,7 @@ cursos = [
         'fecha_inicio': '07-02-2022',
         'fecha_final': '03-06-2022',
         'horario_clases': ['L: 5:05pm - 7:45pm'],
-        'carreras':['Administración de Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
+        'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
         'nombre': 'Matemática General',
@@ -97,7 +97,7 @@ cursos = [
         'fecha_inicio': '07-02-2022',
         'fecha_final': '03-06-2022',
         'horario_clases': 'J: 07:00am - 9:00am',
-        'carreras':['Administración de Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
+        'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
         'nombre': 'Química Básica I',
@@ -106,7 +106,7 @@ cursos = [
         'fecha_inicio': '07-02-2022',
         'fecha_final': '10-06-2022',
         'horario_clases': 'L: 12:30 - 4:30',
-        'carreras':['Administración de Empresas','Ingeniería En Producción Industrial','Ingeniería Electrónica','Ingeniería En Agronomía']
+        'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
         'nombre': 'Cálculo Diferencial E Integral',
@@ -120,15 +120,15 @@ cursos = [
     {
         'nombre': 'Inglés I',
         'creditos': 2,
-        'horas lectivas': 3,
+        'horas_lectivas': 3,
         'fecha_inicio': '25-07-2022',
         'fecha_final': '11-11-2022',
         'horario_clases': 'K 1:20 - 4:30',
-        'carreras':['Administración de Empresas','Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
+        'carreras':['Administración De Empresas','Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     }
-]
+)
 
-carreras = ['Administración de Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
+carreras = ('Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía')
 
 # PRUEBAS DE LAS FUNCIONES
 

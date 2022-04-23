@@ -1,8 +1,6 @@
-from main import estudiantes, administradores
-from funciones.funciones import cifrar_contrasena, limpiar_terminal, agregar_curso
+from main import estudiantes, administradores, cursos, carreras
+from funciones.funciones import cifrar_contrasena, limpiar_terminal, agregar_curso, modificar_curso, validar_curso, ver_cursos
 from time import sleep
-from main import cursos
-
 
 def menu_login():
     """Esta funcion despliguea el menu de login en la consola
@@ -65,11 +63,11 @@ def inicio_sesion():
             ---------------------------------
             """) 
             permisos_adm = False
-            sleep(3)
+            sleep(1)
             menu_principal()
         else:
             print("El usuario no existe o lo datos son invalidos")
-            sleep(3)
+            sleep(1)
             inicio_sesion()
             
 
@@ -83,14 +81,15 @@ def inicio_sesion():
             ---------------------------------
             """)
              permisos_adm = True
-             sleep(3)
+             sleep(2)
              menu_principal()
         else:
             print("El usuario no existe o lo datos son invalidos")
-            sleep(3)
+            sleep(2)
             inicio_sesion()
-
+    
     return()
+    
 
 def opciones_administador():
     limpiar_terminal()
@@ -109,6 +108,8 @@ def opciones_administador():
     [2]- Modificar Curso
     [3]- Agregar Carrera
     [4]- Modificar Carrera
+    [5]- Ver Cursos
+    [6]- Ver Carreras
     [0]- Salir
     """.format(administradores[sesion_actual]['nombre_completo']))
 
@@ -132,14 +133,14 @@ def opciones_estudiantes():
     [0]- Salir
     """.format(estudiantes[sesion_actual]['nombre_completo']))
 
-
 def menu_principal():
+    global cursos
+    global carreras
     inicio = True
     while(inicio):
         if (permisos_adm):
             opciones_administador()
             opcion = input("Digite la opcion que desea realizar: ")
-
             if opcion == "1":
                 n = input("Nombre del curso: ")
                 cre = input("Numero Creditos: ")
@@ -148,13 +149,44 @@ def menu_principal():
                 ff = input("Fecha Final (): ")
                 hc = input("El o los horarios del curso: ")
                 c = input("La o las carreras que tiene este curso: ")
-                agregar_curso(cursos, n, cre, hl, fi, ff, hc, c)
+                cursos = agregar_curso(cursos, n, cre, hl, fi, ff, hc, c)
+                print("""
+                ---------------------------------
+                Curso agregado correctamente
+                ---------------------------------
+                """) 
+                sleep(2)                
             elif opcion == "0":
                 inicio = False
-        
+            elif opcion=="2":
+                n1 = input("Nombre del curso a modificar: ")
+                n1 = validar_curso(cursos,n1)
+                n2 = input("Nombre del nuevo nombre del curso: ")
+                cre = input("Numero Creditos: ")
+                hl = input("Numero de horas lectivas: ")
+                fi = input("Fecha de inicio: ")
+                ff = input("Fecha final: ")
+                hc = input("El o los horarios del curso: ")
+                c = input("La o las carreras que tiene este curso: ")
+                modificar_curso(cursos, n1, n2, cre, hl, fi, ff, hc, c)
+                print("""
+                ---------------------------------
+                Curso modificado correctamente
+                ---------------------------------
+                """) 
+                sleep(2)  
+            elif opcion == "5":
+                print(cursos)
+                input("\nDigite una tecla para volver")
         else:
             opciones_estudiantes()
-            opcion = input("Digite la opcion que desea realizar")
+            opcion = input("Digite la opcion que desea realizar: ")
+            if opcion=="1":
+                sleep(2)
+                limpiar_terminal()
+                carreras = estudiantes[sesion_actual]['carreras']
+                ver_cursos(carreras,cursos)
+                input("Ingrese la opción del curso a matricular: ") #Falta la funcion matricular_curso
     
 inicio_sesion()
 
