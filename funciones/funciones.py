@@ -2,6 +2,46 @@
 # Imports
 from hashlib import md5
 
+def imprimir_carreras(tupla):
+    for x in tupla:
+        print(x)
+    return()
+
+def comprobar_carrera(lista_carreras, c):
+    for x in lista_carreras:
+        if x == c:
+            valido = True
+            break
+        else:
+            valido = False
+    return(valido)
+
+
+
+def comprobar_cantidad_carreras(lista, estudiante):
+    """Comprueba si un estudiante tiene 2 carreras, si las tiene, no podrá agregar más
+    args:
+        lista (lista): Lista de estudiantes
+        estudiante (string): Indice de la lista estudiantes (Estudiante que se verifica si tiene dos carreras activas)      
+    """
+    if (len(lista[estudiante]["carreras"]) == 2):
+        permitir_iniciar = False
+    else:
+        permitir_iniciar = True
+    return(permitir_iniciar)
+
+def iniciar_carrera(lista,estudiante,carrera):
+    """Esta funcion se encarga de agregar una carrera a las carreras del estudiante
+
+    args:
+        lista (lista): Lista de estudiantes
+        estudiante (string): Estudiante que va a iniciar la carrera
+        carrera (string): Carrera que va a iniciar         
+    """
+    lista[estudiante]['carreras'].append(carrera)
+    return()
+
+
 def limpiar_terminal():
     """Esta funcion se encarga de limpiar la terminal
     """

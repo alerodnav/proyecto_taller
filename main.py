@@ -4,31 +4,66 @@ import funciones.funciones as func
 estudiantes = [
     {
     'nombre_completo':'Jose Alejandro Rodriguez Navarro',
-    'carreras': ['Ingeniería En Computación','Administración De Empresas'],
+    'carreras': [],
     'cursos':[],
     'usuario': 'arodri',
-    'contrasena': func.cifrar_contrasena('ar123')
+    'contrasena': func.cifrar_contrasena('ar123'),
+    'actividades':
+        {
+            'descripcion':'Realizar tarea ingles',
+            'curso_asociado':'Inglés I',
+            'fecha_inicio':'19-03-22',
+            'fecha_final':'22-03-22',
+            'estado':False  # False = No realizada,  True = Realizada
+        }
     },
+
     {
     'nombre_completo':'Deivid Matute Guerrero',
     'carreras': [],
     'cursos':[],
     'usuario': 'dmatute',
-    'contrasena': func.cifrar_contrasena('dmcr7')
+    'contrasena': func.cifrar_contrasena('dmcr7'),
+    'actividades':
+        {
+            'descripcion':'Estudiar materia vista en Matematica General',
+            'curso_asociado':'Cálculo Diferencial E Integral',
+            'fecha_inicio':'23-03-22',
+            'fecha_final':'27-03-22',
+            'estado':False  # False = No realizada,  True = Realizada
+        }
     },
+
     {
     'nombre_completo':'Andres Dinarte Castro',
     'carreras': [],
     'cursos':[],
     'usuario': 'dini',
-    'contrasena': func.cifrar_contrasena('adin69')
+    'contrasena': func.cifrar_contrasena('adin69'),
+    'actividades':
+        {
+            'descripcion':'Estudiar materia vista en Quimica Basica',
+            'curso_asociado':'Química Básica I',
+            'fecha_inicio':'01-04-22',
+            'fecha_final':'05-04-22',
+            'estado':False  # False = No realizada,  True = Realizada
+        }
     },
+    
     {
     'nombre_completo':'Leonardo Alpizar',
     'carreras': [],
     'cursos':[],
     'usuario': 'leoalp',
-    'contrasena': func.cifrar_contrasena('lp7178')
+    'contrasena': func.cifrar_contrasena('lp7178'),
+    'actividades':
+        {
+            'descripcion':'Estudiar materia vista en comunicacion escrita',
+            'curso_asociado':'Comunicación Escrita',
+            'fecha_inicio':'23-03-22',
+            'fecha_final':'30-03-22',
+            'estado':False  # False = No realizada,  True = Realizada
+        }
     }
 
 ]
@@ -60,7 +95,7 @@ administradores = [
     }
 ]
 
-actividades = ['Estudiar','Repasar','Hacer ejercicio','Practicar deporte','Leer un libro','Actividad física','Reunión con amigos','Salir al aire libre']
+#actividades = ['Estudiar','Repasar','Hacer ejercicio','Practicar deporte','Leer un libro','Actividad física','Reunión con amigos','Salir al aire libre']
 
 # actividades = [
 #     {

@@ -1,5 +1,5 @@
 from main import estudiantes, administradores, cursos, carreras
-from funciones.funciones import cifrar_contrasena, limpiar_terminal, agregar_curso, modificar_curso, validar_curso, ver_cursos
+from funciones.funciones import *
 from time import sleep
 
 def menu_login():
@@ -178,6 +178,8 @@ def menu_principal():
             elif opcion == "5":
                 print(cursos)
                 input("\nDigite una tecla para volver")
+
+                
         else:
             opciones_estudiantes()
             opcion = input("Digite la opcion que desea realizar: ")
@@ -187,10 +189,26 @@ def menu_principal():
                 carreras = estudiantes[sesion_actual]['carreras']
                 ver_cursos(carreras,cursos)
                 input("Ingrese la opción del curso a matricular: ") #Falta la funcion matricular_curso
+            elif opcion == "3":
+                if (comprobar_cantidad_carreras(estudiantes,sesion_actual) == True):
+                    limpiar_terminal()
+                    print("=============================")
+                    print("Carreras Disponibles: ")
+                    imprimir_carreras(carreras)
+                    print("=============================")
+                    carerra_a_iniciar = input("Escriba la carrera que quiere iniciar tal como se ve en pantalla: ")
+                    if comprobar_carrera(carreras, carerra_a_iniciar):
+                        iniciar_carrera(estudiantes, sesion_actual, carerra_a_iniciar)
+                        print("Estas son sus carreras")
+                        print(estudiantes[sesion_actual]['carreras'])
+                        sleep(5)
+                    else:
+                        print("Carrera no valida")
+                        sleep(3)
+                else:
+                    limpiar_terminal()
+                    print("Usted está cursando 2 carreras, no puedo cursar más de 2 carreras")
+                    sleep(4)
     
 inicio_sesion()
 
-
-
-
-    
