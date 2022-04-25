@@ -1,11 +1,9 @@
 # Funciones
 # Imports
-from audioop import reverse
 from hashlib import md5
 from numbers import Number
 from operator import indexOf
 from time import sleep
-from xmlrpc.server import SimpleXMLRPCDispatcher
 
 def imprimir_carreras(tupla):
     for x in tupla:

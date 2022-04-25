@@ -1,3 +1,4 @@
+from string import printable
 from main import estudiantes, administradores, cursos, carreras
 from funciones.funciones import *
 from time import sleep
@@ -110,6 +111,7 @@ def opciones_administador():
     [4]- Modificar Carrera
     [5]- Ver Cursos
     [6]- Ver Carreras
+    [7]- Cerrar Sesion
     [0]- Salir
     """.format(administradores[sesion_actual]['nombre_completo']))
 
@@ -130,6 +132,7 @@ def opciones_estudiantes():
     [2]- Agregar actividades
     [3]- Iniciar Carrera
     [4]- Cambiar Carrera
+    [7] - Cerrar Sesion
     [0]- Salir
     """.format(estudiantes[sesion_actual]['nombre_completo']))
 
@@ -174,9 +177,21 @@ def menu_principal():
                 ---------------------------------
                 """) 
                 sleep(2)  
+
+            elif opcion == "3":
+                global carreras
+                temp_carreras = list(carreras)
+                carrer = input('Escriba el nombre de la carrera que desea añadir: ')
+                carreras = agregar_carrera(temp_carreras,carrer)
+                print(carreras)
+                sleep(5)
+                
             elif opcion == "5":
                 print(cursos)
                 input("\nDigite una tecla para volver")
+
+            elif opcion == "7":
+                inicio_sesion()
 
                 
         else:
@@ -193,11 +208,11 @@ def menu_principal():
                     print("\nCursos matriculados: ")
                     print(estudiantes[sesion_actual]['cursos'])
                     sleep(3)
-                    opcion2 = input(
-                    """
+                    opcion2 = int(input(
+                    """2
     Desea matricular otro curso?\n
     [1] Si
-    [2] No  """)
+    [2] No  """))
                     #No se detiene cuando da 2
             elif opcion == "2":
                 limpiar_terminal
@@ -233,6 +248,8 @@ def menu_principal():
                     limpiar_terminal()
                     print("Usted está cursando 2 carreras, no puedo cursar más de 2 carreras")
                     sleep(2)
+            elif opcion == "7":
+                inicio_sesion()
     
 inicio_sesion()
 
