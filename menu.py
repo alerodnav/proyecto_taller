@@ -1,5 +1,4 @@
-from string import printable
-from main import estudiantes, administradores, cursos, carreras
+from main import estudiantes, administradores, cursos, carreras, semanas
 from funciones.funciones import *
 from time import sleep
 
@@ -195,6 +194,8 @@ def menu_principal():
         else:
             opciones_estudiantes()
             opcion = input("Digite la opcion que desea realizar: ")
+            if opcion=="0":
+                exit()
             if opcion=="1":
                 opcion2 = 1
                 while (opcion2!=2):
@@ -202,12 +203,18 @@ def menu_principal():
                     limpiar_terminal()
                     carreras = estudiantes[sesion_actual]['carreras']
                     opcion_curso = ver_cursos(carreras,cursos)
-                    print(matricular_curso(opcion_curso,cursos,sesion_actual,estudiantes))
+                    num_semana = "*"
+                    dia = opcion_curso[1][0][0] #solo envia el dia de la primer fecha
+                    h_inicio = opcion_curso[1][0][1] #con un curso, no sirve con 2
+                    h_fin = opcion_curso[1][0][2]
+                    if (validar_matricula_curso(cursos,num_semana,dia,h_inicio,h_fin)):
+                        print(matricular_curso(opcion_curso[0],cursos,sesion_actual,estudiantes))
+
                     print("\nCursos matriculados: ")
                     print(estudiantes[sesion_actual]['cursos'])
-                    sleep(3)
+                    sleep(2)
                     opcion2 = int(input(
-                    """2
+                    """
     Desea matricular otro curso?\n
     [1] Si
     [2] No  """))
@@ -218,7 +225,7 @@ def menu_principal():
                 print("Nueva Actividad: ")
                 print("=============================")
                 desc = input("Descripción: ")
-                ver_cursos(carreras,cursos)
+                # ver_cursos(carreras,cursos)
                 c_asoc = input("Ingesa la opcion del curso asociado: ")
                 fi = input("Fecha Inicio: ")
                 ff = input("Fecha Final: ")
@@ -250,4 +257,3 @@ def menu_principal():
                 inicio_sesion()
     
 inicio_sesion()
-

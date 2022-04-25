@@ -3,7 +3,7 @@ import funciones.funciones as func
 estudiantes = [
     {
     'nombre_completo':'Jose Alejandro Rodriguez Navarro',
-    'carreras': ['Ingeniería En Computación','Administración DeEmpresas'],
+    'carreras': ['Ingeniería En Computación','Administración De Empresas'],
     'cursos':[],
     'usuario': 'arodri',
     'contrasena': func.cifrar_contrasena('ar123'),
@@ -12,8 +12,9 @@ estudiantes = [
             {
             'descripcion':'Realizar tarea ingles',
             'curso_asociado':'Inglés I',
-            'fecha_inicio':'19-03-22',
-            'fecha_final':'22-03-22',
+            'fecha_inicio':'25-04',
+            'fecha_final':'27-04',
+            'semana': '11',
             'hora_inicio':'9:00',
             'hora_final': '11:00',
             'estado':False  # False = No realizada,  True = Realizada
@@ -32,8 +33,11 @@ estudiantes = [
         {
             'descripcion':'Estudiar materia vista en Matematica General',
             'curso_asociado':'Cálculo Diferencial E Integral',
-            'fecha_inicio':'23-03-22',
-            'fecha_final':'27-03-22',
+            'fecha_inicio':'25-04',
+            'fecha_final':'27-04',
+            'semana': '11',
+            'hora_inicio':'6:00',
+            'hora_final': '8:00',
             'estado':False  # False = No realizada,  True = Realizada
         }
         ]
@@ -50,8 +54,11 @@ estudiantes = [
             {
             'descripcion':'Estudiar materia vista en Quimica Basica',
             'curso_asociado':'Química Básica I',
-            'fecha_inicio':'01-04-22',
-            'fecha_final':'05-04-22',
+            'fecha_inicio':'25-04',
+            'fecha_final':'27-04',
+            'semana': '11',
+            'hora_inicio':'13:00',
+            'hora_final': '15:00',
             'estado':False  # False = No realizada,  True = Realizada
             }
         ]
@@ -68,16 +75,18 @@ estudiantes = [
             {
             'descripcion':'Estudiar materia vista en comunicacion escrita',
             'curso_asociado':'Comunicación Escrita',
-            'fecha_inicio':'23-03',
-            'fecha_final':'30-03',
-            'hora_inicio': '8:00',
-            'hora_final': '11:00',
+            'fecha_inicio':'25-04',
+            'fecha_final':'27-04',
+            'semana': '11',
+            'hora_inicio':'17:05',
+            'hora_final': '19:45',
             'estado':False  # False = No realizada,  True = Realizada
             }
         ]
     }
 
 ]
+
 
 administradores = [
     {
@@ -122,8 +131,9 @@ cursos = (
         'nombre': 'Comunicación Escrita',
         'creditos': 2,
         'horas lectivas': 3,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Lunes','17:05','19:45']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
@@ -131,8 +141,9 @@ cursos = (
         'nombre': 'Matemática General',
         'creditos': 2,
         'horas lectivas': 5,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Martes','12:30','14:15'],['Jueves','12:30','15:15']],
         'carreras':['Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería En Agronomía''Ingeniería Electrónica']
     },
@@ -140,8 +151,9 @@ cursos = (
         'nombre': 'Actividad Cultural I',
         'creditos': 0,
         'horas lectivas': 2,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Jueves','7:00','9:00']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
@@ -149,8 +161,9 @@ cursos = (
         'nombre': 'Química Básica I',
         'creditos': 3,
         'horas lectivas': 4,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Lunes','12:30','16:30']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
@@ -158,8 +171,9 @@ cursos = (
         'nombre': 'Cálculo Diferencial E Integral',
         'creditos': 4,
         'horas lectivas': 5,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Jueves','12:30','14:15'],['Viernes','7:55','9:40']],
         'carreras':['Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
@@ -167,14 +181,103 @@ cursos = (
         'nombre': 'Inglés I',
         'creditos': 2,
         'horas_lectivas': 3,
-        'fecha_inicio': '07-02-2022',
-        'fecha_final': '03-06-2022',
+        'fecha_inicio': '07-02',
+        'fecha_final': '03-06',
+        'semana': '*',
         'horario_clases': [['Martes','13:20','16:30']],
         'carreras':['Administración De Empresas','Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     }
 )
 
 carreras = ('Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía')
+
+semanas = [
+    {
+        'numero': 1,
+        'inicio': '07-02',
+        'fin': '13-02'
+    },
+    {
+        'numero': 2,
+        'inicio': '14-02',
+        'fin': '20-02'
+    },
+    {
+        'numero': 3,
+        'inicio': '21-02',
+        'fin': '27-02'
+    },
+    {
+        'numero': 4,
+        'inicio': '28-02',
+        'fin': '06-03'
+    },
+    {
+        'numero': 5,
+        'inicio': '07-03',
+        'fin': '13-03'
+    },
+    {
+        'numero': 6,
+        'inicio': '14-03',
+        'fin': '20-03'
+    },
+    {
+        'numero': 7,
+        'inicio': '21-03',
+        'fin': '27-03'
+    },
+    {
+        'numero': 8,
+        'inicio': '28-03',
+        'fin': '03-04'
+    },
+    {
+        'numero': 9,
+        'inicio': '04-04',
+        'fin': '10-04'
+    },
+    {
+        'numero': 10,
+        'inicio': '18-04',
+        'fin': '24-04'
+    },
+    {
+        'numero': 11,
+        'inicio': '25-04',
+        'fin': '01-05'
+    },
+    {
+        'numero': 12,
+        'inicio': '02-05',
+        'fin': '08-05'
+    },
+    {
+        'numero': 13,
+        'inicio': '09-05',
+        'fin': '15-05'
+    },
+    {
+        'numero': 14,
+        'inicio': '16-05',
+        'fin': '22-05'
+    },
+    {
+        'numero': 15,
+        'inicio': '23-05',
+        'fin': '29-05'
+    },
+    {
+        'numero': 16,
+        'inicio': '30-05',
+        'fin': '05-06'
+    },
+    {
+        'numero': 17,
+        'inicio': '06-06',
+        'fin': '12-06'
+    }
+]
 
 # PRUEBAS DE LAS FUNCIONES
 

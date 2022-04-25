@@ -1,7 +1,6 @@
 # Funciones
 # Imports
 from hashlib import md5
-from numbers import Number
 from operator import indexOf
 from time import sleep
 
@@ -205,14 +204,15 @@ def ver_cursos(c,cursos):
     nombres_cursos = []
     for i in c:
         for j in cursos:
-            if i in j['carreras']:                
-                if not (j['nombre'] in cursos_posibles):
+            if i in j['carreras']:   
+                valor = "{0}  /  {1} de {2} a {3}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2]))             
+                if not (valor in cursos_posibles):
                     tam = len(j['horario_clases'])
                     if(tam < 2):
-                        cursos_posibles.append("{0}  /  {1} de {2} a {3}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2])))
+                        cursos_posibles.append(valor)
                     else:
                         cursos_posibles.append("{0}  /  {1} de {2} a {3} y los {4} de {5} a {6}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2]),str(j['horario_clases'][1][0]),str(j['horario_clases'][1][1]),str(j['horario_clases'][1][2])))   
-                    nombres_cursos.append(j['nombre'])
+                    nombres_cursos.append([j['nombre'],j['horario_clases']])
         
     cont1 = 1
     cont2 = 1
@@ -221,7 +221,7 @@ def ver_cursos(c,cursos):
     opciones = {}
 
     for x in nombres_cursos:
-        opciones[cont1]=x
+        opciones[cont1]=x[0]
         cont1+=1
 
     for i in cursos_posibles:
@@ -230,7 +230,7 @@ def ver_cursos(c,cursos):
 
     opcion_curso = int(input("Ingrese la opción del curso a matricular: "))
 
-    return opciones[opcion_curso]
+    return [opciones[opcion_curso],nombres_cursos[opcion_curso-1][1]]
 
 
 def ver_hora(h):
@@ -270,10 +270,54 @@ def matricular_curso(op,c,id,est):
     id (int) Index (id) del usuario de la sesion actual
     est (list) Lista de estudiantes
     """
+    # validar()
     for i in c:
         if i['nombre'] == op:
+            print(i)
             est[id]['cursos'].append([i['nombre'],i['horario_clases']])
             return "Curso Matriculado"
     return "Error al matricular curso"
     
-    
+def encontrar_semana(fi,ff,s):
+    """Función para encontrar el número de la semana
+
+    args:
+    fi (string): Cadena con fecha de inicio
+    ff (string): Cadena con fecha final
+    s (string): Lista de las semanas
+    """
+    for i in s:
+        print(fi)
+        input()
+        if ((i['inicio'][-1] == fi[-1]) & (i['inicio'][-2] == fi[-2])) & ((i['fin'][-1] >= ff[-1]) & (i['fin'][-2] == ff[-2])):
+            if (fi[0]+fi[1]) < (ff[0]+ff[1]):
+                if ((int(i['inicio'][0] + i['inicio'][1])<=(int(fi[0] + fi[1]))) & (i['fin'][-1] > ff[-1])):
+                    return i['numero']
+                elif(int(i['fin'][0] + i['fin'][1])>=(int(ff[0] + ff[1]))):
+                    return i['numero']
+    return "Este rango de fechas no existe dentro de una única semana"
+
+def validar_matricula_curso(l,ns,d,hi,hf):
+    """Función para valiidar si esta hora ya esta ocupada este mismo dia de esta semana 
+
+    args:
+    l (list): Lista de las semanas
+    ns (int): Numero de la semana
+    d (string): Dia de la semana
+    hi (string): Hora de inicio
+    hf (string): Hora final
+    """
+    for i in l:
+        for j in i['horario_clases']: 
+            if ((ns=="*")|(ns == i['semana'])) & (d == j[0]): #Misma semana y dia
+                print("No entra al if, {0} no es igual a {1}".format(ver_hora(hi),ver_hora(j[1]))) #Verificar porque a veces funciona normal y otras no
+                if ver_hora(hi)==ver_hora(j[1]): 
+                    return [False,"Inicia a la misma hora que {0}.".format(i['nombre'])]
+                print("No entra al if, {0} no es menor a {1} & {2} no es mayor a {3}".format(ver_hora(hi),ver_hora(j[1]),ver_hora(hf),ver_hora(j[2])))
+                if (ver_hora(hi)<ver_hora(j[1])) & (ver_hora(hf)>ver_hora(j[1])):
+                    return [False, "Debes terminar antes, porque chocaría con el horario de {0}".format(i['nombre'])]
+                print("No entra al if, {0} no es mayor a {1} & {2} no es menor a {3}".format(ver_hora(hi),ver_hora(j[1]),ver_hora(hf),ver_hora(j[2])))
+                if (ver_hora(hi)>ver_hora(j[1])) & (ver_hora(hi)<ver_hora(j[2])):
+                    return [False,"Esta hora no te sirve, te choca con {0}".format(i['nombre'])]
+                input()
+    return [True]
