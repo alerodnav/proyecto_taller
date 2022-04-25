@@ -1,6 +1,11 @@
 # Funciones
 # Imports
+from audioop import reverse
 from hashlib import md5
+from numbers import Number
+from operator import indexOf
+from time import sleep
+from xmlrpc.server import SimpleXMLRPCDispatcher
 
 def imprimir_carreras(tupla):
     for x in tupla:
@@ -199,15 +204,78 @@ def ver_cursos(c,cursos):
     """
     cursos = list(cursos)
     cursos_posibles = []
+    nombres_cursos = []
     for i in c:
         for j in cursos:
             if i in j['carreras']:                
                 if not (j['nombre'] in cursos_posibles):
-                    cursos_posibles.append(j['nombre'])
+                    tam = len(j['horario_clases'])
+                    if(tam < 2):
+                        cursos_posibles.append("{0}  /  {1} de {2} a {3}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2])))
+                    else:
+                        cursos_posibles.append("{0}  /  {1} de {2} a {3} y los {4} de {5} a {6}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2]),str(j['horario_clases'][1][0]),str(j['horario_clases'][1][1]),str(j['horario_clases'][1][2])))   
+                    nombres_cursos.append(j['nombre'])
         
-    cont = 1
-    print("Cursos Discponibles \n")
+    cont1 = 1
+    cont2 = 1
+    print("Cursos Disponibles \n")
+
+    opciones = {}
+
+    for x in nombres_cursos:
+        opciones[cont1]=x
+        cont1+=1
+
     for i in cursos_posibles:
-        print(cont,"- "+i)
+        print(cont2,"- "+i)
+        cont2+=1
+
+    opcion_curso = int(input("Ingrese la opción del curso a matricular: "))
+
+    return opciones[opcion_curso]
+
+
+def ver_hora(h):
+    """Funcion que devuelve la hora de un formato de hora
+    
+    arg:
+    h (string) Cadena con la hora completa
+    """
+    hora = ""
+    for i in h:
+        if i == ":":
+            return int(hora)
+        hora=hora+i
+
+def ver_minutos(h):
+    """Funcion que devuelve los minutos de un formato de hora
+    
+    arg:
+    h (string) Cadena con la hora completa
+    """
+    minutos = ""
+    aux = indexOf(h,":")
+    tam = len(h)
+    cont = 0
+    for i in range(tam):
+        if i>aux:
+            minutos=minutos+h[cont]
         cont+=1
-    print("")
+    return minutos
+
+def matricular_curso(op,c,id,est):
+    """Funcion para matricular cursos del estudiante
+    
+    args: 
+    op (string) Nombre del curso a matricular
+    c (list) Lista de cursos disponibles
+    id (int) Index (id) del usuario de la sesion actual
+    est (list) Lista de estudiantes
+    """
+    for i in c:
+        if i['nombre'] == op:
+            est[id]['cursos'].append([i['nombre'],i['horario_clases']])
+            return "Curso Matriculado"
+    return "Error al matricular curso"
+    
+    

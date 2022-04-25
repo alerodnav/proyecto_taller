@@ -4,18 +4,22 @@ import funciones.funciones as func
 estudiantes = [
     {
     'nombre_completo':'Jose Alejandro Rodriguez Navarro',
-    'carreras': [],
+    'carreras': ['Ingeniería En Computación','Administración DeEmpresas'],
     'cursos':[],
     'usuario': 'arodri',
     'contrasena': func.cifrar_contrasena('ar123'),
     'actividades':
-        {
+        [
+            {
             'descripcion':'Realizar tarea ingles',
             'curso_asociado':'Inglés I',
             'fecha_inicio':'19-03-22',
             'fecha_final':'22-03-22',
+            'hora_inicio':'9:00',
+            'hora_final': '11:00',
             'estado':False  # False = No realizada,  True = Realizada
-        }
+            }
+        ]
     },
 
     {
@@ -25,6 +29,7 @@ estudiantes = [
     'usuario': 'dmatute',
     'contrasena': func.cifrar_contrasena('dmcr7'),
     'actividades':
+        [
         {
             'descripcion':'Estudiar materia vista en Matematica General',
             'curso_asociado':'Cálculo Diferencial E Integral',
@@ -32,6 +37,7 @@ estudiantes = [
             'fecha_final':'27-03-22',
             'estado':False  # False = No realizada,  True = Realizada
         }
+        ]
     },
 
     {
@@ -41,13 +47,15 @@ estudiantes = [
     'usuario': 'dini',
     'contrasena': func.cifrar_contrasena('adin69'),
     'actividades':
-        {
+        [
+            {
             'descripcion':'Estudiar materia vista en Quimica Basica',
             'curso_asociado':'Química Básica I',
             'fecha_inicio':'01-04-22',
             'fecha_final':'05-04-22',
             'estado':False  # False = No realizada,  True = Realizada
-        }
+            }
+        ]
     },
     
     {
@@ -57,13 +65,17 @@ estudiantes = [
     'usuario': 'leoalp',
     'contrasena': func.cifrar_contrasena('lp7178'),
     'actividades':
-        {
+        [
+            {
             'descripcion':'Estudiar materia vista en comunicacion escrita',
             'curso_asociado':'Comunicación Escrita',
-            'fecha_inicio':'23-03-22',
-            'fecha_final':'30-03-22',
+            'fecha_inicio':'23-03',
+            'fecha_final':'30-03',
+            'hora_inicio': '8:00',
+            'hora_final': '11:00',
             'estado':False  # False = No realizada,  True = Realizada
-        }
+            }
+        ]
     }
 
 ]
@@ -113,7 +125,7 @@ cursos = (
         'horas lectivas': 3,
         'fecha_inicio': '07-02-2022',
         'fecha_final': '03-06-2022',
-        'horario_clases': ['L: 5:05pm - 7:45pm'],
+        'horario_clases': [['Lunes','17:05','19:45']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -122,7 +134,7 @@ cursos = (
         'horas lectivas': 5,
         'fecha_inicio': '07-02-2022',
         'fecha_final': '03-06-2022',
-        'horario_clases': ['K: 12:30pm - 2:15pm','M: 12:30pm - 3:15pm'],
+        'horario_clases': [['Martes','12:30','14:15'],['Jueves','12:30','15:15']],
         'carreras':['Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería En Agronomía''Ingeniería Electrónica']
     },
     {
@@ -131,7 +143,7 @@ cursos = (
         'horas lectivas': 2,
         'fecha_inicio': '07-02-2022',
         'fecha_final': '03-06-2022',
-        'horario_clases': 'J: 07:00am - 9:00am',
+        'horario_clases': [['Jueves','7:00','9:00']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -139,26 +151,26 @@ cursos = (
         'creditos': 3,
         'horas lectivas': 4,
         'fecha_inicio': '07-02-2022',
-        'fecha_final': '10-06-2022',
-        'horario_clases': 'L: 12:30 - 4:30',
+        'fecha_final': '03-06-2022',
+        'horario_clases': [['Lunes','12:30','16:30']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
         'nombre': 'Cálculo Diferencial E Integral',
         'creditos': 4,
         'horas lectivas': 5,
-        'fecha_inicio': '25-07-2022',
-        'fecha_final': '11-11-2022',
-        'horario_clases': ['J: 12:30pm - 2:15pm','V: 7:55am - 9:40am'],
+        'fecha_inicio': '07-02-2022',
+        'fecha_final': '03-06-2022',
+        'horario_clases': [['Jueves','12:30','14:15'],['Viernes','7:55','9:40']],
         'carreras':['Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
         'nombre': 'Inglés I',
         'creditos': 2,
         'horas_lectivas': 3,
-        'fecha_inicio': '25-07-2022',
-        'fecha_final': '11-11-2022',
-        'horario_clases': 'K 1:20 - 4:30',
+        'fecha_inicio': '07-02-2022',
+        'fecha_final': '03-06-2022',
+        'horario_clases': [['Martes','13:20','16:30']],
         'carreras':['Administración De Empresas','Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     }
 )

@@ -134,8 +134,7 @@ def opciones_estudiantes():
     """.format(estudiantes[sesion_actual]['nombre_completo']))
 
 def menu_principal():
-    global cursos
-    global carreras
+    global cursos,carreras,estudiantes
     inicio = True
     while(inicio):
         if (permisos_adm):
@@ -184,11 +183,36 @@ def menu_principal():
             opciones_estudiantes()
             opcion = input("Digite la opcion que desea realizar: ")
             if opcion=="1":
-                sleep(2)
-                limpiar_terminal()
-                carreras = estudiantes[sesion_actual]['carreras']
+                opcion2 = 1
+                while (opcion2!=2):
+                    print("Sigo en el while")
+                    limpiar_terminal()
+                    carreras = estudiantes[sesion_actual]['carreras']
+                    opcion_curso = ver_cursos(carreras,cursos)
+                    print(matricular_curso(opcion_curso,cursos,sesion_actual,estudiantes))
+                    print("\nCursos matriculados: ")
+                    print(estudiantes[sesion_actual]['cursos'])
+                    sleep(3)
+                    opcion2 = input(
+                    """
+    Desea matricular otro curso?\n
+    [1] Si
+    [2] No  """)
+                    #No se detiene cuando da 2
+            elif opcion == "2":
+                limpiar_terminal
+                print("=============================")
+                print("Nueva Actividad: ")
+                print("=============================")
+                desc = input("Descripción: ")
                 ver_cursos(carreras,cursos)
-                input("Ingrese la opción del curso a matricular: ") #Falta la funcion matricular_curso
+                c_asoc = input("Ingesa la opcion del curso asociado: ")
+                fi = input("Fecha Inicio: ")
+                ff = input("Fecha Final: ")
+                hi = input("Hora Inicio: ")
+                hf = input("Hora Final: ")
+                estado = input("Estado del curso: 1 - Aprobado      2 - Reprobado       3 - En curso")
+
             elif opcion == "3":
                 if (comprobar_cantidad_carreras(estudiantes,sesion_actual) == True):
                     limpiar_terminal()
@@ -201,14 +225,14 @@ def menu_principal():
                         iniciar_carrera(estudiantes, sesion_actual, carerra_a_iniciar)
                         print("Estas son sus carreras")
                         print(estudiantes[sesion_actual]['carreras'])
-                        sleep(5)
+                        sleep(2)
                     else:
                         print("Carrera no valida")
-                        sleep(3)
+                        sleep(2)
                 else:
                     limpiar_terminal()
                     print("Usted está cursando 2 carreras, no puedo cursar más de 2 carreras")
-                    sleep(4)
+                    sleep(2)
     
 inicio_sesion()
 
