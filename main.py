@@ -12,8 +12,7 @@ estudiantes = [
             {
             'descripcion':'Realizar tarea ingles',
             'curso_asociado':'Inglés I',
-            'fecha_inicio':'25-04',
-            'fecha_final':'27-04',
+            'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
             'hora_inicio':'9:00',
             'hora_final': '11:00',
@@ -33,8 +32,7 @@ estudiantes = [
         {
             'descripcion':'Estudiar materia vista en Matematica General',
             'curso_asociado':'Cálculo Diferencial E Integral',
-            'fecha_inicio':'25-04',
-            'fecha_final':'27-04',
+            'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
             'hora_inicio':'6:00',
             'hora_final': '8:00',
@@ -54,8 +52,7 @@ estudiantes = [
             {
             'descripcion':'Estudiar materia vista en Quimica Basica',
             'curso_asociado':'Química Básica I',
-            'fecha_inicio':'25-04',
-            'fecha_final':'27-04',
+            'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
             'hora_inicio':'13:00',
             'hora_final': '15:00',
@@ -75,8 +72,7 @@ estudiantes = [
             {
             'descripcion':'Estudiar materia vista en comunicacion escrita',
             'curso_asociado':'Comunicación Escrita',
-            'fecha_inicio':'25-04',
-            'fecha_final':'27-04',
+            'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
             'hora_inicio':'17:05',
             'hora_final': '19:45',

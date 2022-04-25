@@ -2,6 +2,8 @@ from main import estudiantes, administradores, cursos, carreras, semanas
 from funciones.funciones import *
 from time import sleep
 
+cursos_matriculados = []
+actividades_registradas = []
 def menu_login():
     """Esta funcion despliguea el menu de login en la consola
     """
@@ -115,6 +117,9 @@ def opciones_administador():
     """.format(administradores[sesion_actual]['nombre_completo']))
 
 def opciones_estudiantes():
+    global cursos_matriculados,actividades_registradas
+    cursos_matriculados = []
+    actividades_registradas = estudiantes[sesion_actual]['actividades']
     limpiar_terminal()
     print("""
     ==============================================
@@ -131,7 +136,7 @@ def opciones_estudiantes():
     [2]- Agregar actividades
     [3]- Iniciar Carrera
     [4]- Cambiar Carrera
-    [7] - Cerrar Sesion
+    [5] - Cerrar Sesion
     [0]- Salir
     """.format(estudiantes[sesion_actual]['nombre_completo']))
 
@@ -165,8 +170,8 @@ def menu_principal():
                 n2 = input("Nombre del nuevo nombre del curso: ")
                 cre = input("Numero Creditos: ")
                 hl = input("Numero de horas lectivas: ")
-                fi = input("Fecha de inicio: ")
-                ff = input("Fecha final: ")
+                fi = input("Fecha de inicio: (Solo fecha y mes, ej: \"24-04\")")
+                ff = input("Fecha final: (Solo fecha y mes, ej: \"27-04\")")
                 hc = input("El o los horarios del curso: ")
                 c = input("La o las carreras que tiene este curso: ")
                 modificar_curso(cursos, n1, n2, cre, hl, fi, ff, hc, c)
@@ -185,8 +190,22 @@ def menu_principal():
                 print(carreras)
                 sleep(5)
                 
+            elif opcion == "4":
+                temp_carreras2 = list(carreras)
+                limpiar_terminal()
+                print(carreras)
+                carrer = input('Escriba el nombre de la carrera que desea modificar: ')
+                carrer2 = input('Escriba el nuevo nombre de la carrera: ')
+                carreras = modificar_carrera(temp_carreras2,carrer,carrer2)
+                print(carreras)
+                sleep(5)
+
+
             elif opcion == "5":
                 print(cursos)
+                input("\nDigite una tecla para volver")
+            elif opcion == "6":
+                print(carreras)
                 input("\nDigite una tecla para volver")
 
             elif opcion == "7":
@@ -194,21 +213,25 @@ def menu_principal():
         else:
             opciones_estudiantes()
             opcion = input("Digite la opcion que desea realizar: ")
+            global cursos_matriculados
             if opcion=="0":
                 exit()
             if opcion=="1":
                 opcion2 = 1
                 while (opcion2!=2):
-                    print("Sigo en el while")
                     limpiar_terminal()
                     carreras = estudiantes[sesion_actual]['carreras']
-                    opcion_curso = ver_cursos(carreras,cursos)
+                    opcion_curso = ver_cursos(carreras,cursos,'m')
                     num_semana = "*"
                     dia = opcion_curso[1][0][0] #solo envia el dia de la primer fecha
                     h_inicio = opcion_curso[1][0][1] #con un curso, no sirve con 2
                     h_fin = opcion_curso[1][0][2]
-                    if (validar_matricula_curso(cursos,num_semana,dia,h_inicio,h_fin)):
+                    validacion = validar_matricula_curso(cursos_matriculados,num_semana,dia,h_inicio,h_fin,'c')
+                    if(validacion[0]):
+                        cursos_matriculados.append({'nombre':opcion_curso[0],'horario_clases':opcion_curso[1],'semana':'*'})
                         print(matricular_curso(opcion_curso[0],cursos,sesion_actual,estudiantes))
+                    else:
+                        print(validacion[1])
 
                     print("\nCursos matriculados: ")
                     print(estudiantes[sesion_actual]['cursos'])
@@ -218,20 +241,42 @@ def menu_principal():
     Desea matricular otro curso?\n
     [1] Si
     [2] No  """))
-                    #No se detiene cuando da 2
             elif opcion == "2":
                 limpiar_terminal
                 print("=============================")
                 print("Nueva Actividad: ")
                 print("=============================")
-                desc = input("Descripción: ")
-                # ver_cursos(carreras,cursos)
-                c_asoc = input("Ingesa la opcion del curso asociado: ")
-                fi = input("Fecha Inicio: ")
-                ff = input("Fecha Final: ")
-                hi = input("Hora Inicio: ")
-                hf = input("Hora Final: ")
-                estado = input("Estado del curso: 1 - Aprobado      2 - Reprobado       3 - En curso")
+                opcion2 = 1
+                while (opcion2!=2):
+                    nombre = input("Nombre: ")
+                    c_asoc = ver_cursos(carreras, cursos, 'i')
+                    fi = input("Fecha Inicio: (Solo fecha y mes, ej: \"24-04\")")
+                    ff = input("Fecha Final: (Solo fecha y mes, ej: \"27-04\")")
+                    dia = "-"
+                    hi = input("Hora Inicio: (Escribela como el ejemplo: \"14:20\")")
+                    hf = input("Hora Final: (Escribela como el ejemplo: \"14:20\")")
+                    num_semana = encontrar_semana(fi,ff,semanas)
+                    estado = input("Estado del curso: 1 - Aprobado      2 - Reprobado       3 - En curso")
+                    validacion1 = validar_matricula_curso(cursos_matriculados,num_semana,dia,hi,hf,'c')
+                    print(validacion1)
+                    validacion2 = validar_matricula_curso(actividades_registradas,num_semana,dia,hi,hf,'a')
+                    if(validacion1[0] & validacion2[0]):
+                        actividades_registradas.append({'nombre':nombre, 'horario_clases':[dia,hi,hf],'semana':num_semana})
+                        print(actividades_registradas)
+                        estudiantes[sesion_actual]['actividades'].append({'descripcion': nombre,'curso_asociado':c_asoc,'horario':[dia,hi,hf],'estado':estado})
+                        print("Actividad registrada exitosamente")
+                    else:
+                        if(not(validacion1[0])):
+                            print(validacion1[1])
+                        if (not(validacion2[0])):
+                            print(validacion2[1])
+                    # imprimirlas actividades de estudiantes[activ]
+                    sleep(2)
+                    opcion2 = int(input(
+                    """
+    Desea matricular otra actividad?\n
+    [1] Si
+    [2] No  """))
 
             elif opcion == "3":
                 if (comprobar_cantidad_carreras(estudiantes,sesion_actual) == True):
@@ -253,7 +298,7 @@ def menu_principal():
                     limpiar_terminal()
                     print("Usted está cursando 2 carreras, no puedo cursar más de 2 carreras")
                     sleep(2)
-            elif opcion == "7":
+            elif opcion == "5":
                 inicio_sesion()
     
 inicio_sesion()

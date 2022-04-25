@@ -192,12 +192,13 @@ def modificar_actividad(lista, act1, act2):
             lista[i] = act2
     return lista
 
-def ver_cursos(c,cursos):
+def ver_cursos(c,cursos,v):
     """Función para desplegar los cursos que un estudiante puede matricular
 
     args:
     c (lista): Lista de la o las carrreras del estudiante
     cursos (tuple): Lista de todos los cursos
+    v (string): Letra para validar si se quiere matricular o elegir curso asociado
     """
     cursos = list(cursos)
     cursos_posibles = []
@@ -216,21 +217,28 @@ def ver_cursos(c,cursos):
         
     cont1 = 1
     cont2 = 1
-    print("Cursos Disponibles \n")
+    print("Cursos: \n")
 
     opciones = {}
 
     for x in nombres_cursos:
-        opciones[cont1]=x[0]
+        if x not in opciones.items():
+            opciones[cont1]=x[0]
         cont1+=1
+    opciones[cont1]='Libre'
 
     for i in cursos_posibles:
         print(cont2,"- "+i)
         cont2+=1
+    print(cont2,"- Libre")
+    if v=="m":
+        opcion_curso = int(input("Ingrese la opción del curso a matricular: "))
+        return [opciones[opcion_curso],nombres_cursos[opcion_curso-1][1]]
+    elif (v=="i"):
+        opcion_curso = int(input("Ingrese la opción del curso asociado: "))
+        return [opciones[opcion_curso]]
 
-    opcion_curso = int(input("Ingrese la opción del curso a matricular: "))
-
-    return [opciones[opcion_curso],nombres_cursos[opcion_curso-1][1]]
+        
 
 
 def ver_hora(h):
@@ -287,37 +295,60 @@ def encontrar_semana(fi,ff,s):
     s (string): Lista de las semanas
     """
     for i in s:
-        print(fi)
-        input()
         if ((i['inicio'][-1] == fi[-1]) & (i['inicio'][-2] == fi[-2])) & ((i['fin'][-1] >= ff[-1]) & (i['fin'][-2] == ff[-2])):
             if (fi[0]+fi[1]) < (ff[0]+ff[1]):
                 if ((int(i['inicio'][0] + i['inicio'][1])<=(int(fi[0] + fi[1]))) & (i['fin'][-1] > ff[-1])):
                     return i['numero']
                 elif(int(i['fin'][0] + i['fin'][1])>=(int(ff[0] + ff[1]))):
                     return i['numero']
-    return "Este rango de fechas no existe dentro de una única semana"
+    return "-"
 
-def validar_matricula_curso(l,ns,d,hi,hf):
+def validar_matricula_curso(l,ns,d,hi,hf,v):
     """Función para valiidar si esta hora ya esta ocupada este mismo dia de esta semana 
 
     args:
-    l (list): Lista de las semanas
+    l (list): Lista de cursos o actividades
     ns (int): Numero de la semana
     d (string): Dia de la semana
     hi (string): Hora de inicio
     hf (string): Hora final
+    v (string): Determina si se agruegará un curso o una actividad
     """
-    for i in l:
-        for j in i['horario_clases']: 
-            if ((ns=="*")|(ns == i['semana'])) & (d == j[0]): #Misma semana y dia
-                print("No entra al if, {0} no es igual a {1}".format(ver_hora(hi),ver_hora(j[1]))) #Verificar porque a veces funciona normal y otras no
-                if ver_hora(hi)==ver_hora(j[1]): 
-                    return [False,"Inicia a la misma hora que {0}.".format(i['nombre'])]
-                print("No entra al if, {0} no es menor a {1} & {2} no es mayor a {3}".format(ver_hora(hi),ver_hora(j[1]),ver_hora(hf),ver_hora(j[2])))
-                if (ver_hora(hi)<ver_hora(j[1])) & (ver_hora(hf)>ver_hora(j[1])):
-                    return [False, "Debes terminar antes, porque chocaría con el horario de {0}".format(i['nombre'])]
-                print("No entra al if, {0} no es mayor a {1} & {2} no es menor a {3}".format(ver_hora(hi),ver_hora(j[1]),ver_hora(hf),ver_hora(j[2])))
-                if (ver_hora(hi)>ver_hora(j[1])) & (ver_hora(hi)<ver_hora(j[2])):
-                    return [False,"Esta hora no te sirve, te choca con {0}".format(i['nombre'])]
-                input()
-    return [True]
+    result=[False]
+    tam = len(l)
+    if (tam > 0) & (v=="m"):
+        for i in l:
+            for j in i['horario_clases']: 
+                if ((ns=="-")|(ns=="*")|(ns == i['semana'])) & ((d == j[0]) | (d=="-")): #Misma semana y dia
+                    if ver_hora(hi)==ver_hora(j[1]): 
+                        result.append("Inicia a la misma hora que {0}.".format(i['nombre']))
+                        return result
+                    if (ver_hora(hi)<ver_hora(j[1])) & ((ver_hora(hf)>ver_hora(j[2]))|((ver_hora(hf)>ver_hora(j[1])))):
+                        result.append("Debes terminar antes, porque chocaría con el horario de {0}".format(i['nombre']))
+                        return result
+                    if (ver_hora(hi)>ver_hora(j[1])) & (ver_hora(hi)<ver_hora(j[2])):
+                        result.append("Esta hora no te sirve, te choca con {0}".format(i['nombre']))
+                        return result
+        result[0] = True
+        return result
+    elif (tam > 0) & (v=="a"):
+        for i in l:
+            for j in i['horario']: 
+                if ((ns=="-")|(ns=="*")|(ns == i['semana'])) & ((d == j[0]) | (d=="-")): #Misma semana y dia
+                    h_inicio = ver_hora(i['horario'][1])
+                    h_final = ver_hora(i['horario'][2])
+                    if ver_hora(hi)==h_inicio:
+                        result.append("Inicia a la misma hora que {0}.".format(i['nombre']))
+                        return result
+                    if (ver_hora(hi)< h_inicio) & ((ver_hora(hf)>h_final)|(ver_hora(hf)>h_inicio)):
+                        result.append("Debes terminar antes, porque chocaría con el horario de {0}".format(i['nombre']))
+                        return result
+                    if (ver_hora(hi)>h_inicio) & (ver_hora(hi)<h_final):
+                        result.append("Esta hora no te sirve, te choca con {0}".format(i['nombre']))
+                        return result
+        result[0] = True
+        return result    
+    result[0]=True 
+    return result    
+    
+    
