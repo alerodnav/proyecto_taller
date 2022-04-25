@@ -190,11 +190,8 @@ def menu_principal():
                 print(cursos)
                 input("\nDigite una tecla para volver")
 
-
             elif opcion == "7":
-                inicio_sesion()
-
-                
+                inicio_sesion() 
         else:
             opciones_estudiantes()
             opcion = input("Digite la opcion que desea realizar: ")

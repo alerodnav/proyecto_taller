@@ -1,6 +1,4 @@
 import funciones.funciones as func
-
-
 #Lista de los estudiantes registrados
 estudiantes = [
     {
