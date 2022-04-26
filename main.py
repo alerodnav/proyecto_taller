@@ -10,10 +10,10 @@ estudiantes = [
     'actividades':
         [
             {
-            'descripcion':'Realizar tarea ingles',
+            'nombre':'Realizar tarea ingles',
             'curso_asociado':'Inglés I',
             'horario': ['Lunes','8:00','10:00'],
-            'semana': '11',
+            'semana': 11,
             'hora_inicio':'9:00',
             'hora_final': '11:00',
             'estado':False  # False = No realizada,  True = Realizada
@@ -30,7 +30,7 @@ estudiantes = [
     'actividades':
         [
         {
-            'descripcion':'Estudiar materia vista en Matematica General',
+            'nombre':'Estudiar materia vista en Matematica General',
             'curso_asociado':'Cálculo Diferencial E Integral',
             'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
@@ -50,7 +50,7 @@ estudiantes = [
     'actividades':
         [
             {
-            'descripcion':'Estudiar materia vista en Quimica Basica',
+            'nombre':'Estudiar materia vista en Quimica Basica',
             'curso_asociado':'Química Básica I',
             'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
@@ -70,7 +70,7 @@ estudiantes = [
     'actividades':
         [
             {
-            'descripcion':'Estudiar materia vista en comunicacion escrita',
+            'nombre':'Estudiar materia vista en comunicacion escrita',
             'curso_asociado':'Comunicación Escrita',
             'horario': ['Lunes','8:00','10:00'],
             'semana': '11',
@@ -115,7 +115,7 @@ administradores = [
 
 # actividades = [
 #     {
-#         'descripcion': EL USUARIO LA ELIGE,
+#         'nombre': EL USUARIO LA ELIGE,
 #         'curso_asociado': '',
 #         'fecha_inicio': '',
 #         'fecha_conclusión': ''
@@ -130,7 +130,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Lunes','17:05','19:45']],
+        'horario': [['Lunes','17:05','19:45']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -140,7 +140,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Martes','12:30','14:15'],['Jueves','12:30','15:15']],
+        'horario': [['Martes','12:30','14:15'],['Jueves','12:30','15:15']],
         'carreras':['Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería En Agronomía''Ingeniería Electrónica']
     },
     {
@@ -150,7 +150,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Jueves','7:00','9:00']],
+        'horario': [['Jueves','7:00','9:00']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -160,7 +160,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Lunes','12:30','16:30']],
+        'horario': [['Lunes','12:30','16:30']],
         'carreras':['Administración De Empresas','Ingeniería En Producción Industrial','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -170,7 +170,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Jueves','12:30','14:15'],['Viernes','7:55','9:40']],
+        'horario': [['Jueves','12:30','14:15'],['Viernes','7:55','9:40']],
         'carreras':['Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     },
     {
@@ -180,7 +180,7 @@ cursos = (
         'fecha_inicio': '07-02',
         'fecha_final': '03-06',
         'semana': '*',
-        'horario_clases': [['Martes','13:20','16:30']],
+        'horario': [['Martes','13:20','16:30']],
         'carreras':['Administración De Empresas','Gestión del Turismo Rural Sostenible','Ingeniería En Computación','Ingeniería Electrónica','Ingeniería En Agronomía']
     }
 )

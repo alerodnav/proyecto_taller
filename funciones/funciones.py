@@ -86,7 +86,7 @@ def agregar_curso(l, n, cre, hl, fi, ff, hc, c):
             'horas lectivas': hl,
             'fecha_inicio': fi,
             'fecha_final': ff,
-            'horario_clases': hc,
+            'horario': hc,
             'carreras': c
         }
     )
@@ -129,7 +129,7 @@ def modificar_curso(l, n1, n2, cre, hl, fi, ff, hc, c):
             i['horas_lectivas'] = hl
             i['fecha_inicio'] = fi
             i['fecha_final'] = ff
-            i['horario_clases'] = hc
+            i['horario'] = hc
             i['carreras'] = c
 
     return tuple(l)
@@ -206,14 +206,14 @@ def ver_cursos(c,cursos,v):
     for i in c:
         for j in cursos:
             if i in j['carreras']:   
-                valor = "{0}  /  {1} de {2} a {3}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2]))             
+                valor = "{0}  /  {1} de {2} a {3}".format(j['nombre'],str(j['horario'][0][0]),str(j['horario'][0][1]),str(j['horario'][0][2]))             
                 if not (valor in cursos_posibles):
-                    tam = len(j['horario_clases'])
+                    tam = len(j['horario'])
                     if(tam < 2):
                         cursos_posibles.append(valor)
                     else:
-                        cursos_posibles.append("{0}  /  {1} de {2} a {3} y los {4} de {5} a {6}".format(j['nombre'],str(j['horario_clases'][0][0]),str(j['horario_clases'][0][1]),str(j['horario_clases'][0][2]),str(j['horario_clases'][1][0]),str(j['horario_clases'][1][1]),str(j['horario_clases'][1][2])))   
-                    nombres_cursos.append([j['nombre'],j['horario_clases']])
+                        cursos_posibles.append("{0}  /  {1} de {2} a {3} y los {4} de {5} a {6}".format(j['nombre'],str(j['horario'][0][0]),str(j['horario'][0][1]),str(j['horario'][0][2]),str(j['horario'][1][0]),str(j['horario'][1][1]),str(j['horario'][1][2])))   
+                    nombres_cursos.append([j['nombre'],j['horario']])
         
     cont1 = 1
     cont2 = 1
@@ -238,8 +238,18 @@ def ver_cursos(c,cursos,v):
         opcion_curso = int(input("Ingrese la opción del curso asociado: "))
         return [opciones[opcion_curso]]
 
-        
-
+def ver_cursos_matriculados(est,id):
+    """Funcion que imprime los cursos matriculados
+    
+    args: 
+    est (list) lista de estudiantes
+    id (int) Index del estudiante
+    """        
+    print("\nCursos matriculados: ")
+    cont = 1
+    for i in est[id]['cursos']:
+        print(cont,"-",i['nombre'])
+        cont+=1
 
 def ver_hora(h):
     """Funcion que devuelve la hora de un formato de hora
@@ -285,16 +295,15 @@ def matricular_curso(op,c,id,est):
             tam = len(est[id]['cursos'])
             cont=0
             for j in range (tam):
-                if est[id]['cursos'][cont][0] == op:
+                if est[id]['cursos'][cont]['nombre'] == op:
                     puede_matricular = False       
                 cont+=1
             if puede_matricular:
-                est[id]['cursos'].append([i['nombre'],i['horario_clases']])
-                return "Curso Matriculado"
+                return True
             else:
-                return "Este curso ya fue matriculado"
+                return False
             
-    return "Error al matricular curso"
+    return False
     
 def encontrar_semana(fi,ff,s):
     """Función para encontrar el número de la semana
@@ -328,7 +337,7 @@ def validar_matricula_curso(l,ns,d,hi,hf,v):
     tam = len(l)
     if (tam > 0) & (v=="m"):
         for i in l:
-            for j in i['horario_clases']: 
+            for j in i['horario']: 
                 if ((ns=="-")|(ns=="*")|(ns == i['semana'])) & ((d == j[0]) | (d=="-")): #Misma semana y dia
                     if ver_hora(hi)==ver_hora(j[1]): 
                         result.append("Inicia a la misma hora que {0}.".format(i['nombre']))
@@ -357,8 +366,36 @@ def validar_matricula_curso(l,ns,d,hi,hf,v):
                         result.append("Esta hora no te sirve, te choca con {0}".format(i['nombre']))
                         return result
         result[0] = True
-        return result    
+        return result 
     result[0]=True 
     return result    
+
+def reporte_semana(ar, cm, ns, se):
+    """Funcion para devolver un reporte semanal
     
-    
+    args:
+    ar (list): Actividades registradas del estudiante
+    cm (list): Cursos matriculados del estudiante
+    ns (int): Numero de la semana que se desea consultar
+    se (list): lista de las semanas
+    """
+
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
+    eventos = []
+
+    # ver las actividades de esta semana con semana = s
+    cont=0
+    for a in ar:
+        # print(a)
+        # print(a['semana'])
+        # input()
+        if (a['semana'] == ns) | (a['semana']=="*"):
+           eventos.append("{0} el {1} de {2} a {3}".format(a['nombre'],a['horario'][0],a['horario'][1],a['horario'][2])) 
+
+    for c in cm:
+        if (c['semana'] == ns) | (c['semana'] == "*"):
+           eventos.append("{0} el {1} de {2} a {3}".format(c['nombre'],c['horario'][cont][0],c['horario'][cont][1],c['horario'][cont][2]))
+           cont+=1 
+
+    return eventos
+         
