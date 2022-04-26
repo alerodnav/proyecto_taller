@@ -226,15 +226,15 @@ def ver_cursos(c,cursos,v):
             opciones[cont1]=x[0]
         cont1+=1
     opciones[cont1]='Libre'
-
     for i in cursos_posibles:
         print(cont2,"- "+i)
         cont2+=1
-    print(cont2,"- Libre")
+    
     if v=="m":
         opcion_curso = int(input("Ingrese la opción del curso a matricular: "))
         return [opciones[opcion_curso],nombres_cursos[opcion_curso-1][1]]
     elif (v=="i"):
+        print(cont2, "- Libre")
         opcion_curso = int(input("Ingrese la opción del curso asociado: "))
         return [opciones[opcion_curso]]
 
@@ -279,11 +279,21 @@ def matricular_curso(op,c,id,est):
     est (list) Lista de estudiantes
     """
     # validar()
+    puede_matricular = True
     for i in c:
         if i['nombre'] == op:
-            print(i)
-            est[id]['cursos'].append([i['nombre'],i['horario_clases']])
-            return "Curso Matriculado"
+            tam = len(est[id]['cursos'])
+            cont=0
+            for j in range (tam):
+                if est[id]['cursos'][cont][0] == op:
+                    puede_matricular = False       
+                cont+=1
+            if puede_matricular:
+                est[id]['cursos'].append([i['nombre'],i['horario_clases']])
+                return "Curso Matriculado"
+            else:
+                return "Este curso ya fue matriculado"
+            
     return "Error al matricular curso"
     
 def encontrar_semana(fi,ff,s):
@@ -312,7 +322,7 @@ def validar_matricula_curso(l,ns,d,hi,hf,v):
     d (string): Dia de la semana
     hi (string): Hora de inicio
     hf (string): Hora final
-    v (string): Determina si se agruegará un curso o una actividad
+    v (string): Determina si se agregará un curso o una actividad
     """
     result=[False]
     tam = len(l)
