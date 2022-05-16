@@ -1,5 +1,4 @@
 import clases as c
-
 def agregar_elemento (elemento,archivo):
     """Esta funcion recibe el elemento que se desea agregar y lo escribe en el archivo que se desea
     args:
@@ -25,29 +24,39 @@ def almacenar_datos(l,ruta):
     try:
         with open(ruta,"ta") as archivo:
             agregar_elemento(l.nombre,ruta)
+            agregar_elemento(l.usuario,ruta)
+            agregar_elemento(l.passwd,ruta)
             while l.sig!=None:
                 l=l.sig
                 agregar_elemento(l.nombre,ruta)
+                agregar_elemento(l.usuario,ruta)
+                agregar_elemento(l.passwd,ruta)
     except FileNotFoundError as error:
         print('El archivo no se encuentra')
 
 #Prueba
-lista_carreras = c.Carrera('Ingenieria En Gestion Ambiental')
-lista_carreras.insertar(c.Carrera('Ingenieria en Fisica'))
-
-almacenar_datos(lista_carreras,'datos/carreras.text')
 
 
-def consultar_datos(ruta):
+lista_estudiantes = c.Estudiante('Alejandro','arn','a123')
+lista_estudiantes.insertar(c.Estudiante('Deivid','dmg','d123'))
+
+#almacenar_datos(lista_estudiantes,'datos/estudiantes.txt')
+
+
+def consultar_estudiantes(ruta):
     datos=None
     try:
         with open(ruta,"tr") as lector:
             nombre=lector.readline()[:-1]
-            datos=c.Carrera(nombre)
+            us=lector.readline()[:-1]
+            ps=lector.readline()[:-1]
+            datos=c.Estudiante(nombre,us,ps)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
+                us=lector.readline()[:-1]
+                ps=lector.readline()[:-1]
                 if (nombre!=''):
-                    datos.insertar(c.Carrera(nombre))
+                    datos.insertar(c.Estudiante(nombre,us,ps))
     except FileNotFoundError as error:
         lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
         if  lectura.lower()=="s":
@@ -55,6 +64,9 @@ def consultar_datos(ruta):
     return (datos)
 
 
-print(consultar_datos('datos/carreras.text').nombre)
-print(consultar_datos('datos/carreras.text').sig.nombre)
 
+#lista_estudiantes = c.Estudiante('Alejandro','arn','a123')
+#lista_estudiantes.insertar(c.Estudiante('Deivid','dmg','d123'))
+#lista_estudiantes.insertar(c.Estudiante('Mario','mcr','m123'))
+
+print(lista_estudiantes.login('dmg','d1123'))

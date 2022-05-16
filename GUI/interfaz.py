@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
+from funciones_clases import *
+
+
 
 v=Tk()
 v.iconbitmap("GUI/software.ico")
@@ -11,6 +14,9 @@ texto = StringVar()
 op_tipoUsuario = IntVar()
 validar_usuario = StringVar()
 validar_password = StringVar()
+
+#listas
+lista_estudiantes = consultar_estudiantes('GUI/datos/estudiantes.txt')
 
 #Clase frame
 class frame():
@@ -29,13 +35,14 @@ class frame():
 
 
 #Funciones
-def validacion_login(v,f,op):
+def validacion_login(v,f,op,u,c):
     if op==0: 
-        #Falta validar usuario y contraseña aqui
         f_administrador(v,f)
     elif op==1: 
-        #Falta validar usuario y contraseña aqui
-        f_estudiante(v,f)
+        if lista_estudiantes.login(u,c):
+            f_estudiante(v,f)
+        else:
+            messagebox.showwarning('Error','Los datos ingresados no son correctos')
     else:
         messagebox.showwarning("Atención","No has marcado ningun tipo de usuario")
 
@@ -124,7 +131,7 @@ def f_login(v,fo):
     txt_password.grid(row=3,column=1, padx=20, pady=20, sticky="e")
     
     #Boton Aceptar
-    b = Button(f,text="Aceptar", command=lambda:validacion_login(v,f,cmb_tipo_usuario.current()))
+    b = Button(f,text="Aceptar", command=lambda:validacion_login(v,f,cmb_tipo_usuario.current(),validar_usuario.get(),validar_password.get()))
     b.grid(row=4, column=2, padx=20, pady=20)
     
     #Funciones para el frame

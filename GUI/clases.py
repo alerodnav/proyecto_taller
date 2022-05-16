@@ -32,6 +32,19 @@ class Estudiante (Lista):
         self.usuario=usuario
         self.passwd= passwd
 
+
+    def login(self,u,p):
+        aux = self
+        while (aux.sig != None):
+            if ((aux.usuario == u) and (aux.passwd == p)):
+                return True
+            else:
+                aux = aux.sig
+        if ((aux.usuario == u) and (aux.passwd == p)):
+                return True
+        else:
+                return False
+
 #Clase Administrador
 
 class Administrador (Lista):
