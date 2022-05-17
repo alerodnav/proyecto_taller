@@ -63,6 +63,26 @@ def consultar_estudiantes(ruta):
             open(ruta,"tw")
     return (datos)
 
+def consultar_administradores(ruta):
+    datos=None
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            us=lector.readline()[:-1]
+            ps=lector.readline()[:-1]
+            datos=c.Administrador(nombre,us,ps)
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                us=lector.readline()[:-1]
+                ps=lector.readline()[:-1]
+                if (nombre!=''):
+                    datos.insertar(c.Administrador(nombre,us,ps))
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open(ruta,"tw")
+    return (datos)
+
 
 
 #lista_estudiantes = c.Estudiante('Alejandro','arn','a123')

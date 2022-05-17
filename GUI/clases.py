@@ -58,6 +58,18 @@ class Administrador (Lista):
 
     #Constructor de la clase estudiante (Es obligatorio registrar el nombre,usuario y contrasena)
 
+    def login(self,u,p):
+        aux = self
+        while (aux.sig != None):
+            if ((aux.usuario == u) and (aux.passwd == p)):
+                return True
+            else:
+                aux = aux.sig
+        if ((aux.usuario == u) and (aux.passwd == p)):
+                return True
+        else:
+                return False
+
     def __init__(self,nombre,usuario,passwd):
         self.nombre=nombre
         self.usuario=usuario

@@ -4,7 +4,6 @@ from tkinter.ttk import Combobox
 from funciones_clases import *
 
 
-
 v=Tk()
 v.iconbitmap("GUI/software.ico")
 f = Frame(v) 
@@ -16,7 +15,8 @@ validar_usuario = StringVar()
 validar_password = StringVar()
 
 #listas
-lista_estudiantes = consultar_estudiantes('GUI/datos/estudiantes.txt')
+lista_estudiantes = consultar_estudiantes('./datos/estudiantes.txt')
+lista_administradores = consultar_administradores('./datos/administradores.txt')
 
 #Clase frame
 class frame():
@@ -37,7 +37,10 @@ class frame():
 #Funciones
 def validacion_login(v,f,op,u,c):
     if op==0: 
-        f_administrador(v,f)
+        if lista_administradores.login(u,c):
+            f_administrador(v,f)
+        else:
+            messagebox.showwarning('Error','Los datos ingresados no son correctos')
     elif op==1: 
         if lista_estudiantes.login(u,c):
             f_estudiante(v,f)
