@@ -35,6 +35,11 @@ class frame():
 
 
 #Funciones
+
+
+def guardar():
+    return
+
 def validacion_login(v,f,op,u,c):
     if op==0: 
         if lista_administradores.login(u,c):
@@ -79,9 +84,22 @@ def menu_estudiante(v,f):
     verMenu.add_command(label="Ver Cursos matriculados", command=lambda:f_cursos_matriculados(v,f))
     verMenu.add_separator()
     verMenu.add_command(label="Ver Actividades registradas",command=lambda:f_actividades_registradas(v,f))
+
+     #Menu de guardado
+    guardarMenu = Menu(seccionMenu, tearoff=0)
+    guardarMenu.add_command(label="Guardar", command=lambda:guardar())
+    guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
+
+    seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
     seccionMenu.add_cascade(label="Acciones", menu=accionesMenu)
     seccionMenu.add_cascade(label="Ver", menu=verMenu)
     seccionMenu.add_cascade(label="Sesión", menu=sesionMenu)
+   
+
+   
+
+
+
 
 def menu_administrador(v,f):
     seccionMenu = Menu(f)
