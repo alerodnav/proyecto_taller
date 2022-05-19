@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
+#from GUI.clases import Carrera
 from funciones_clases import *
+import clases as c
 
 
 v=Tk()
@@ -17,6 +19,10 @@ validar_password = StringVar()
 #listas
 lista_estudiantes = consultar_estudiantes('./datos/estudiantes.txt')
 lista_administradores = consultar_administradores('./datos/administradores.txt')
+lista_carreras = consultar_carreras('./datos/carreras.txt')
+
+
+
 
 #Clase frame
 class frame():
@@ -37,8 +43,12 @@ class frame():
 #Funciones
 
 
-def guardar():
-    return
+
+def guardar_lista_carreras():
+    global listas_carreras
+    guardar_carreras(lista_carreras,'./datos/carreras.txt')
+
+    
 
 def validacion_login(v,f,op,u,c):
     if op==0: 
@@ -85,9 +95,9 @@ def menu_estudiante(v,f):
     verMenu.add_separator()
     verMenu.add_command(label="Ver Actividades registradas",command=lambda:f_actividades_registradas(v,f))
 
-     #Menu de guardado
+    #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:guardar())
+    guardarMenu.add_command(label="Guardar", command=lambda:guardar_carreras())
     guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
@@ -117,6 +127,13 @@ def menu_administrador(v,f):
     verMenu.add_command(label="Ver Cursos",command=lambda:f_ver_cursos(v,f))
     verMenu.add_separator()
     verMenu.add_command(label="Ver Carreras", command=lambda:f_ver_carreras(v,f))
+
+    #Menu de guardado
+    guardarMenu = Menu(seccionMenu, tearoff=0)
+    guardarMenu.add_command(label="Guardar", command=lambda:guardar_lista_carreras())
+    guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
+
+    seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
     seccionMenu.add_cascade(label="Acciones", menu=accionesMenu)
     seccionMenu.add_cascade(label="Ver", menu=verMenu)
     seccionMenu.add_cascade(label="Sesión", menu=sesionMenu)
@@ -540,18 +557,21 @@ def f_agregar_carrera(v,fo):
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
 
     v_nueva_carrera = StringVar()
+    
 
     # ++++++++++++++++ Widgets de este frame ++++++++++++++
     lbl_carrera = Label(f,text="Nombre Carrera")
     txt_carrera = Entry(f, textvariable=v_nueva_carrera)
-    btn_agregar = Button(f,text="Agregar",command=lambda:print("Aqui va funcion modificar_carrera"))
+    btn_agregar = Button(f,text="Agregar",command=lambda: [lista_carreras.insertar(c.Carrera(v_nueva_carrera.get())),borrar_texto()])
 
     # +++++++++++++ Posicion en grid +++++++++++++
     lbl_carrera.grid(row=1,column=0,padx=20,pady=20,sticky="e")
     txt_carrera.grid(row=1,column=1,padx=20,pady=20)
     btn_agregar.grid(row=2,column=1,padx=20,pady=20)
-
     f.grid_propagate(False)
+
+    def borrar_texto():
+        v_nueva_carrera.set('')
 
 f_login(v,f)
 v.mainloop()

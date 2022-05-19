@@ -1,3 +1,5 @@
+from tkinter.messagebox import showerror
+
 import clases as c
 def agregar_elemento (elemento,archivo):
     """Esta funcion recibe el elemento que se desea agregar y lo escribe en el archivo que se desea
@@ -83,6 +85,33 @@ def consultar_administradores(ruta):
             open(ruta,"tw")
     return (datos)
 
+def consultar_carreras(ruta):
+    datos=None
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            datos=c.Carrera(nombre)
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                if (nombre!=''):
+                    datos.insertar(c.Carrera(nombre))
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open(ruta,"tw")
+    return (datos)
+
+def guardar_carreras(l,ruta):
+    try:
+        with open(ruta,"tw") as archivo:
+            agregar_elemento(l.nombre,ruta)
+            while l.sig!=None:
+                l=l.sig
+                agregar_elemento(l.nombre,ruta)
+    except FileNotFoundError as error:
+        showerror(message='No se pudo guardar en el archivo de carreras')
+
+
 
 
 #lista_estudiantes = c.Estudiante('Alejandro','arn','a123')
@@ -90,3 +119,4 @@ def consultar_administradores(ruta):
 #lista_estudiantes.insertar(c.Estudiante('Mario','mcr','m123'))
 
 print(lista_estudiantes.login('dmg','d1123'))
+
