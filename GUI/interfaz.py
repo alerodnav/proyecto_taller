@@ -46,7 +46,7 @@ class frame():
 
 def guardar_lista_carreras():
     global listas_carreras
-    guardar_carreras(lista_carreras,'./datos/carreras.txt')
+    lista_carreras.guardar_carreras('./datos/carreras.txt')
 
     
 
@@ -97,7 +97,7 @@ def menu_estudiante(v,f):
 
     #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:guardar_carreras())
+    guardarMenu.add_command(label="Guardar", command=lambda:c.guardar_carreras())
     guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)

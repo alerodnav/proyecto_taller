@@ -1,5 +1,8 @@
 # Clase principal lista con puntero
 
+from tkinter.messagebox import showerror
+from funciones_clases import *
+
 class Lista:
     sig=None
 
@@ -11,6 +14,14 @@ class Lista:
             l.sig=p
         else:
             self.__insertar(l.sig,p)
+
+    def agregar_elemento(self,elemento,archivo):
+        try:
+            with open(archivo,"ta") as archivo:
+                archivo.writelines(elemento+"\n")
+        except FileNotFoundError as error:
+            with open(archivo,"tw") as archivo:
+                archivo.writelines(elemento+"\n")
 
 #Clase estudiante
 
@@ -28,7 +39,7 @@ class Estudiante (Lista):
     #Constructor de la clase estudiante (Es obligatorio registrar el nombre,usuario y contrasena)
 
     def __init__(self,nombre,usuario,passwd):
-        self.nombre=nombre
+        self.nombre_completo=nombre
         self.usuario=usuario
         self.passwd= passwd
 
@@ -44,6 +55,17 @@ class Estudiante (Lista):
                 return True
         else:
                 return False
+    
+    def guardar_estudiante(self):
+        puntero=self
+        try:
+            with open("./datos/estudiantes.txt'","tw") as archivo:
+                archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de estudiantes')
 
 #Clase Administrador
 
@@ -82,6 +104,17 @@ class Carrera(Lista):
 
     def __init__(self,nombre):
         self.nombre=nombre
+
+    def guardar_carreras(self,ruta):
+        puntero=self
+        try:
+            with open(ruta,"tw") as archivo:
+                self.agregar_elemento(puntero.nombre,ruta)
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    self.agregar_elemento(puntero.nombre,ruta)
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de carreras')
     
 
 class Curso(Lista):
@@ -100,6 +133,8 @@ class Curso(Lista):
         self.fecha_inicio=fecha_inicio
         self.fecha_final=fecha_final
         self.carreras=carreras
+
+    
 
 class Actividad(Lista):
 
