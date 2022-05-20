@@ -48,6 +48,7 @@ def guardar_lista_carreras():
     global listas_carreras
     lista_carreras.guardar_carreras('./datos/carreras.txt')
 
+
     
 
 def validacion_login(v,f,op,u,c):
@@ -172,6 +173,8 @@ def f_login(v,fo):
     b = Button(f,text="Aceptar", command=lambda:validacion_login(v,f,cmb_tipo_usuario.current(),validar_usuario.get(),validar_password.get()))
     b.grid(row=4, column=2, padx=20, pady=20)
     
+
+
     #Funciones para el frame
     f.grid_propagate(False)
 
@@ -519,6 +522,7 @@ def f_modificar_curso(v,fo):
     f.grid_propagate(False)
 
 def f_modificar_carrera(v,fo):
+    global lista_carreras
     contenido_frame = frame(v,"Usuario Administrador","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -529,21 +533,26 @@ def f_modificar_carrera(v,fo):
     v_nueva_carrera = StringVar()
 
     # +++++++++++++++ Widgets de este frame ++++++++++++++++++
-    carreras=["Ingenieria En Computacion", "Administración De Empresas","Ingenieria en Produccion Industrial"]
+    carreras=lista_carreras.listar_carreras()
     lbl_carrera1 = Label(f,text="Carrera A Modificar")
     cmb_carrera1 = Combobox(f, state="readonly", width=30)
     cmb_carrera1["values"] = carreras
     cmb_carrera1.set("Elige una opción")
     lbl_carrera2 = Label(f,text="Nueva Carrera")
     txt_carrera2 = Entry(f, textvariable=v_nueva_carrera)
-    btn_modificar = Button(f,text="Modificar",command=lambda:print("Aqui va funcion agregar_carrera"))
-
+    btn_modificar = Button(f,text="Modificar",command=lambda: [lista_carreras.modificar_carrera(cmb_carrera1.get(),v_nueva_carrera.get()), borrar_texto()]) ####
     # ++++++++++++++++ Posicion en grid ++++++++++++++++++
     lbl_carrera1.grid(row=1,column=0,padx=20,pady=20,sticky="e")
     cmb_carrera1.grid(row=1,column=1,padx=20,pady=20)
     lbl_carrera2.grid(row=2,column=0,padx=20,pady=20,sticky="e")
     txt_carrera2.grid(row=2,column=1,padx=20,pady=20)
     btn_modificar.grid(row=3,column=1,padx=20,pady=20)
+
+
+
+    def borrar_texto():
+        v_nueva_carrera.set('')
+
 
     f.grid_propagate(False)
 

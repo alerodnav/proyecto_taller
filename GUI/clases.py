@@ -115,6 +115,30 @@ class Carrera(Lista):
                     self.agregar_elemento(puntero.nombre,ruta)
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de carreras')
+
+    def listar_carreras(self):
+        return(self.__listar_carreras(self))
+    
+    def __listar_carreras(self,l):
+        datos=[]
+        if l!=None:
+            datos.append(l.nombre)
+            datos+=self.__listar_carreras(l.sig)
+        return (datos)
+
+    def modificar_carrera(self,c,nc):
+        aux = self
+        while (aux.sig != None):
+            if (aux.nombre == c):
+                aux.nombre = nc
+                return
+            else:
+                aux = aux.sig
+        if ((aux.nombre == c)):
+                aux.nombre == nc
+        else:
+                showerror(message='No se ha encontrado la carrera que se desea modificar')
+
     
 
 class Curso(Lista):
