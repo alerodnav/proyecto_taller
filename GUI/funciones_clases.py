@@ -2,7 +2,7 @@ from tkinter.messagebox import showerror
 
 import clases as c
 
-def agregar_elemento1 (elemento,archivo):
+def agregar_elementos (elemento,archivo):
     """Esta funcion recibe el elemento que se desea agregar y lo escribe en el archivo que se desea
     args:
         elemento (string): Texto que se desea agrega
@@ -28,14 +28,14 @@ def almacenar_datos(l,ruta):
     """
     try:
         with open(ruta,"ta") as archivo:
-            agregar_elemento1(l.nombre,ruta)
-            agregar_elemento1(l.usuario,ruta)
-            agregar_elemento1(l.passwd,ruta)
+            agregar_elementos(l.nombre,ruta)
+            agregar_elementos(l.usuario,ruta)
+            agregar_elementos(l.passwd,ruta)
             while l.sig!=None:
                 l=l.sig
-                agregar_elemento1(l.nombre,ruta)
-                agregar_elemento1(l.usuario,ruta)
-                agregar_elemento1(l.passwd,ruta)
+                agregar_elementos(l.nombre,ruta)
+                agregar_elementos(l.usuario,ruta)
+                agregar_elementos(l.passwd,ruta)
     except FileNotFoundError as error:
         print('El archivo no se encuentra')
 
