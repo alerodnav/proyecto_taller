@@ -62,7 +62,7 @@ class Estudiante (Lista):
     def guardar_estudiante(self):
         puntero=self
         try:
-            with open("./datos/estudiantes.txt'","tw") as archivo:
+            with open("./datos/estudiantes.txt","tw") as archivo:
                 archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
                 while puntero.sig!=None:
                     puntero=puntero.sig
@@ -87,6 +87,7 @@ class Estudiante (Lista):
         while (aux.sig != None):
             if (aux.nombre_completo == n):
                 aux.carreras.append(c)
+                return
             else:
                 aux = aux.sig
         if (aux.nombre_completo == n):

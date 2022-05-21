@@ -52,9 +52,9 @@ def guardar_lista_carreras():
     lista_carreras.guardar_carreras('./datos/carreras.txt')
 
 
-def guardar_estudiantes():
-    global lista_estudiantes
-    lista_estudiantes.guardar_estudiante()
+#def guardar_estudiantes():
+#    global lista_estudiantes
+    
 
 def iniciar_carrera():
     print()
@@ -112,7 +112,7 @@ def menu_estudiante(v,f):
 
     #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:guardar_estudiantes())
+    guardarMenu.add_command(label="Guardar", command=lambda:print())
     guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
@@ -239,8 +239,12 @@ def f_iniciar_carrera(v,fo):
     cmb_carreras.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
     cmb_carreras["values"]=carreras_disponibles
     cmb_carreras.set("Elige una opción")
-    btn_aceptar = Button(f,text="Matricular",command=lambda: lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()))
+    btn_aceptar = Button(f,text="Matricular",command=lambda:lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()))
     btn_aceptar.grid(row=2,column=1, padx=20,pady=20,sticky="nsew")
+
+    btn_guardar = Button(f,text="Guardar",command=lambda:lista_estudiantes.guardar_estudiante())
+    btn_guardar.grid(row=2,column=2, padx=20,pady=20,sticky="nsew")
+
     
 
     f.grid_propagate(False)
