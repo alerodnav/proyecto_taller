@@ -42,6 +42,9 @@ class Estudiante (Lista):
         self.nombre_completo=nombre
         self.usuario=usuario
         self.passwd= passwd
+        self.carreras=[]
+        self.cursos=[]
+        self.actividades=[]
 
 
     def login(self,u,p):
@@ -66,6 +69,31 @@ class Estudiante (Lista):
                     archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de estudiantes')
+
+    def detectar_estudiantes(self,u):
+        aux = self
+        while (aux.sig != None):
+            if (aux.usuario == u):
+                return aux.nombre_completo
+            else:
+                aux = aux.sig
+        if (aux.usuario == u):
+                return aux.nombre_completo
+        else:
+                return False
+    
+    def inic_carrera(self,n,c):
+        aux = self
+        while (aux.sig != None):
+            if (aux.nombre_completo == n):
+                aux.carreras.append(c)
+            else:
+                aux = aux.sig
+        if (aux.nombre_completo == n):
+                aux.carreras.append(c)
+        else:
+                showerror(message='No se ha encontrado la carrera')
+
 
 #Clase Administrador
 
@@ -138,6 +166,19 @@ class Carrera(Lista):
                 aux.nombre == nc
         else:
                 showerror(message='No se ha encontrado la carrera que se desea modificar')
+
+    def buscar_x_nombre(self,c):
+        aux = self
+        while (aux.sig != None):
+            if (aux.nombre == c):
+                return aux.nombre
+            else:
+                aux = aux.sig
+        if (aux.nombre == c):
+                return aux.nombre
+        else:
+                showerror(message='No se ha encontrado la carrera')
+
 
     
 

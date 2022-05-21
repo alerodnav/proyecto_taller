@@ -1,6 +1,2 @@
-Alejandro
-arn
-a123
-Deivid
-dmg
-d123
+['Alejandro','arn','a123']
+['Deivid','dmg','d123']

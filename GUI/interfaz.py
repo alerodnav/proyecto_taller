@@ -16,9 +16,13 @@ op_tipoUsuario = IntVar()
 validar_usuario = StringVar()
 validar_password = StringVar()
 
+#Usuario_Actual
+
+usuario_actual=''
+
 #listas
-lista_estudiantes = consultar_estudiantes('./datos/estudiantes.txt')
-lista_administradores = consultar_administradores('./datos/administradores.txt')
+lista_estudiantes = consultar_estudiantes()
+lista_administradores = consultar_administradores()
 lista_carreras = consultar_carreras('./datos/carreras.txt')
 
 
@@ -43,22 +47,32 @@ class frame():
 #Funciones
 
 
-
 def guardar_lista_carreras():
     global listas_carreras
     lista_carreras.guardar_carreras('./datos/carreras.txt')
 
 
-    
+def guardar_estudiantes():
+    global lista_estudiantes
+    lista_estudiantes.guardar_estudiante()
+
+def iniciar_carrera():
+    print()
+
 
 def validacion_login(v,f,op,u,c):
+    global usuario_actual
     if op==0: 
         if lista_administradores.login(u,c):
+            
             f_administrador(v,f)
         else:
             messagebox.showwarning('Error','Los datos ingresados no son correctos')
     elif op==1: 
         if lista_estudiantes.login(u,c):
+
+            usuario_actual = lista_estudiantes.detectar_estudiantes(u)
+            pass
             f_estudiante(v,f)
         else:
             messagebox.showwarning('Error','Los datos ingresados no son correctos')
@@ -98,7 +112,7 @@ def menu_estudiante(v,f):
 
     #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:c.guardar_carreras())
+    guardarMenu.add_command(label="Guardar", command=lambda:guardar_estudiantes())
     guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
@@ -106,11 +120,6 @@ def menu_estudiante(v,f):
     seccionMenu.add_cascade(label="Ver", menu=verMenu)
     seccionMenu.add_cascade(label="Sesión", menu=sesionMenu)
    
-
-   
-
-
-
 
 def menu_administrador(v,f):
     seccionMenu = Menu(f)
@@ -142,7 +151,7 @@ def menu_administrador(v,f):
 #Frames
 def f_login(v,fo):
     #Creación de objeto con lo básico del frame
-    contenido_frame = frame(v,"Inicio de sesión","#ffffff","900","500")
+    contenido_frame = frame(v,"Inicio de sesión","#ffffff","500","500")
     fo.destroy()
     f = contenido_frame.f
     # Widgets extras
@@ -171,7 +180,7 @@ def f_login(v,fo):
     
     #Boton Aceptar
     b = Button(f,text="Aceptar", command=lambda:validacion_login(v,f,cmb_tipo_usuario.current(),validar_usuario.get(),validar_password.get()))
-    b.grid(row=4, column=2, padx=20, pady=20)
+    b.grid(row=4, column=1, padx=20, pady=20)
     
 
 
@@ -214,6 +223,7 @@ def f_administrador(v,fo):
     f.grid_propagate(False)
 
 def f_iniciar_carrera(v,fo):
+    global lista_carreras, usuario_actual
     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -224,13 +234,14 @@ def f_iniciar_carrera(v,fo):
 
     lbl_carreras = Label(f,text="Seleccione la carrera")
     lbl_carreras.grid(row=1,column=0, padx=20,pady=20,sticky="nsew")
-    carreras_disponibles=["Ingenieria En Computacion", "Administración De Empresas","Ingenieria en Produccion Industrial"]
+    carreras_disponibles= lista_carreras.listar_carreras()  #Hay que validar si ya inicio una carrera
     cmb_carreras = Combobox(f,state="readonly",width=30)
     cmb_carreras.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
     cmb_carreras["values"]=carreras_disponibles
     cmb_carreras.set("Elige una opción")
-    btn_aceptar = Button(f,text="Matricular",command=lambda:print("Aqui va la funcion de iniciar carrera"))
+    btn_aceptar = Button(f,text="Matricular",command=lambda: lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()))
     btn_aceptar.grid(row=2,column=1, padx=20,pady=20,sticky="nsew")
+    
 
     f.grid_propagate(False)
     

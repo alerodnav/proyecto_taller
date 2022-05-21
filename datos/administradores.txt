@@ -1,9 +1,2 @@
-Gabriel
-gabri
-g123
-Felix
-falpi
-f123
-Marvin
-angulin
-m123
+['Gabriel','gabri','g123']
+['Marvin','ang','a123']
