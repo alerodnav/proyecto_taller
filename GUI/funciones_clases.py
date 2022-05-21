@@ -103,6 +103,34 @@ def consultar_administradores():
     finally:
         return respuesta
 
+
+def consultar_cursos(ruta):
+    datos=None
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            creditos=lector.readline()[:-1]
+            h_lectivas=lector.readline()[:-1]
+            f_inicio=lector.readline()[:-1]
+            f_final=lector.readline()[:-1]
+            carreras=lector.readline()[:-1]
+            datos=c.Curso(nombre,creditos,h_lectivas,f_inicio,f_final,carreras)
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                creditos=lector.readline()[:-1]
+                h_lectivas=lector.readline()[:-1]
+                f_inicio=lector.readline()[:-1]
+                f_final=lector.readline()[:-1]
+                carreras=lector.readline()[:-1]
+                if (nombre!=''):
+                    datos.insertar(c.Curso(nombre,creditos,h_lectivas,f_inicio,f_final,carreras))
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open(ruta,"tw")
+    return (datos)
+
+
 """
 def guardar_carreras(l,ruta):
     try:

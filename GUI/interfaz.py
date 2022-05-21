@@ -1,3 +1,4 @@
+from glob import glob
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
@@ -24,7 +25,7 @@ usuario_actual=''
 lista_estudiantes = consultar_estudiantes()
 lista_administradores = consultar_administradores()
 lista_carreras = consultar_carreras('./datos/carreras.txt')
-
+lista_cursos = consultar_cursos('./datos/cursos.txt')
 
 
 
@@ -50,6 +51,10 @@ class frame():
 def guardar_lista_carreras():
     global listas_carreras
     lista_carreras.guardar_carreras('./datos/carreras.txt')
+
+def guardar_lista_cursos():
+    global listas_cursos
+    lista_cursos.guardar_cursos('./datos/cursos.txt')
 
 
 #def guardar_estudiantes():
@@ -140,7 +145,7 @@ def menu_administrador(v,f):
 
     #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:guardar_lista_carreras())
+    guardarMenu.add_command(label="Guardar", command=lambda:[guardar_lista_carreras(),guardar_lista_cursos()])
     guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
@@ -421,16 +426,37 @@ def f_agregar_curso(v,fo):
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
 
     #Variables
+    global lista_cursos
     v_nuevo_curso = StringVar()
     v_num_creditos = StringVar()
     v_h_lectivas = StringVar()
     v_f_inicio = StringVar()
     v_f_final = StringVar()
-    v_horario = StringVar()
     c_administracion = IntVar()
     c_computacion = IntVar()
     c_agronomia = IntVar()
+    c_produccion = IntVar()
+    c_electronica = IntVar()
     
+    def ver_carreras_elegidas(carreras_elegidas):
+        if c_administracion.get() == 1:
+            carreras_elegidas+='Administracion De Empresas, '
+        if c_produccion.get() == 1:
+            carreras_elegidas+='Ingenieria En Produccion Industrial, '
+        if c_computacion.get() == 1:
+            carreras_elegidas+='Ingenieria En Computacion, '
+        if c_electronica.get() == 1:
+            carreras_elegidas+='Ingenieria Electronica, '
+        if c_agronomia.get() == 1:
+            carreras_elegidas+='Ingenieria En Agronomia, '
+        return carreras_elegidas[:-2]
+        
+    def agregar_nuevo_curso():
+        carreras_elegidas = ''
+        carreras_elegidas = ver_carreras_elegidas(carreras_elegidas)
+        lista_cursos.insertar(c.Curso(v_nuevo_curso.get(),v_num_creditos.get(),v_h_lectivas.get(),v_f_inicio.get(),v_f_final.get(),carreras_elegidas))
+        borrar_texto()
+
     # ++++++++++++++++ Widgets de este frame ++++++++++++++
     lbl_curso = Label(f,text="Nombre Curso")
     txt_curso = Entry(f, textvariable=v_nuevo_curso)
@@ -438,17 +464,17 @@ def f_agregar_curso(v,fo):
     txt_num_creditos = Entry(f, textvariable=v_num_creditos)
     lbl_h_lectivas = Label(f,text="Horas Lectivas")
     txt_h_lectivas = Entry(f, textvariable=v_h_lectivas)
-    lbl_f_inicio = Label(f,text="Hora Inicio")
+    lbl_f_inicio = Label(f,text="Fecha Inicio")
     txt_f_inicio = Entry(f, textvariable=v_f_inicio)
-    lbl_f_final = Label(f,text="Hora Final")
+    lbl_f_final = Label(f,text="Fecha Final")
     txt_f_final = Entry(f, textvariable=v_f_final)
-    lbl_horario = Label(f,text="Horario(s)")
-    txt_horario = Entry(f, textvariable=v_horario)
     lbl_carreras_asoc = Label(f,text="Carreras Del Curso")
     c1 = Checkbutton(f, text="Ingeniería En Computación", variable=c_computacion, onvalue=1, offvalue=0)
     c2 = Checkbutton(f, text="Administración De Empresas", variable=c_administracion, onvalue=1, offvalue=0)
-    c3 = Checkbutton(f, text="Ingeniería En Agronomia", variable=c_agronomia, onvalue=1, offvalue=0)
-    btn_agregar = Button(f,text="Agregar",command=lambda:print("Aqui va funcion de agregar curso"))
+    c3 = Checkbutton(f, text="Ingeniería En Producción Industrial", variable=c_produccion, onvalue=1, offvalue=0)
+    c4 = Checkbutton(f, text="Ingeniería Electrónica", variable=c_electronica, onvalue=1, offvalue=0)
+    c5 = Checkbutton(f, text="Ingeniería En Agronomía", variable=c_agronomia, onvalue=1, offvalue=0)
+    btn_agregar = Button(f,text="Agregar",command=lambda:agregar_nuevo_curso())
 
     # +++++++++++++ Posicion en grid +++++++++++++
     lbl_curso.grid(row=1,column=0,padx=20,pady=20)
@@ -461,13 +487,25 @@ def f_agregar_curso(v,fo):
     txt_f_inicio.grid(row=2,column=3,padx=20,pady=20)
     lbl_f_final.grid(row=3,column=0,padx=20,pady=20)
     txt_f_final.grid(row=3,column=1,padx=20,pady=20)
-    lbl_horario.grid(row=3,column=2,padx=20,pady=20)
-    txt_horario.grid(row=3,column=3,padx=20,pady=20)
     lbl_carreras_asoc.grid(row=4,column=0,padx=20,pady=20)
     c1.grid(row=4,column=1,padx=20,pady=20)
     c2.grid(row=4,column=2,padx=20,pady=20)
     c3.grid(row=4,column=3,padx=20,pady=20)
-    btn_agregar.grid(row=5,column=3,padx=20,pady=20)
+    c4.grid(row=5,column=1,padx=20,pady=20)
+    c5.grid(row=5,column=2,padx=20,pady=20)
+    btn_agregar.grid(row=6,column=3,padx=20,pady=20)
+
+    def borrar_texto():
+        v_f_final.set('')
+        v_f_inicio.set('')
+        v_nuevo_curso.set('')
+        v_h_lectivas.set('')
+        v_num_creditos.set('')
+        c_administracion.set(0)
+        c_computacion.set(0)
+        c_produccion.set(0)
+        c_electronica.set(0)
+        c_agronomia.set(0)
 
     f.grid_propagate(False)
 

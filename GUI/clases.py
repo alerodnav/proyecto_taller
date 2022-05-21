@@ -199,7 +199,67 @@ class Curso(Lista):
         self.fecha_inicio=fecha_inicio
         self.fecha_final=fecha_final
         self.carreras=carreras
+        
+    def guardar_cursos(self,ruta):
+        puntero=self
+        try:
+            with open(ruta,"tw") as archivo:
+                self.agregar_elemento(puntero.nombre,ruta)
+                self.agregar_elemento(puntero.creditos,ruta)
+                self.agregar_elemento(puntero.horas_lectivas,ruta)
+                self.agregar_elemento(puntero.fecha_inicio,ruta)
+                self.agregar_elemento(puntero.fecha_final,ruta)
+                self.agregar_elemento(puntero.carreras,ruta)
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    self.agregar_elemento(puntero.nombre,ruta)
+                    self.agregar_elemento(puntero.creditos,ruta)
+                    self.agregar_elemento(puntero.horas_lectivas,ruta)
+                    self.agregar_elemento(puntero.fecha_inicio,ruta)
+                    self.agregar_elemento(puntero.fecha_final,ruta)
+                    self.agregar_elemento(puntero.carreras,ruta)
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de cursos')
 
+    def listar_cursos(self):
+        return(self.__listar_cursos(self))
+    
+    def __listar_cursos(self,l):
+        datos=[]
+        if l!=None:
+            datos.append(l.nombre)
+            datos.append(l.creditos)
+            datos.append(l.horas_lectivas)
+            datos.append(l.fecha_inicio)
+            datos.append(l.fecha_final)
+            datos.append(l.carreras)
+            datos+=self.__listar_cursos(l.sig)
+        return (datos)
+
+    def modificar_cursos(self,n1,n2,c2,hl2,fi2,ff2,ca2):
+        aux = self
+        while (aux.sig != None):
+            if (aux.nombre == n1):
+                aux.nombre = n2
+                aux.creditos = c2
+                aux.horas_lectivas = hl2
+                aux.fecha_inicio = fi2
+                aux.fecha_final = ff2
+                aux.carreras = ca2
+                return
+            else:
+                aux = aux.sig
+        if ((aux.nombre == n1)):
+                aux.nombre = n2
+                aux.creditos = c2
+                aux.horas_lectivas = hl2
+                aux.fecha_inicio = fi2
+                aux.fecha_final = ff2
+                aux.carreras = ca2
+        else:
+                showerror(message='No se ha encontrado el curso que se desea modificar')
+
+ 
     
 
 class Actividad(Lista):

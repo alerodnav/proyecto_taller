@@ -1,0 +1,48 @@
+Matematica General
+3
+8
+07-02
+13-06
+Ingenieria En Computacion, Produccion Industrial
+Matematica Discreta
+3
+15:00 - 16:55
+07-02
+13-06
+Ingenieria En Co    mputacion, Ingenieria Electronica
+Ingles I
+3
+9
+07-02
+13-06
+admin
+Comunicacion Escrita
+4
+12
+07-02
+13-06
+admin
+Ingles II
+3
+8
+07-02
+13-06
+Ingenieria En Computacion, 
+Matematica Elemental
+2
+6
+07-02
+13-06
+Administracion De Empresas, Ingenieria En Produccion Industrial, Ingenieria En Computacion, Ingenieria Electronica, Ingenieria En Agronomia
+Ingles III
+3
+9
+07-02
+13-06
+Administracion De Empresas, Ingenieria Electronica, Ingenieria En Agronomia
+Computacion Para Administracion
+3
+9
+07-02
+13-06
+Administracion De Empresas, Ingenieria En Agronomia
