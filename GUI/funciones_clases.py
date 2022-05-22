@@ -1,5 +1,6 @@
 from operator import le
 from tkinter.messagebox import askyesno, showerror
+from time import sleep
 
 import clases as c
 
@@ -65,7 +66,34 @@ def consultar_carreras(ruta):
             open(ruta,"tw")
     return (datos)
 
-
+def buscar_cursos(n):
+    ruta = "./datos/cursos.txt"
+    datos=None
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            creditos=lector.readline()[:-1]
+            h_lectivas=lector.readline()[:-1]
+            f_inicio=lector.readline()[:-1]
+            f_final=lector.readline()[:-1]
+            carreras=lector.readline()[:-1]
+            while (nombre!=n):
+                nombre=lector.readline()[:-1]
+                creditos=lector.readline()[:-1]
+                h_lectivas=lector.readline()[:-1]
+                f_inicio=lector.readline()[:-1]
+                f_final=lector.readline()[:-1]
+                carreras=lector.readline()[:-1]
+            if (nombre==n):
+                datos=[nombre,creditos,h_lectivas,f_inicio,f_final,carreras]        
+                return datos
+            else:
+                showerror(title="Error", message="No encontramos el curso")
+    except FileNotFoundError as error:
+        respuesta=askyesno(title="Error", message="No encontramos el archivo de datos desea crear un nuevo archivo de registro")
+        if respuesta:
+            open("./datos/cursos.txt","tw").close()
+        
 
 def consultar_estudiantes():
     respuesta=None

@@ -236,6 +236,17 @@ class Curso(Lista):
             datos+=self.__listar_cursos(l.sig)
         return (datos)
 
+    def listar_nombre_cursos(self):
+        return(self.__listar_nombre_cursos(self))
+    
+    def __listar_nombre_cursos(self,l):
+        datos=[]
+        if l!=None:
+            datos.append(l.nombre)
+            datos+=self.__listar_nombre_cursos(l.sig)
+        return (datos)
+
+    
     def modificar_cursos(self,n1,n2,c2,hl2,fi2,ff2,ca2):
         aux = self
         while (aux.sig != None):

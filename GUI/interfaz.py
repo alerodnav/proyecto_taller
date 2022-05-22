@@ -1,3 +1,4 @@
+from gc import callbacks
 from glob import glob
 from tkinter import *
 from tkinter import messagebox
@@ -476,8 +477,10 @@ def f_agregar_curso(v,fo):
     def agregar_nuevo_curso():
         carreras_elegidas = ''
         carreras_elegidas = ver_carreras_elegidas(carreras_elegidas)
-        lista_cursos.insertar(c.Curso(v_nuevo_curso.get(),v_num_creditos.get(),v_h_lectivas.get(),v_f_inicio.get(),v_f_final.get(),carreras_elegidas))
+        if v_nuevo_curso.get() != "":
+            lista_cursos.insertar(c.Curso(v_nuevo_curso.get(),v_num_creditos.get(),v_h_lectivas.get(),v_f_inicio.get(),v_f_final.get(),carreras_elegidas))
         borrar_texto()
+        cursos_autoguardado_adm()
 
     # ++++++++++++++++ Widgets de este frame ++++++++++++++
     lbl_curso = Label(f,text="Nombre Curso")
@@ -541,41 +544,112 @@ def f_modificar_curso(v,fo):
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
 
 #Variables
+    global lista_cursos
     v_nuevo_curso = StringVar()
     v_viejo_curso = StringVar()
     v_num_creditos = StringVar()
     v_h_lectivas = StringVar()
     v_f_inicio = StringVar()
     v_f_final = StringVar()
-    v_horario = StringVar()
     c_administracion = IntVar()
     c_computacion = IntVar()
     c_agronomia = IntVar()
+    c_electronica = IntVar()
+    c_produccion = IntVar()
+    cursos=lista_cursos.listar_nombre_cursos()
     
+    
+    
+    # Funciones
+
+    def encontrar_curso():
+        datos = buscar_cursos(cmb_cursos.get())
+        v_f_final.set(datos[4])
+        v_f_inicio.set(datos[3])
+        v_nuevo_curso.set(datos[0])
+        v_h_lectivas.set(datos[2])
+        v_num_creditos.set(datos[1])
+        if "Administracion De Empresas" in datos[5]:
+            c_administracion.set(1)
+        else:
+            c_administracion.set(0)
+        if "Ingenieria En Computacion" in datos[5]:
+            c_computacion.set(1)
+        else:
+            c_computacion.set(0)
+        if "Ingenieria En Produccion Industrial" in datos[5]:
+            c_produccion.set(1)
+        else:
+            c_produccion.set(0)
+        if "Ingenieria Electronica" in datos[5]:
+            c_electronica.set(1)
+        else:
+            c_electronica.set(0)
+        if "Ingenieria En Agronomia" in datos[5]:
+            c_agronomia.set(1)
+        else:
+            c_agronomia.set(0)
+
+    def ver_carreras_elegidas(carreras_elegidas):
+        if c_administracion.get() == 1:
+            carreras_elegidas+='Administracion De Empresas, '
+        if c_produccion.get() == 1:
+            carreras_elegidas+='Ingenieria En Produccion Industrial, '
+        if c_computacion.get() == 1:
+            carreras_elegidas+='Ingenieria En Computacion, '
+        if c_electronica.get() == 1:
+            carreras_elegidas+='Ingenieria Electronica, '
+        if c_agronomia.get() == 1:
+            carreras_elegidas+='Ingenieria En Agronomia, '
+        return carreras_elegidas[:-2]
+
+    def modificar_curso():
+        carreras_elegidas = ''
+        carreras_elegidas = ver_carreras_elegidas(carreras_elegidas)
+        lista_cursos.modificar_cursos(v_viejo_curso.get(),v_nuevo_curso.get(),v_num_creditos.get(),v_h_lectivas.get(),v_f_inicio.get(),v_f_final.get(),carreras_elegidas)
+        borrar_texto()
+        cursos_autoguardado_adm()
+        
+    def borrar_texto():
+        v_f_final.set('')
+        v_f_inicio.set('')
+        v_nuevo_curso.set('')
+        v_h_lectivas.set('')
+        v_num_creditos.set('')
+        c_administracion.set(0)
+        c_computacion.set(0)
+        c_produccion.set(0)
+        c_electronica.set(0)
+        c_agronomia.set(0)
+        cmb_cursos.set('Elige una opción')
+
     # ++++++++++++++++ Widgets de este frame ++++++++++++++
-    lbl_curso1 = Label(f,text="Nombre del Curso")
-    txt_curso1 = Entry(f, textvariable=v_viejo_curso)
-    lbl_curso2 = Label(f,text="Nombre del Nuevo Curso")
+    lbl_curso1 = Label(f,text="Curso A Modicar")
+    cmb_cursos = Combobox(f,textvariable=v_viejo_curso,state="readonly", width=30)
+    cmb_cursos["values"] = cursos
+    cmb_cursos.set("Elige una opción")
+    cmb_cursos.bind("<<ComboboxSelected>>",lambda _ : encontrar_curso())
+    lbl_curso2 = Label(f,text="Nombre Curso")
     txt_curso2 = Entry(f, textvariable=v_nuevo_curso)
     lbl_num_creditos = Label(f,text="Numero de Créditos")
     txt_num_creditos = Entry(f, textvariable=v_num_creditos)
     lbl_h_lectivas = Label(f,text="Horas Lectivas")
     txt_h_lectivas = Entry(f, textvariable=v_h_lectivas)
-    lbl_f_inicio = Label(f,text="Hora Inicio")
+    lbl_f_inicio = Label(f,text="Fecha Inicio")
     txt_f_inicio = Entry(f, textvariable=v_f_inicio)
-    lbl_f_final = Label(f,text="Hora Final")
+    lbl_f_final = Label(f,text="Fecha Final")
     txt_f_final = Entry(f, textvariable=v_f_final)
-    lbl_horario = Label(f,text="Horario(s)")
-    txt_horario = Entry(f, textvariable=v_horario)
     lbl_carreras_asoc = Label(f,text="Carreras Del Curso")
-    c1 = Checkbutton(f, text="Ingeniería En Computación", variable=c_computacion, onvalue=1, offvalue=0)
-    c2 = Checkbutton(f, text="Administración De Empresas", variable=c_administracion, onvalue=1, offvalue=0)
-    c3 = Checkbutton(f, text="Ingeniería En Agronomia", variable=c_agronomia, onvalue=1, offvalue=0)
-    btn_modificar = Button(f,text="Modificar",command=lambda:print("Aqui va funcion de modificar curso"))
+    c1 = Checkbutton(f, text="Ingenieria En Computacion", variable=c_computacion, onvalue=1, offvalue=0)
+    c2 = Checkbutton(f, text="Administracion De Empresas", variable=c_administracion, onvalue=1, offvalue=0)
+    c3 = Checkbutton(f, text="Ingenieria En Produccion Industrial", variable=c_produccion, onvalue=1, offvalue=0)
+    c4 = Checkbutton(f, text="Ingenieria Electronica", variable=c_electronica, onvalue=1, offvalue=0)
+    c5 = Checkbutton(f, text="Ingenieria En Agronomia", variable=c_agronomia, onvalue=1, offvalue=0)
+    btn_modificar = Button(f,text="Modificar",command=lambda:modificar_curso())
 
     # +++++++++++++ Posicion en grid +++++++++++++
     lbl_curso1.grid(row=1,column=0,padx=20,pady=20)
-    txt_curso1.grid(row=1,column=1,padx=20,pady=20)
+    cmb_cursos.grid(row=1,column=1,padx=20,pady=20)
     lbl_curso2.grid(row=1,column=2,padx=20,pady=20)
     txt_curso2.grid(row=1,column=3,padx=20,pady=20)
     lbl_num_creditos.grid(row=2,column=0,padx=20,pady=20)
@@ -586,12 +660,12 @@ def f_modificar_curso(v,fo):
     txt_f_inicio.grid(row=3,column=1,padx=20,pady=20)
     lbl_f_final.grid(row=3,column=2,padx=20,pady=20)
     txt_f_final.grid(row=3,column=3,padx=20,pady=20)
-    lbl_horario.grid(row=4,column=0,padx=20,pady=20)
-    txt_horario.grid(row=4,column=1,padx=20,pady=20)
     lbl_carreras_asoc.grid(row=5,column=0,padx=20,pady=20)
     c1.grid(row=5,column=1,padx=20,pady=20)
     c2.grid(row=5,column=2,padx=20,pady=20)
     c3.grid(row=5,column=3,padx=20,pady=20)
+    c4.grid(row=6,column=1,padx=20,pady=20)
+    c5.grid(row=6,column=2,padx=20,pady=20)
     btn_modificar.grid(row=6,column=3,padx=20,pady=20)
 
     f.grid_propagate(False)
@@ -670,6 +744,10 @@ def carrera_autoguardado_adm():
     if autoguardado_adm.get() == 1:
         guardar_lista_carreras()
 
+def cursos_autoguardado_adm():
+    global autoguardado_adm
+    if autoguardado_adm.get() == 1:
+        guardar_lista_cursos()
 
     
 
