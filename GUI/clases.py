@@ -52,7 +52,7 @@ class Estudiante (Lista):
         self.nombre_completo=nombre
         self.usuario=usuario
         self.passwd= passwd
-        self.carreras=[]
+        self.carrera=""
         self.cursos=[]
         self.actividades=[]
 
@@ -80,10 +80,10 @@ class Estudiante (Lista):
         puntero=self
         try:
             with open("./datos/estudiantes.txt","tw") as archivo:
-                archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+                archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carrera,puntero.cursos,puntero.actividades].__str__()+"\n")
                 while puntero.sig!=None:
                     puntero=puntero.sig
-                    archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+                    archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carrera,puntero.cursos,puntero.actividades].__str__()+"\n")
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de estudiantes')
 
@@ -112,14 +112,28 @@ class Estudiante (Lista):
         aux = self
         while (aux.sig != None):
             if (aux.nombre_completo == n):
-                aux.carreras.append(c)
+                aux.carrera = c
                 return
             else:
                 aux = aux.sig
         if (aux.nombre_completo == n):
-                aux.carreras.append(c)
+                aux.carrera = c
         else:
                 showerror(message='No se ha encontrado la carrera')
+
+    def cambiar_carrera(self,n,cn):
+        aux = self
+        while (aux.sig != None):
+            if (aux.nombre_completo == n):
+                aux.carrera = cn
+                return
+            else:
+                aux = aux.sig
+        if (aux.nombre_completo == n):
+                aux.carrera = cn
+        else:
+                showerror(message='No se ha encontrado la carrera')
+
 
 
 #Clase Administrador

@@ -366,6 +366,7 @@ def f_agregar_actividad(v,fo):
 
 
 def f_cambiar_carrera(v,fo):
+    global lista_carreras, usuario_actual
     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -373,23 +374,24 @@ def f_cambiar_carrera(v,fo):
     lbl_titulo = Label(f,text="Cambiar Carrera")
     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
-    
+    """
     lbl_carreras1 = Label(f,text="Seleccione la Carrera Actual")
     lbl_carreras1.grid(row=1,column=0, padx=20,pady=20,sticky="nsew")
-    carreras_disponibles=["Ingenieria En Computacion", "Administración De Empresas","Ingenieria en Produccion Industrial"]
+    
     cmb_carreras1 = Combobox(f,state="readonly",width=30)
     cmb_carreras1.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
     cmb_carreras1["values"]=carreras_disponibles
     cmb_carreras1.set("Elige una opción")
-
+    """
+    carreras_disponibles= lista_carreras.listar_carreras()
     lbl_carreras2 = Label(f,text="Seleccione la Nueva Carrera")
     lbl_carreras2.grid(row=2,column=0, padx=20,pady=20,sticky="nsew")
     cmb_carreras2 = Combobox(f,state="readonly",width=30)
     cmb_carreras2.grid(row=2,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
-    cmb_carreras2["values"]=carreras_disponibles
+    cmb_carreras2["values"]= carreras_disponibles
     cmb_carreras2.set("Elige una opción")
 
-    btn_aceptar = Button(f,text="Cambiar",command=lambda:print("Aqui va la funcion de iniciar carrera"))
+    btn_aceptar = Button(f,text="Cambiar",command=lambda: [lista_estudiantes.cambiar_carrera(usuario_actual,cmb_carreras2.get()), lista_estudiantes.guardar_estudiante()])
     btn_aceptar.grid(row=3,column=1, padx=20,pady=20,sticky="nsew")
     
     f.grid_propagate(False)
@@ -766,6 +768,11 @@ def carrera_autoguardado_est():
 def carrera_autoguardado_adm():
     global autoguardado_adm
     if autoguardado_adm.get() == 1:
+        guardar_lista_carreras()
+
+def carrera_autoguardado_est():
+    global autoguardado_est
+    if autoguardado_est.get() == 1:
         guardar_lista_carreras()
 
 def cursos_autoguardado_adm():
