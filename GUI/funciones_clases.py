@@ -51,6 +51,10 @@ lista_estudiantes.insertar(c.Estudiante('Deivid','dmg','d123'))
 
 
 def consultar_carreras(ruta):
+    """Carga los datos del archivo de carreras
+    args:
+        ruta (string): Ruta del archivo     
+    """
     datos=None
     try:
         with open(ruta,"tr") as lector:
@@ -67,6 +71,10 @@ def consultar_carreras(ruta):
     return (datos)
 
 def buscar_cursos(n):
+    """Busca un curso
+    args:
+        n (string): nombre del curso     
+    """
     ruta = "./datos/cursos.txt"
     datos=None
     try:
@@ -96,6 +104,8 @@ def buscar_cursos(n):
         
 
 def consultar_estudiantes():
+    """Carga los datos del archivo de estudiantes     
+    """
     respuesta=None
     try:
         with open("./datos/estudiantes.txt","tr") as lector:
@@ -114,6 +124,8 @@ def consultar_estudiantes():
         return respuesta
 
 def consultar_administradores():
+    """Carga los datos del archivo de administradores    
+    """
     respuesta=None
     try:
         with open("./datos/administradores.txt","tr") as lector:
@@ -133,6 +145,10 @@ def consultar_administradores():
 
 
 def consultar_cursos(ruta):
+    """Carga los datos del archivo de cursos
+    args:
+        ruta (string): Ruta del archivo     
+    """
     datos=None
     try:
         with open(ruta,"tr") as lector:
@@ -159,6 +175,10 @@ def consultar_cursos(ruta):
     return (datos)
 
 def consultar_actividades(ruta):
+    """Carga los datos del archivo de actividades
+    args:
+        ruta (string): Ruta del archivo     
+    """
     datos=None
     try:
         with open(ruta,"tr") as lector:

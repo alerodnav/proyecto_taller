@@ -54,14 +54,20 @@ class frame():
 
 
 def guardar_lista_carreras():
+    """Guarda los datos de la lista de carreras   
+    """
     global listas_carreras
     lista_carreras.guardar_carreras('./datos/carreras.txt')
 
 def guardar_lista_cursos():
+    """Guarda los datos de la lista de cursos   
+    """
     global listas_cursos
     lista_cursos.guardar_cursos('./datos/cursos.txt')
 
 def guardar_lista_actividades():
+    """Guarda los datos de la lista de actividades   
+    """
     global lista_actividades
     lista_actividades.guardar_actividades('./datos/actividades.txt')
 
