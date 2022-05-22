@@ -410,6 +410,7 @@ def f_reportes(v,fo):
     f.grid_propagate(False)
 
 def f_ver_cursos(v,fo):
+    global lista_cursos
     contenido_frame = frame(v,"Usuario Administrador","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -417,7 +418,13 @@ def f_ver_cursos(v,fo):
     lbl_titulo = Label(f,text="Cursos")
     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
+    
+    cmb_cursos = Combobox(f,state="readonly",width=30)
+    cmb_cursos.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=6)
+    cmb_cursos["values"]=lista_cursos.listar_nombre_cursos()
+    cmb_cursos.set("Cursos Registrados")
     f.grid_propagate(False)
+
 
 def f_ver_carreras(v,fo):
 
