@@ -31,7 +31,7 @@ lista_estudiantes = consultar_estudiantes()
 lista_administradores = consultar_administradores()
 lista_carreras = consultar_carreras('./datos/carreras.txt')
 lista_cursos = consultar_cursos('./datos/cursos.txt')
-
+lista_actividades = consultar_actividades('./datos/actividades.txt')
 
 
 #Clase frame
@@ -61,13 +61,9 @@ def guardar_lista_cursos():
     global listas_cursos
     lista_cursos.guardar_cursos('./datos/cursos.txt')
 
-
-#def guardar_estudiantes():
-#    global lista_estudiantes
-    
-
-def iniciar_carrera():
-    print()
+def guardar_lista_actividades():
+    global lista_actividades
+    lista_actividades.guardar_actividades('./datos/actividades.txt')
 
 
 def validacion_login(v,f,op,u,c):
@@ -126,7 +122,7 @@ def menu_estudiante(v,f):
     #Menu de guardado
 
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:print())
+    guardarMenu.add_command(label="Guardar", command=lambda:[guardar_lista_actividades()])
     guardarMenu.add_checkbutton(label="Autoguardado", variable=autoguardado_est,onvalue=1, offvalue=0)
    
 
@@ -299,6 +295,7 @@ def f_agregar_actividad(v,fo):
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
 
     #+++++++++++++++ Variables Agregar Actividad ++++++++++++++++++ 
+    global lista_cursos
     v_nombre = StringVar()
     v_c_asoc = StringVar()
     v_f_inicio = StringVar()
@@ -306,13 +303,27 @@ def f_agregar_actividad(v,fo):
     v_h_inicio = StringVar()
     v_h_final = StringVar()
     v_estado = StringVar()
-    cursos = ["Matematica General", "Ingles I", "Matematica Discreta"]
+
+    #Funciones
+    def agregar_actividad():
+        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_c_asoc.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get()))
+        borrar_texto()
+        actividad_autoguardado_est()
+
+    def borrar_texto():
+        v_nombre.set('')
+        cmb_c_asoc.set('Curso Asociado')
+        v_f_inicio.set('')
+        v_f_final.set('')
+        v_h_inicio.set('')
+        v_h_final.set('')
+        v_estado.set('')
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")
     txt_nombre = Entry (f, textvariable=v_nombre)
     lbl_c_asoc = Label(f,text="Curso Asociado: ")
-    cmb_c_asoc = Combobox(f,state="readonly",width=30)
+    cmb_c_asoc = Combobox(f,textvariable=v_c_asoc, state="readonly",width=30)
     lbl_f_inicio = Label(f,text="Fecha Inicio: ")
     txt_f_inicio = Entry (f, textvariable=v_f_inicio)
     lbl_f_final = Label(f,text="Fecha Final: ")
@@ -323,7 +334,7 @@ def f_agregar_actividad(v,fo):
     txt_h_final = Entry (f, textvariable=v_h_final)
     lbl_estado = Label(f,text="Estado: ")
     txt_estado = Entry (f, textvariable=v_estado)
-    btn_agregar = Button(f,text="Agregar: ",command=lambda:print("Aqui va funcion de Agregar Actividad"))
+    btn_agregar = Button(f,text="Agregar: ",command=lambda:agregar_actividad())
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
@@ -331,7 +342,7 @@ def f_agregar_actividad(v,fo):
     txt_nombre.grid(row=1, column=1, padx=20, pady=20)
     lbl_c_asoc.grid(row=1, column=2, sticky="e", padx=20, pady=20)
     cmb_c_asoc.grid(row=1, column=3, padx=20, pady=20)
-    cmb_c_asoc["values"]=cursos
+    cmb_c_asoc["values"]=lista_cursos.listar_nombre_cursos()
     cmb_c_asoc.set("Elige una opción")
     lbl_f_inicio.grid(row=2, column=0, sticky="e", padx=20, pady=20)
     txt_f_inicio.grid(row=2, column=1, padx=20, pady=20)
@@ -756,6 +767,10 @@ def cursos_autoguardado_adm():
     if autoguardado_adm.get() == 1:
         guardar_lista_cursos()
 
+def actividad_autoguardado_est():
+    global autoguardado_est
+    if autoguardado_est.get() == 1:
+        guardar_lista_actividades()
     
 
 f_login(v,f)

@@ -158,6 +158,35 @@ def consultar_cursos(ruta):
             open(ruta,"tw")
     return (datos)
 
+def consultar_actividades(ruta):
+    datos=None
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            curso_asociado=lector.readline()[:-1]
+            fecha_inicio=lector.readline()[:-1]
+            fecha_final=lector.readline()[:-1]
+            hora_inicio=lector.readline()[:-1]
+            hora_final=lector.readline()[:-1]
+            estado=lector.readline()[:-1]
+            datos=c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado)
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                curso_asociado=lector.readline()[:-1]
+                fecha_inicio=lector.readline()[:-1]
+                fecha_final=lector.readline()[:-1]
+                hora_inicio=lector.readline()[:-1]
+                hora_final=lector.readline()[:-1]
+                estado=lector.readline()[:-1]
+                if (nombre!=''):
+                    datos.insertar(c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado))
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open(ruta,"tw")
+    return (datos)
+
+
 
 """
 def guardar_carreras(l,ruta):

@@ -277,20 +277,43 @@ class Actividad(Lista):
 
     descripcion=None
     curso_asociado=None
-    horario=None
+    fecha_inicio=None
+    fecha_final=None
     hora_inicio=None
     hora_final=None
     estado=None
 
-    def __init__(self,descripcion,curso_asociado,horario,hora_inicio,hora_final,estado):
+    def __init__(self,descripcion,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado):
         self.descripcion=descripcion
         self.curso_asociado=curso_asociado
-        self.horario=horario
+        self.fecha_inicio=fecha_inicio
+        self.fecha_final=fecha_final
         self.hora_inicio=hora_inicio
         self.hora_final=hora_final
         self.estado=estado
     
-
+    def guardar_actividades(self,ruta):
+        puntero=self
+        try:
+            with open(ruta,"tw") as archivo:
+                self.agregar_elemento(puntero.descripcion,ruta)
+                self.agregar_elemento(puntero.curso_asociado,ruta)
+                self.agregar_elemento(puntero.fecha_inicio,ruta)
+                self.agregar_elemento(puntero.fecha_final,ruta)
+                self.agregar_elemento(puntero.hora_inicio,ruta)
+                self.agregar_elemento(puntero.hora_final,ruta)
+                self.agregar_elemento(puntero.estado,ruta)
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    self.agregar_elemento(puntero.descripcion,ruta)
+                    self.agregar_elemento(puntero.curso_asociado,ruta)
+                    self.agregar_elemento(puntero.fecha_inicio,ruta)
+                    self.agregar_elemento(puntero.fecha_final,ruta)
+                    self.agregar_elemento(puntero.hora_inicio,ruta)
+                    self.agregar_elemento(puntero.hora_final,ruta)
+                    self.agregar_elemento(puntero.estado,ruta)
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de actividades')
 
 
 
