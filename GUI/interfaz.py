@@ -17,6 +17,10 @@ op_tipoUsuario = IntVar()
 validar_usuario = StringVar()
 validar_password = StringVar()
 
+autoguardado_est = IntVar()
+
+autoguardado_adm = IntVar()
+
 #Usuario_Actual
 
 usuario_actual=''
@@ -97,6 +101,9 @@ def cerrar_sesion(v,f):
 
 #Cargar los menús desde una sola funcion
 def menu_estudiante(v,f):
+
+    global autoguardado_est
+
     seccionMenu = Menu(f)
     v.config(menu=seccionMenu, width=300, height=300)
     accionesMenu = Menu(seccionMenu, tearoff=0)
@@ -116,9 +123,11 @@ def menu_estudiante(v,f):
     verMenu.add_command(label="Ver Actividades registradas",command=lambda:f_actividades_registradas(v,f))
 
     #Menu de guardado
+
     guardarMenu = Menu(seccionMenu, tearoff=0)
     guardarMenu.add_command(label="Guardar", command=lambda:print())
-    guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
+    guardarMenu.add_checkbutton(label="Autoguardado", variable=autoguardado_est,onvalue=1, offvalue=0)
+   
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
     seccionMenu.add_cascade(label="Acciones", menu=accionesMenu)
@@ -127,6 +136,9 @@ def menu_estudiante(v,f):
    
 
 def menu_administrador(v,f):
+
+    global autoguardado_adm
+
     seccionMenu = Menu(f)
     v.config(menu=seccionMenu, width=300, height=300)
     accionesMenu = Menu(seccionMenu, tearoff=0)
@@ -146,7 +158,7 @@ def menu_administrador(v,f):
     #Menu de guardado
     guardarMenu = Menu(seccionMenu, tearoff=0)
     guardarMenu.add_command(label="Guardar", command=lambda:[guardar_lista_carreras(),guardar_lista_cursos()])
-    guardarMenu.add_checkbutton(label="Autoguardado", onvalue=1, offvalue=0)
+    guardarMenu.add_checkbutton(label="Autoguardado",variable=autoguardado_adm, onvalue=1, offvalue=0)
 
     seccionMenu.add_cascade(label="Archivo", menu=guardarMenu)
     seccionMenu.add_cascade(label="Acciones", menu=accionesMenu)
@@ -409,7 +421,7 @@ def f_ver_cursos(v,fo):
 def f_ver_carreras(v,fo):
 
     global lista_carreras
-    
+
     contenido_frame = frame(v,"Usuario Administrador","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -445,7 +457,9 @@ def f_agregar_curso(v,fo):
     c_agronomia = IntVar()
     c_produccion = IntVar()
     c_electronica = IntVar()
-    
+
+
+
     def ver_carreras_elegidas(carreras_elegidas):
         if c_administracion.get() == 1:
             carreras_elegidas+='Administracion De Empresas, '
@@ -632,7 +646,7 @@ def f_agregar_carrera(v,fo):
     # ++++++++++++++++ Widgets de este frame ++++++++++++++
     lbl_carrera = Label(f,text="Nombre Carrera")
     txt_carrera = Entry(f, textvariable=v_nueva_carrera)
-    btn_agregar = Button(f,text="Agregar",command=lambda: [lista_carreras.insertar(c.Carrera(v_nueva_carrera.get())),borrar_texto()])
+    btn_agregar = Button(f,text="Agregar",command=lambda: [lista_carreras.insertar(c.Carrera(v_nueva_carrera.get())),borrar_texto(),carrera_autoguardado_adm()])
 
     # +++++++++++++ Posicion en grid +++++++++++++
     lbl_carrera.grid(row=1,column=0,padx=20,pady=20,sticky="e")
@@ -642,6 +656,22 @@ def f_agregar_carrera(v,fo):
 
     def borrar_texto():
         v_nueva_carrera.set('')
+
+"""
+def carrera_autoguardado_est():
+    global autoguardado_est
+    if autoguardado_est == 1:
+        guardar_lista_carreras()
+        
+"""
+
+def carrera_autoguardado_adm():
+    global autoguardado_adm
+    if autoguardado_adm.get() == 1:
+        guardar_lista_carreras()
+
+
+    
 
 f_login(v,f)
 v.mainloop()
