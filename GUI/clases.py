@@ -48,13 +48,13 @@ class Estudiante (Lista):
 
     #Constructor de la clase estudiante (Es obligatorio registrar el nombre,usuario y contrasena)
 
-    def __init__(self,nombre,usuario,passwd):
+    def __init__(self,nombre,usuario,passwd,carreras,cursos,actividades):
         self.nombre_completo=nombre
         self.usuario=usuario
         self.passwd= passwd
-        self.carreras=[]
-        self.cursos=[]
-        self.actividades=[]
+        self.carreras=list(carreras)
+        self.cursos=list(cursos)
+        self.actividades=list(actividades)
 
 
     def login(self,u,p):
@@ -79,6 +79,7 @@ class Estudiante (Lista):
         """
         puntero=self
         aux = self
+        print(self.carreras)
         try:
             with open(ruta,"tr") as lector:
                 while aux != None:
@@ -96,6 +97,19 @@ class Estudiante (Lista):
                     aux.actividades=lectura[5]
                     aux=aux.sig
             with open(ruta,"tw") as archivo:
+                archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de estudiantes')
+
+    def guardar_estudiante1(self):
+        """Esta función guarda los datos de los estudiantes en el archivo esstudiantes.txt
+        """
+        puntero=self
+        try:
+            with open("./datos/estudiantes.txt","tw") as archivo:
                 archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
                 while puntero.sig!=None:
                     puntero=puntero.sig

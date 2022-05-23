@@ -32,7 +32,7 @@ lista_administradores = consultar_administradores()
 lista_carreras = consultar_carreras('./datos/carreras.txt')
 lista_cursos = consultar_cursos('./datos/cursos.txt')
 lista_actividades = consultar_actividades('./datos/actividades.txt')
-
+pass
 
 #Clase frame
 class frame():
@@ -213,20 +213,20 @@ def f_login(v,fo):
     f.grid_propagate(False)
 
 def f_estudiante(v,fo):
+    global usuario_actual
     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
     #Menú
     menu_estudiante(v,f)
 
+
     #Widgets del frame
-    l = Label(f,text="Bienvenido Estudiante")
+    l = Label(f,text="Bienvenido: "+ usuario_actual)
     l.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     l.grid(row=0, column=1, padx=20, pady=20, columnspan=6)
-    e = Entry(f, textvariable=texto)
-    e.grid(row=1, column=0, padx=20, pady=20)
-    b = Button(f,text="Ir al login", command=lambda:f_login(v,f))
-    b.grid(row=2, column=0, padx=20, pady=20)
+
+
     f.grid_propagate(False)
 
 def f_administrador(v,fo):
@@ -241,10 +241,6 @@ def f_administrador(v,fo):
     l = Label(f,text="Bienvenido Administrador")
     l.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     l.grid(row=0, column=1, padx=20, pady=20, columnspan=6)
-    e = Entry(f, textvariable=texto)
-    e.grid(row=1, column=0, padx=20, pady=20)
-    b = Button(f,text="Ir al login", command=lambda:f_login(v,f))
-    b.grid(row=2, column=0, padx=20, pady=20)
     f.grid_propagate(False)
 
 def f_iniciar_carrera(v,fo):
@@ -264,11 +260,9 @@ def f_iniciar_carrera(v,fo):
     cmb_carreras.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
     cmb_carreras["values"]=carreras_disponibles
     cmb_carreras.set("Elige una opción")
-    btn_aceptar = Button(f,text="Matricular",command=lambda:lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()))
+    btn_aceptar = Button(f,text="Matricular",command=lambda:[lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()),lista_estudiantes.guardar_estudiante1()])
     btn_aceptar.grid(row=2,column=1, padx=20,pady=20,sticky="nsew")
 
-    btn_guardar = Button(f,text="Guardar",command=lambda:lista_estudiantes.guardar_estudiante('./datos/estudiantes.txt',usuario_estudiante))
-    btn_guardar.grid(row=2,column=2, padx=20,pady=20,sticky="nsew")
 
     
 
@@ -794,6 +788,11 @@ def carrera_autoguardado_est():
 def carrera_autoguardado_adm():
     global autoguardado_adm
     if autoguardado_adm.get() == 1:
+        guardar_lista_carreras()
+
+def carrera_autoguardado_est():
+    global autoguardado_est
+    if autoguardado_est.get() == 1:
         guardar_lista_carreras()
 
 def cursos_autoguardado_adm():

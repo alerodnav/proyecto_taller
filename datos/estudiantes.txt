@@ -1,2 +1,2 @@
-['Alejandro', 'arn', 'a123', ['Administracion De Empresas'], ['Estadistica'], []]
+['Alejandro', 'arn', 'a123', ['Ingenieria Electronica'], ['Estadistica', 'Matematica Elemental', 'Ingles I'], []]
 ['Deivid', 'dmg', 'd123', ['Ingenieria En Computacion'], ['Ingles I', 'Estadistica'], []]

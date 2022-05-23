@@ -40,8 +40,7 @@ def almacenar_datos(l,ruta):
 #Prueba
 
 
-lista_estudiantes = c.Estudiante('Alejandro','arn','a123')
-lista_estudiantes.insertar(c.Estudiante('Deivid','dmg','d123'))
+
 
 
 
@@ -107,10 +106,10 @@ def consultar_estudiantes():
         with open("./datos/estudiantes.txt","tr") as lector:
             lectura= eval(lector.readline()[:-1])
             if lectura!='':
-                respuesta=c.Estudiante(nombre=lectura[0],usuario=lectura[1],passwd=lectura[2])
+                respuesta=c.Estudiante(nombre=lectura[0],usuario=lectura[1],passwd=lectura[2],carreras=lectura[3],cursos=lectura[4],actividades=lectura[5])
             lectura= eval(lector.readline()[:-1])
             while (lectura!=''):
-                respuesta.insertar(c.Estudiante(nombre=lectura[0],usuario=lectura[1],passwd=lectura[2]))
+                respuesta.insertar(c.Estudiante(nombre=lectura[0],usuario=lectura[1],passwd=lectura[2],carreras=lectura[3],cursos=lectura[4],actividades=lectura[5]))
                 lectura= eval(lector.readline()[:-1])
     except FileNotFoundError as error:
         respuesta=askyesno(title="Error", message="No encontramos el archivo de datos desea crear un nuevo archivo de registro (s/n)")
