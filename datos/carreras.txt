@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-Administracion De Empresas
-Ingenieria En Produccion Industrial
-Ingenieria En Computacion
-Ingenieria Electronica
-Ingenieria En Agronomia
-=======
 Administración De Empresas
 Ingeniería En Producción Industrial
 Ingeniería En Computación
 Ingeniería Electrónica
 Ingeniería En Agronomía
->>>>>>> 032aab1 (Funciones Actividades,Cursos)

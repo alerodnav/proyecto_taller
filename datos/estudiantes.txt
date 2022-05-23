@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-['Alejandro', 'arn', 'a123', 'Ingenieria En Computacion', [], []]
-['Deivid', 'dmg', 'd123', '', [], []]
-=======
 ['Alejandro', 'arn', 'a123', ['Administracion De Empresas'], ['Estadistica'], []]
 ['Deivid', 'dmg', 'd123', ['Ingenieria En Computacion'], ['Ingles I', 'Estadistica'], []]
->>>>>>> 032aab1 (Funciones Actividades,Cursos)

@@ -52,11 +52,7 @@ class Estudiante (Lista):
         self.nombre_completo=nombre
         self.usuario=usuario
         self.passwd= passwd
-<<<<<<< HEAD
-        self.carrera=""
-=======
         self.carreras=[]
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
         self.cursos=[]
         self.actividades=[]
 
@@ -78,18 +74,6 @@ class Estudiante (Lista):
         else:
                 return False
     
-<<<<<<< HEAD
-    def guardar_estudiante(self):
-        """Esta función guarda los datos de los estudiantes en el archivo esstudiantes.txt
-        """
-        puntero=self
-        try:
-            with open("./datos/estudiantes.txt","tw") as archivo:
-                archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carrera,puntero.cursos,puntero.actividades].__str__()+"\n")
-                while puntero.sig!=None:
-                    puntero=puntero.sig
-                    archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carrera,puntero.cursos,puntero.actividades].__str__()+"\n")
-=======
     def guardar_estudiante(self,ruta,u):
         """Esta función guarda los datos de los estudiantes en el archivo estudiantes.txt
         """
@@ -116,7 +100,6 @@ class Estudiante (Lista):
                 while puntero.sig!=None:
                     puntero=puntero.sig
                     archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de estudiantes')
 
@@ -135,9 +118,6 @@ class Estudiante (Lista):
                 return aux.nombre_completo
         else:
                 return False
-<<<<<<< HEAD
-    
-=======
         
     def carrera_estudiante(self,u):
         """Obtiene el nombre de la persona que inicio sesion y devuelve la o las carreras
@@ -207,7 +187,6 @@ class Estudiante (Lista):
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de carreras')
 
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
     def inic_carrera(self,n,c):
         """Inicia una carrera
     args:
@@ -217,40 +196,15 @@ class Estudiante (Lista):
         aux = self
         while (aux.sig != None):
             if (aux.nombre_completo == n):
-<<<<<<< HEAD
-                aux.carrera = c
-=======
                 aux.carreras.append(c)
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
                 return
             else:
                 aux = aux.sig
         if (aux.nombre_completo == n):
-<<<<<<< HEAD
-                aux.carrera = c
-        else:
-                showerror(message='No se ha encontrado la carrera')
-
-    def cambiar_carrera(self,n,cn):
-        aux = self
-        while (aux.sig != None):
-            if (aux.nombre_completo == n):
-                aux.carrera = cn
-                return
-            else:
-                aux = aux.sig
-        if (aux.nombre_completo == n):
-                aux.carrera = cn
-        else:
-                showerror(message='No se ha encontrado la carrera')
-
-
-=======
                 aux.carreras.append(c)
         else:
                 showerror(message='No se ha encontrado la carrera')
 
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
 
 #Clase Administrador
 

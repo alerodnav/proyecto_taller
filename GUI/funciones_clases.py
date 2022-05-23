@@ -18,13 +18,6 @@ def agregar_elementos (elemento,archivo):
             archivo.writelines(elemento+"\n")
 
 
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
 def almacenar_datos(l,ruta):
     """Esta funcion recibe el elemento que se desea agregar y lo escribe en el archivo que se desea
     args:
@@ -209,10 +202,6 @@ def consultar_actividades(ruta):
             open(ruta,"tw")
     return (datos)
 
-<<<<<<< HEAD
-
-
-=======
 def nombre_actividades(ruta):
     """Carga los nombres del las actividades
     args:
@@ -275,7 +264,6 @@ def ver_cursos_disponibles(c):
             open("./datos/cursos.txt","tw")
     return (datos)
 
->>>>>>> 032aab1 (Funciones Actividades,Cursos)
 """
 def guardar_carreras(l,ruta):
     try:
