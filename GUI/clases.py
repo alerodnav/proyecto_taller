@@ -74,12 +74,28 @@ class Estudiante (Lista):
         else:
                 return False
     
-    def guardar_estudiante(self):
-        """Esta función guarda los datos de los estudiantes en el archivo esstudiantes.txt
+    def guardar_estudiante(self,ruta,u):
+        """Esta función guarda los datos de los estudiantes en el archivo estudiantes.txt
         """
         puntero=self
+        aux = self
         try:
-            with open("./datos/estudiantes.txt","tw") as archivo:
+            with open(ruta,"tr") as lector:
+                while aux != None:
+                    lectura= eval(lector.readline()[:-1])
+                    aux.nombre_completo=lectura[0]
+                    aux.usuario=lectura[1]
+                    aux.passwd=lectura[2]
+                    aux.carreras=lectura[3]
+                    if aux.usuario!=u:
+                        aux.cursos=lectura[4]
+                    else:
+                        for i in lectura[4]:
+                            if not(i in aux.cursos):
+                                aux.cursos.append(i)
+                    aux.actividades=lectura[5]
+                    aux=aux.sig
+            with open(ruta,"tw") as archivo:
                 archivo.writelines([puntero.nombre_completo,puntero.usuario,puntero.passwd,puntero.carreras,puntero.cursos,puntero.actividades].__str__()+"\n")
                 while puntero.sig!=None:
                     puntero=puntero.sig
@@ -102,7 +118,75 @@ class Estudiante (Lista):
                 return aux.nombre_completo
         else:
                 return False
+        
+    def carrera_estudiante(self,u):
+        """Obtiene el nombre de la persona que inicio sesion y devuelve la o las carreras
+    args:
+        u (string): Usuario    
+    """
+        with open("./datos/estudiantes.txt","tr") as lector:
+            lectura= eval(lector.readline()[:-1])
+            if lectura!='':
+                if lectura[1]==u:
+                    #Aqui asigno valor de lectura[3] a las carreras
+                    aux = self
+                    if aux.usuario == u:
+                        aux.carreras=lectura[3]
+                    else:
+                        while(aux.sig!=None):
+                            aux = aux.sig
+                            if aux.usuario == u:
+                                aux.carreras=lectura[3]
+                    return lectura[3]
+            lectura= eval(lector.readline()[:-1])
+            while (lectura!=''):
+                if lectura[1]==u:
+                    aux = self
+                    if aux.usuario == u:
+                        aux.carreras=lectura[3]
+                    else:
+                        while(aux.sig!=None):
+                            aux = aux.sig
+                            if aux.usuario == u:
+                                aux.carreras=lectura[3]
+                    return lectura[3]
+                lectura= eval(lector.readline()[:-1])
     
+    def ver_cursos_matriculados(self,u):
+        with open("./datos/estudiantes.txt","tr") as lector:
+            lectura= eval(lector.readline()[:-1])
+            while (lectura!=''):
+                if lectura[1]==u:
+                    print(lectura[4])
+                    return lectura[4]
+                lectura= eval(lector.readline()[:-1])
+      
+    def guardar_cursos_estudiante(self,u,c):
+        try:
+            aux = self
+            if aux.usuario == u:
+                aux.cursos.append(c)
+            while aux.sig!=None:
+                aux = aux.sig
+                if aux.usuario == u:
+                    aux.cursos.append(c)
+        except:
+            showerror(message='No se pudo guardar en el archivo')
+    def guardar_cursos_archivo(self,ruta):
+        """Guarda la lista de cursos en el archivo estudiantes.txt
+        args:
+            ruta (String): Ruta del archivo
+        """
+        puntero=self
+        try:
+            with open(ruta,"tw") as archivo:
+                self.agregar_elemento(puntero.nombre,ruta)
+                while puntero.sig!=None:
+                    puntero=puntero.sig
+                    self.agregar_elemento(puntero.nombre,ruta)
+        except FileNotFoundError as error:
+            showerror(message='No se pudo guardar en el archivo de carreras')
+
     def inic_carrera(self,n,c):
         """Inicia una carrera
     args:

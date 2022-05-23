@@ -23,7 +23,7 @@ autoguardado_est = IntVar()
 autoguardado_adm = IntVar()
 
 #Usuario_Actual
-
+usuario_estudiante=''
 usuario_actual=''
 
 #listas
@@ -70,10 +70,16 @@ def guardar_lista_actividades():
     """
     global lista_actividades
     lista_actividades.guardar_actividades('./datos/actividades.txt')
-
-
+    
+def guardar_cursos_estudiante():
+    """Guarda los datos de la lista de cursos de estudiantes   
+    """
+    global lista_estudiantes
+    lista_estudiantes.guardar_estudiante('./datos/estudiantes.txt',usuario_estudiante)
+    
 def validacion_login(v,f,op,u,c):
-    global usuario_actual
+    global usuario_actual,usuario_estudiante
+    usuario_estudiante=u
     if op==0: 
         if lista_administradores.login(u,c):
             
@@ -119,8 +125,7 @@ def menu_estudiante(v,f):
     sesionMenu.add_command(label= "Cerrar sesión", command=lambda:cerrar_sesion(v,f))
     sesionMenu.add_command(label= "Salir",command=lambda:cerrar_ventana())
     verMenu = Menu(seccionMenu, tearoff=0)
-    verMenu.add_command(label="Ver Reportes", command=lambda:f_reportes(v,f))
-    verMenu.add_separator()
+    # verMenu.add_command(label="Ver Reportes", command=lambda:f_reportes(v,f))
     verMenu.add_command(label="Ver Cursos matriculados", command=lambda:f_cursos_matriculados(v,f))
     verMenu.add_separator()
     verMenu.add_command(label="Ver Actividades registradas",command=lambda:f_actividades_registradas(v,f))
@@ -128,7 +133,7 @@ def menu_estudiante(v,f):
     #Menu de guardado
 
     guardarMenu = Menu(seccionMenu, tearoff=0)
-    guardarMenu.add_command(label="Guardar", command=lambda:[guardar_lista_actividades()])
+    guardarMenu.add_command(label="Guardar", command=lambda:[guardar_lista_actividades(),guardar_cursos_estudiante()])
     guardarMenu.add_checkbutton(label="Autoguardado", variable=autoguardado_est,onvalue=1, offvalue=0)
    
 
@@ -262,7 +267,7 @@ def f_iniciar_carrera(v,fo):
     btn_aceptar = Button(f,text="Matricular",command=lambda:lista_estudiantes.inic_carrera(usuario_actual,cmb_carreras.get()))
     btn_aceptar.grid(row=2,column=1, padx=20,pady=20,sticky="nsew")
 
-    btn_guardar = Button(f,text="Guardar",command=lambda:lista_estudiantes.guardar_estudiante())
+    btn_guardar = Button(f,text="Guardar",command=lambda:lista_estudiantes.guardar_estudiante('./datos/estudiantes.txt',usuario_estudiante))
     btn_guardar.grid(row=2,column=2, padx=20,pady=20,sticky="nsew")
 
     
@@ -270,6 +275,7 @@ def f_iniciar_carrera(v,fo):
     f.grid_propagate(False)
     
 def f_matricular_curso(v,fo):
+    global lista_cursos, lista_estudiantes,usuario_actual
     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -278,14 +284,23 @@ def f_matricular_curso(v,fo):
     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
 
+    #Funciones
+    
+    
+    def matricular_curso():
+        lista_estudiantes.guardar_cursos_estudiante(usuario_estudiante,cmb_cursos.get())
+        curso_est_autoguardado_est()
+        cmb_cursos.set("Elige una opción")
+
+
     lbl_curso = Label(f,text="Seleccione el curso")
     lbl_curso.grid(row=1,column=0, padx=20,pady=20,sticky="nsew")
-    cursos_disponibles=["Matematica General", "Ingles I","Artes Visuales","Futbol Sala","Matematica Discreta","Comunicación Escrita"]
     cmb_cursos = Combobox(f,state="readonly",width=30)
     cmb_cursos.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
-    cmb_cursos["values"]=cursos_disponibles
+    carrera_estudiante = lista_estudiantes.carrera_estudiante(usuario_estudiante)
+    cmb_cursos["values"]=ver_cursos_disponibles(carrera_estudiante)
     cmb_cursos.set("Elige una opción")
-    btn_aceptar = Button(f,text="Matricular",command=lambda:print("Aqui va la funcion de matricular cursos"))
+    btn_aceptar = Button(f,text="Matricular",command=lambda:matricular_curso())
     btn_aceptar.grid(row=2,column=1, padx=20,pady=20,sticky="nsew")
 
     f.grid_propagate(False)
@@ -397,6 +412,7 @@ def f_cambiar_carrera(v,fo):
 
 
 def f_cursos_matriculados(v,fo):
+    global lista_estudiantes
     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
     fo.destroy()
     f = contenido_frame.f
@@ -404,6 +420,11 @@ def f_cursos_matriculados(v,fo):
     lbl_titulo = Label(f,text="Cursos Matriculados")
     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
+    cmb_cursos = Combobox(f,state="readonly",width=30)
+    cmb_cursos.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
+    cmb_cursos["values"]=lista_estudiantes.ver_cursos_matriculados(usuario_estudiante)
+    cmb_cursos.set("Cursos Matriculados")
+
     f.grid_propagate(False)
 
 def f_actividades_registradas(v,fo):
@@ -414,17 +435,24 @@ def f_actividades_registradas(v,fo):
     lbl_titulo = Label(f,text="Actividades Registradas")
     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
+    
+    actividades = nombre_actividades("./datos/actividades.txt")
+    cmb_actividades = Combobox(f,state="readonly",width=30)
+    cmb_actividades.grid(row=1,column=1, padx=20,pady=20,sticky="nsew",columnspan=3)
+    cmb_actividades["values"]=actividades
+    cmb_actividades.set("Actividades Registradas")
     f.grid_propagate(False)
 
-def f_reportes(v,fo):
-    contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
-    fo.destroy()
-    f = contenido_frame.f
-    menu_estudiante(v,f)
-    lbl_titulo = Label(f,text="Reportes")
-    lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
-    lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
-    f.grid_propagate(False)
+
+# def f_reportes(v,fo):
+#     contenido_frame = frame(v,"Usuario Estudiante","#ffffff","900","500")
+#     fo.destroy()
+#     f = contenido_frame.f
+#     menu_estudiante(v,f)
+#     lbl_titulo = Label(f,text="Reportes")
+#     lbl_titulo.config(font=("Times New Roman",30),fg="#4ca2f8",bg="#ffffff")
+#     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
+#     f.grid_propagate(False)
 
 def f_ver_cursos(v,fo):
     global lista_cursos
@@ -777,6 +805,11 @@ def actividad_autoguardado_est():
     global autoguardado_est
     if autoguardado_est.get() == 1:
         guardar_lista_actividades()
+        
+def curso_est_autoguardado_est():
+    global autoguardado_est
+    if autoguardado_est.get()==1:
+        guardar_cursos_estudiante
     
 
 f_login(v,f)
