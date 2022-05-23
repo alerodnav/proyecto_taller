@@ -18,10 +18,13 @@ def agregar_elementos (elemento,archivo):
             archivo.writelines(elemento+"\n")
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 032aab1 (Funciones Actividades,Cursos)
 def almacenar_datos(l,ruta):
     """Esta funcion recibe el elemento que se desea agregar y lo escribe en el archivo que se desea
     args:
@@ -206,8 +209,73 @@ def consultar_actividades(ruta):
             open(ruta,"tw")
     return (datos)
 
+<<<<<<< HEAD
 
 
+=======
+def nombre_actividades(ruta):
+    """Carga los nombres del las actividades
+    args:
+        ruta (string): Ruta del archivo     
+    """
+    datos=[]
+    try:
+        with open(ruta,"tr") as lector:
+            nombre=lector.readline()[:-1]
+            curso_asociado=lector.readline()[:-1]
+            fecha_inicio=lector.readline()[:-1]
+            fecha_final=lector.readline()[:-1]
+            hora_inicio=lector.readline()[:-1]
+            hora_final=lector.readline()[:-1]
+            estado=lector.readline()[:-1]
+            datos.append(nombre)
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                curso_asociado=lector.readline()[:-1]
+                fecha_inicio=lector.readline()[:-1]
+                fecha_final=lector.readline()[:-1]
+                hora_inicio=lector.readline()[:-1]
+                hora_final=lector.readline()[:-1]
+                estado=lector.readline()[:-1]
+                if (nombre!=''):
+                    datos.append(nombre)
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con actividades, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open(ruta,"tw")
+    return (datos)
+
+
+def ver_cursos_disponibles(c):
+    """Carga lista de cursos disponibles para una o dos carreras
+    """
+    datos=[]
+    try:
+        with open("./datos/cursos.txt","tr") as lector:
+            nombre=lector.readline()[:-1]
+            num_creditos=lector.readline()[:-1]
+            h_lectivas=lector.readline()[:-1]
+            f_inicio=lector.readline()[:-1]
+            f_final=lector.readline()[:-1]
+            carreras=lector.readline()[:-1]
+            while (nombre!=''):
+                nombre=lector.readline()[:-1]
+                num_creditos=lector.readline()[:-1]
+                h_lectivas=lector.readline()[:-1]
+                f_inicio=lector.readline()[:-1]
+                f_final=lector.readline()[:-1]
+                carreras=lector.readline()[:-1]
+                for i in c:
+                    if i in carreras:
+                        if not(nombre in datos):
+                            datos.append(nombre)
+    except FileNotFoundError as error:
+        lectura=input("No hay un archivo con cursos, Desea crear uno? (s/n)")
+        if  lectura.lower()=="s":
+            open("./datos/cursos.txt","tw")
+    return (datos)
+
+>>>>>>> 032aab1 (Funciones Actividades,Cursos)
 """
 def guardar_carreras(l,ruta):
     try:
