@@ -2,6 +2,13 @@ from tkinter import *
 from tkinter import messagebox
 from clases import *
 from funciones_clases import *
+from emociones import *
+import threading
+import cv2 as cv
+import os, io
+from google.cloud import vision
+
+from time import sleep
 
 v=Tk()
 f = Frame(v) 
@@ -23,10 +30,15 @@ def f_login(v,fo):
     v_password = StringVar()
     usuarios = {"Luis":"123","Juan":"123"}
     #Funciones 
+    
     def validacion_login(u,p):
+        permiso = False
         for key,value in usuarios.items():
             if (key == u) & (value == p):
+                permiso = True
                 f_agregar_actividad(v,f)
+        if not(permiso):
+            messagebox.showerror("Error","Usuario o contraseña incorrecta")
 
     #Creación de objeto con lo básico del frame
     l = Label(f,text="Inicio de Sesion")
@@ -71,9 +83,28 @@ def f_agregar_actividad(v,fo):
 
     #Funciones
 
+    
+
     def agregar_actividad():
         lista_actividades.insertar(c.Actividad(v_nombre.get(),v_c_asoc.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get()))
         lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
+
+
+    def iniciar_registro():
+        estado=[True]
+        parametros=[estado]
+        proceso=threading.Thread(target=tarea_paralela,args=parametros)
+        proceso.start()
+
+    def tarea_paralela(estado):
+        mi_rostro= rostro()
+        while estado[0]:
+            print('Tomando fotos: ')
+            imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
+            detectar_emociones(imagen)
+            sleep(60)
+
+    
 
 
 
@@ -91,7 +122,11 @@ def f_agregar_actividad(v,fo):
     txt_h_final = Entry (f, textvariable=v_h_final)
     lbl_estado = Label(f,text="Estado: ")
     txt_estado = Entry (f, textvariable=v_estado)
-    btn_agregar = Button(f,text="Agregar: ",command=lambda: agregar_actividad())
+    btn_agregar = Button(f,text="Agregar",command=lambda: agregar_actividad())
+
+    btn_iniciar = Button(f,text="Iniciar Registro",command=lambda: iniciar_registro())
+
+    btn_detener = Button(f,text="Detener Registro",command=lambda:'Aqui va la funcion')
     
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 
@@ -109,6 +144,10 @@ def f_agregar_actividad(v,fo):
     lbl_estado.grid(row=4, column=0, sticky="e", padx=20, pady=20)
     txt_estado.grid(row=4, column=1, padx=20, pady=20)
     btn_agregar.grid(row=5, column=3, padx=20, pady=20)
+
+    btn_iniciar.grid(row=5, column=4, padx=20, pady=20)
+    btn_detener.grid(row=5, column=5, padx=20, pady=20)
+    
 
     f.grid_propagate(False)
 
