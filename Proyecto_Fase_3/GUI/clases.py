@@ -80,8 +80,6 @@ class Actividad(Lista):
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de actividades')
 
-
-
 """
 l_cursos = Actividad('Estudiar Mate Discreta','Mate','5 a 8','6 a 12','12 a 18',True)
 print(l_cursos.descripcion)

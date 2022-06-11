@@ -1,9 +1,15 @@
 from tkinter import *
 from tkinter import messagebox
+from clases import *
+from funciones_clases import *
 
 v=Tk()
 f = Frame(v) 
 v.title("Control De Actividades")
+
+
+# Listas
+lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
 def f_login(v,fo):
     #Creación de objeto con lo básico del frame
@@ -64,6 +70,14 @@ def f_agregar_actividad(v,fo):
     v_estado = StringVar()
 
     #Funciones
+
+    def agregar_actividad():
+        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_c_asoc.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get()))
+        lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
+
+
+
+
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")
     txt_nombre = Entry (f, textvariable=v_nombre)
@@ -77,7 +91,8 @@ def f_agregar_actividad(v,fo):
     txt_h_final = Entry (f, textvariable=v_h_final)
     lbl_estado = Label(f,text="Estado: ")
     txt_estado = Entry (f, textvariable=v_estado)
-    btn_agregar = Button(f,text="Agregar: ",command=lambda:print("Aqui va una funcion"))
+    btn_agregar = Button(f,text="Agregar: ",command=lambda: agregar_actividad())
+    
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
