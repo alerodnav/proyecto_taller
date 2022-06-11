@@ -14,7 +14,6 @@ v=Tk()
 f = Frame(v) 
 v.title("Control De Actividades")
 
-
 # Listas
 lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
