@@ -7,8 +7,8 @@ import threading
 import cv2 as cv
 import os, io
 from google.cloud import vision
-
 from time import sleep
+
 
 v=Tk()
 f = Frame(v) 
