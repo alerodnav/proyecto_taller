@@ -9,9 +9,12 @@ import os, io
 from pprint import pprint
 from time import sleep
 from tkinter.messagebox import showerror
+from urllib.response import addinfo
 import cv2 as cv
 import threading
 from google.cloud import vision
+
+#Variables
 
 class rostro ():
     
@@ -93,8 +96,12 @@ def detectar_emociones(imagen):
 
 
     for face in faces:
+        global angulos_rostro
         #dicccionario con los angulos asociados a la detección de la cara
         face_angles=dict(roll_angle=face.roll_angle,pan_angle=face.pan_angle,tilt_angle=face.tilt_angle)
+        
+        detectar_concentracion(face_angles)
+        
 
         #confianza de detección (tipo float)
         detection_confidence=face.detection_confidence
@@ -140,3 +147,14 @@ def detectar_emociones(imagen):
         cv.waitKey(0)
 
 
+def detectar_concentracion(dict):
+    """funcion que detecta cambios en la inclinacion o giro de la cabeza
+    args
+    dict (diccionario) Recibe el diccionario con los angulos del rostro
+    """
+    if not(-20<dict['pan_angle']<20):
+        print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
+    elif not(-20<dict['tilt_angle']<20):
+        print("Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!")
+    
+    

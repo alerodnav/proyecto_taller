@@ -104,10 +104,6 @@ def f_agregar_actividad(v,fo):
             detectar_emociones(imagen)
             sleep(60)
 
-    
-
-
-
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")
