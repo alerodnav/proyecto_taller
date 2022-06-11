@@ -13,6 +13,7 @@ from urllib.response import addinfo
 import cv2 as cv
 import threading
 from google.cloud import vision
+from playsound import playsound
 
 #Variables
 
@@ -95,14 +96,11 @@ def detectar_emociones(imagen):
     faces_list=[]
 
 
-
+    angulos_rostro = None
     for face in faces:
-        global angulos_rostro
         #dicccionario con los angulos asociados a la detección de la cara
         face_angles=dict(roll_angle=face.roll_angle,pan_angle=face.pan_angle,tilt_angle=face.tilt_angle)
-        
-        detectar_concentracion(face_angles)
-        
+        angulos_rostro = face_angles
 
         #confianza de detección (tipo float)
         detection_confidence=face.detection_confidence
@@ -129,6 +127,10 @@ def detectar_emociones(imagen):
                         )
         faces_list.append(face_dict)
 
+    parametros = [angulos_rostro]
+    proceso=threading.Thread(target=detectar_concentracion,args=parametros)
+    proceso.start()
+    
     if (len(faces_list) == 0) or (len(faces_list) > 1) :
         showerror(message='No se detectó ningún rostro o se detectó más de un rostro en la imagen')
 
@@ -249,9 +251,13 @@ def detectar_concentracion(dict):
     dict (diccionario) Recibe el diccionario con los angulos del rostro
     """
     if not(-20<dict['pan_angle']<20):
+        playsound("sonido.mp3")
         print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
     elif not(-20<dict['tilt_angle']<20):
+        playsound("sonido.mp3")
         print("Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!")
+
+
     
     
 """
