@@ -18,6 +18,10 @@ v.title("Control De Actividades")
 # Listas
 lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
+# Variables 
+
+tiempo_fotos = 10
+
 def f_login(v,fo):
     #Creación de objeto con lo básico del frame
     f = Frame(v)
@@ -60,6 +64,8 @@ def f_login(v,fo):
     f.grid_propagate(False)
 
 def f_agregar_actividad(v,fo):
+
+    
     #Creación de objeto con lo básico del frame
     f = Frame(v)
     f.pack(fill = "both", expand=True)
@@ -97,12 +103,13 @@ def f_agregar_actividad(v,fo):
         proceso.start()
 
     def tarea_paralela(estado):
+        global tiempo_fotos
         mi_rostro= rostro()
         while estado[0]:
             print('Tomando fotos: ')
             imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
             detectar_emociones(imagen)
-            sleep(60)
+            sleep(tiempo_fotos)
 
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 

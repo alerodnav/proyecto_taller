@@ -77,6 +77,7 @@ def menu():
 
 
 def detectar_emociones(imagen):
+
     os.environ['GOOGLE_APPLICATION_CREDENTIALS']= r'./Proyecto_Fase_3/GUI/key.json'
     client=vision.ImageAnnotatorClient()
 
@@ -128,23 +129,118 @@ def detectar_emociones(imagen):
                         )
         faces_list.append(face_dict)
 
-    if len(faces_list) == 0:
-        print('No hay rostros')
+    if (len(faces_list) == 0) or (len(faces_list) > 1) :
+        showerror(message='No se detectó ningún rostro o se detectó más de un rostro en la imagen')
 
     else:
-        x1=faces_list[0]['vertices'][0]['x']
-        y1=faces_list[0]['vertices'][0]['y']
-        x2=faces_list[0]['vertices'][2]['x']
-        y2=faces_list[0]['vertices'][2]['y']
+        for k,v in face_expressions.items():
 
-        cv.rectangle(imagen,(x1,y1),(x2,y2),(0,255,0),3)
+        #======================== No es posible reconocer
+            if v == "UNKNOWN":
+                if k == "joy_likelihood":
+                    print("No es posible reconocer si está alegre")
+                elif k == "sorrow_likelihood":
+                    print("No es posible reconocer si está triste")
+                elif k == "anger_likelihood":
+                    print("No es posible reconocer si está enfadado")
+                elif k == "surprise_likelihood":
+                    print("No es posible reconocer si está sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("No es posible reconocer si está bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("No es posible reconocer si está borroso")
+                elif k == "headwear_likelihood":
+                    print("No es posible reconocer si tiene un sombrero")
 
+           #======================= Muy poco probable         
+            if v == "VERY_UNLIKELY":
+                if k == "joy_likelihood":
+                    print("Es muy poco probable que estés alegre")
+                elif k == "sorrow_likelihood":
+                    print("Es muy poco probable que estés triste")
+                elif k == "anger_likelihood":
+                    print("Es muy poco probable que estés enfadado")
+                elif k == "surprise_likelihood":
+                    print("Es muy poco probable que estés sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("Es muy poco probable que estés bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("Es muy poco probable que esté borroso")
+                elif k == "headwear_likelihood":
+                    print("Es muy poco probable que lleve sombrero")
 
+            #=====================Es poco probable 
 
+            if v == "UNLIKELY":
+                if k == "joy_likelihood":
+                    print("Es poco probable que estés alegre")
+                elif k == "sorrow_likelihood":
+                    print("Es poco probable que estés triste")
+                elif k == "anger_likelihood":
+                    print("Es poco probable que estés enfadado")
+                elif k == "surprise_likelihood":
+                    print("Es poco probable que estés sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("Es poco probable que estés bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("Es poco probable que esté borroso")
+                elif k == "headwear_likelihood":
+                    print("Es poco probable que lleve sombrero")
 
-        cv.imshow('Toma de fotografia',imagen)
+            #=====================Es posible 
 
-        cv.waitKey(0)
+            if v == "POSIBLE":
+                if k == "joy_likelihood":
+                    print("Es posible que estés alegre")
+                elif k == "sorrow_likelihood":
+                    print("Es posible que estés triste")
+                elif k == "anger_likelihood":
+                    print("Es posible que estés enfadado")
+                elif k == "surprise_likelihood":
+                    print("Es posible que estés sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("Es posible que estés bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("Es posible que esté borroso")
+                elif k == "headwear_likelihood":
+                    print("Es posible que lleve sombrero")
+
+            #==================Es probable
+
+            if v == "LIKELY":
+                if k == "joy_likelihood":
+                    print("Es probable que estés alegre")
+                elif k == "sorrow_likelihood":
+                    print("Es probable que estés triste")
+                elif k == "anger_likelihood":
+                    print("Es probable que estés enfadado")
+                elif k == "surprise_likelihood":
+                    print("Es probable que estés sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("Es probable que estés bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("Es probable que esté borroso")
+                elif k == "headwear_likelihood":
+                    print("Es probable que lleve sombrero")
+
+          #===================Muy probable
+                  
+            if v == "VERY_LIKELY":
+                if k == "joy_likelihood":
+                    print("Es muy probable que estés alegre")
+                elif k == "sorrow_likelihood":
+                    print("Es muy probable que estés triste")
+                elif k == "anger_likelihood":
+                    print("Es muy probable que estés enfadado")
+                elif k == "surprise_likelihood":
+                    print("Es muy probable que estés sorprendido")
+                elif k == "under_exposed_likelihood":
+                    print("Es muy probable que estés bajo expuesto")
+                elif k == "blurred_likelihood":
+                    print("Es muy probable que esté borroso")
+                elif k == "headwear_likelihood":
+                    print("Es muy probable que lleve sombrero")
+
 
 
 def detectar_concentracion(dict):
@@ -158,3 +254,17 @@ def detectar_concentracion(dict):
         print("Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!")
     
     
+"""
+    else:
+        x1=faces_list[0]['vertices'][0]['x']
+        y1=faces_list[0]['vertices'][0]['y']
+        x2=faces_list[0]['vertices'][2]['x']
+        y2=faces_list[0]['vertices'][2]['y']
+
+        cv.rectangle(imagen,(x1,y1),(x2,y2),(0,255,0),3)
+        
+        cv.imshow('Toma de fotografia',imagen)
+
+        cv.waitKey(0)
+
+"""
