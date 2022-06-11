@@ -110,6 +110,17 @@ def f_agregar_actividad(v,fo):
             detectar_emociones(imagen)
             sleep(tiempo_fotos)
 
+    # funcion de prueba 
+    def imprimir_emociones():
+        global emocion_dominante
+        print('Alegre: '+ str(emocion_dominante['Alegre']))
+        print('Triste: '+ str(emocion_dominante['Triste']))
+        print('Enojado: '+ str(emocion_dominante['Enfadado']))
+        print('Sorprendido: '+ str(emocion_dominante['Sorprendido']))
+        print('Bajo Expuesto (No sé que significa): '+ str(emocion_dominante['Bajo Expuesto']))
+        print('Borroso: '+ str(emocion_dominante['Borroso']))
+        print('Sombrero: '+ str(emocion_dominante['Sombrero']))
+
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")
@@ -128,7 +139,7 @@ def f_agregar_actividad(v,fo):
 
     btn_iniciar = Button(f,text="Iniciar Registro",command=lambda: iniciar_registro())
 
-    btn_detener = Button(f,text="Detener Registro",command=lambda:'Aqui va la funcion')
+    btn_detener = Button(f,text="Detener Registro",command=lambda: imprimir_emociones())
     
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 

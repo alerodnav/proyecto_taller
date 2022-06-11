@@ -17,6 +17,16 @@ from playsound import playsound
 
 #Variables
 
+emocion_dominante = {
+    'Alegre': 0 ,
+    'Triste': 0 ,
+    'Enfadado': 0 ,
+    'Sorprendido': 0 ,
+    'Bajo Expuesto': 0 ,
+    'Borroso': 0 ,
+    'Sombrero': 0 ,
+}
+
 class rostro ():
     
     def __init__(self) -> None:
@@ -140,107 +150,149 @@ def detectar_emociones(imagen):
         #======================== No es posible reconocer
             if v == "UNKNOWN":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 0
                     print("No es posible reconocer si está alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 0
                     print("No es posible reconocer si está triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 0
                     print("No es posible reconocer si está enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 0
                     print("No es posible reconocer si está sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 0
                     print("No es posible reconocer si está bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 0
                     print("No es posible reconocer si está borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 0
                     print("No es posible reconocer si tiene un sombrero")
 
            #======================= Muy poco probable         
             if v == "VERY_UNLIKELY":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 0
                     print("Es muy poco probable que estés alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 0
                     print("Es muy poco probable que estés triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 0
                     print("Es muy poco probable que estés enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 0
                     print("Es muy poco probable que estés sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 0
                     print("Es muy poco probable que estés bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 0
                     print("Es muy poco probable que esté borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 0
                     print("Es muy poco probable que lleve sombrero")
 
             #=====================Es poco probable 
 
             if v == "UNLIKELY":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 0
                     print("Es poco probable que estés alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 0
                     print("Es poco probable que estés triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 0
                     print("Es poco probable que estés enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 0
                     print("Es poco probable que estés sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 0
                     print("Es poco probable que estés bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 0
                     print("Es poco probable que esté borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 0
                     print("Es poco probable que lleve sombrero")
 
             #=====================Es posible 
 
             if v == "POSIBLE":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 1
                     print("Es posible que estés alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 1
                     print("Es posible que estés triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 1
                     print("Es posible que estés enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 1
                     print("Es posible que estés sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 1
                     print("Es posible que estés bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 1
                     print("Es posible que esté borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 1
                     print("Es posible que lleve sombrero")
 
             #==================Es probable
 
             if v == "LIKELY":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 2
                     print("Es probable que estés alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 2
                     print("Es probable que estés triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 2
                     print("Es probable que estés enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 2
                     print("Es probable que estés sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 2
                     print("Es probable que estés bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 2
                     print("Es probable que esté borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 2
                     print("Es probable que lleve sombrero")
 
           #===================Muy probable
                   
             if v == "VERY_LIKELY":
                 if k == "joy_likelihood":
+                    emocion_dominante['Alegre'] += 3
                     print("Es muy probable que estés alegre")
                 elif k == "sorrow_likelihood":
+                    emocion_dominante['Triste'] += 3
                     print("Es muy probable que estés triste")
                 elif k == "anger_likelihood":
+                    emocion_dominante['Enfadado'] += 3
                     print("Es muy probable que estés enfadado")
                 elif k == "surprise_likelihood":
+                    emocion_dominante['Sorprendido'] += 3
                     print("Es muy probable que estés sorprendido")
                 elif k == "under_exposed_likelihood":
+                    emocion_dominante['Bajo Expuesto'] += 3
                     print("Es muy probable que estés bajo expuesto")
                 elif k == "blurred_likelihood":
+                    emocion_dominante['Borroso'] += 3
                     print("Es muy probable que esté borroso")
                 elif k == "headwear_likelihood":
+                    emocion_dominante['Sombrero'] += 3
                     print("Es muy probable que lleve sombrero")
 
 
