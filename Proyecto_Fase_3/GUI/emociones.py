@@ -7,13 +7,14 @@ pip3 install google-cloud-vision
 """
 import os, io
 from pprint import pprint
-from time import sleep
-from tkinter.messagebox import showerror
+from time import sleep, time
+from tkinter.messagebox import showerror,showwarning
 from urllib.response import addinfo
 import cv2 as cv
 import threading
 from google.cloud import vision
 from playsound import playsound
+from time import sleep
 
 #Variables
 
@@ -139,8 +140,8 @@ def detectar_emociones(imagen):
 
     try:
         parametros = [angulos_rostro]
-        proceso=threading.Thread(target=detectar_concentracion,args=parametros)
-        proceso.start()
+        proceso2=threading.Thread(target=detectar_concentracion,args=parametros)
+        proceso2.start()
     except playsound.PlaysoundException: #No sirve esta vara, necesito que ignore el primer intento aunque sea
         print("No se completaron correctamente los analisis de la foto")
         
@@ -307,13 +308,19 @@ def detectar_concentracion(dict):
     dict (diccionario) Recibe el diccionario con los angulos del rostro
     """
     if not(-20<dict['pan_angle']<20):
-        playsound("sonido.mp3")
-        print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
+        
+        playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
+        #print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
+        showwarning(message='Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!')
+
     elif not(-20<dict['tilt_angle']<20):
-        playsound("sonido.mp3")
-        print("Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!")
+        
+        playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
+        #print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
+        showwarning(message='Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!')
 
-
+# Retorna True, False o None.
+print()
     
     
 """

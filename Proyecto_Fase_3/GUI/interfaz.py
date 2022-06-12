@@ -19,7 +19,7 @@ lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.t
 
 # Variables 
 
-tiempo_fotos = 10
+tiempo_fotos = 7
 
 def f_login(v,fo):
     #Creación de objeto con lo básico del frame
@@ -109,10 +109,12 @@ def f_agregar_actividad(v,fo):
         global tiempo_fotos
         mi_rostro= rostro()
         while estado[0]:
-            print('Tomando fotos: ')
+            sleep(tiempo_fotos)
+            print('Tomando foto: ')
             imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
             detectar_emociones(imagen)
-            sleep(tiempo_fotos)
+            
+            
 
     # funcion de prueba 
     def imprimir_emociones():
