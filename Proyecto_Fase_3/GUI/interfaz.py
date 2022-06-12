@@ -8,6 +8,7 @@ import cv2 as cv
 import os, io
 from google.cloud import vision
 from time import sleep
+import datetime
 
 
 v=Tk()
@@ -17,7 +18,9 @@ v.title("Control De Actividades")
 # Listas
 lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
-# Variables 
+# Variables
+#
+estado = True 
 
 tiempo_fotos = 7
 
@@ -100,6 +103,12 @@ def f_agregar_actividad(v,fo):
 
 
     def iniciar_registro():
+        global estado
+        
+        fecha_actual = datetime.datetime.now()
+        hora_actual = datetime.datetime.now().strftime('%H:%M')
+        actividad_actual = lista_actividades.buscar_x_fecha_hora(fecha_actual,hora_actual)
+        pass
         estado=[True]
         parametros=[estado]
         proceso=threading.Thread(target=tarea_paralela,args=parametros)
@@ -114,18 +123,24 @@ def f_agregar_actividad(v,fo):
             imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
             detectar_emociones(imagen)
             
-            
+    def detener_registro(): 
+        
+        global emocion_dominante,estado
+        estado[0]=False  # Aca se detiene la toma de fotos
 
-    # funcion de prueba 
-    def imprimir_emociones():
-        global emocion_dominante
+        #Se procede a imprimir las emociones
         print('Alegre: '+ str(emocion_dominante['Alegre']))
         print('Triste: '+ str(emocion_dominante['Triste']))
         print('Enojado: '+ str(emocion_dominante['Enfadado']))
         print('Sorprendido: '+ str(emocion_dominante['Sorprendido']))
         print('Bajo Expuesto: '+ str(emocion_dominante['Bajo Expuesto']))
         print('Borroso: '+ str(emocion_dominante['Borroso']))
-        print('Sombrero: '+ str(emocion_dominante['Sombrero']))
+        print('Sombrero: '+ str(emocion_dominante['Sombrero']))     
+         
+
+    # funcion de prueba 
+ #   def imprimir_emociones():
+        
 
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 
@@ -156,7 +171,7 @@ def f_agregar_actividad(v,fo):
     btn_fotos_on = Button(f,text="Iniciar Registro",command=lambda: iniciar_registro())
     btn_fotos_on.config(bg="#02e80a", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
-    btn_fotos_off = Button(f,text="Detener Registro",command=lambda: imprimir_emociones())
+    btn_fotos_off = Button(f,text="Detener Registro",command=lambda: detener_registro())
     btn_fotos_off.config(bg="#e00104", fg="#ffffff",font=('Helvetica', 12, 'bold'))
     
     btn_concentrarse_on = Button(f,text="Iniciar Concentracion",command=lambda:print("Funcion Detener Concetracion"))

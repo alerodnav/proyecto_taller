@@ -1,7 +1,10 @@
 # Clase principal lista con puntero
 
+from time import time
 from tkinter.messagebox import showerror
 from funciones_clases import *
+from datetimerange import DateTimeRange
+import datetime
 
 class Lista:
     sig=None
@@ -79,6 +82,47 @@ class Actividad(Lista):
                     self.agregar_elemento(puntero.estado,ruta)
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de actividades')
+
+    def buscar_x_fecha_hora(self,fecha,hora):
+        """Busca una actividad por la fecha y hora
+        args:
+            hora (string): Hora actual
+            fecha (string): Fecha actual
+        """
+        aux = self
+        while (aux.sig != None):
+
+            time_range = DateTimeRange(str(aux.hora_inicio), str(aux.hora_final))
+            time_range.end_time_format = "%H:%M"
+            time_range.start_time_format = "%H:%M"
+
+            inicio= datetime.datetime.strptime(str(aux.fecha_inicio), "%d-%m-%Y")
+            fin = datetime.datetime.strptime(str(aux.fecha_final), "%d-%m-%Y")
+
+            if ((inicio <= fecha <= fin) and (hora in time_range)):
+                return aux.descripcion
+            else:
+                aux = aux.sig
+
+        time_range = DateTimeRange(str(aux.hora_inicio), str(aux.hora_final))
+        time_range.end_time_format = "%H:%M"
+        time_range.start_time_format = "%H:%M"
+
+        inicio= datetime.datetime.strptime(str(aux.fecha_inicio), "%d-%m-%Y")
+        fin = datetime.datetime.strptime(str(aux.fecha_final), "%d-%m-%Y")
+
+       
+        
+        if ((inicio <= fecha <= fin)and (hora in time_range)):
+                pass
+                return aux.descripcion
+        else:
+                showerror(message='No se ha encontrado una actividad')
+
+ #  
+        
+
+        
 
 """
 l_cursos = Actividad('Estudiar Mate Discreta','Mate','5 a 8','6 a 12','12 a 18',True)
