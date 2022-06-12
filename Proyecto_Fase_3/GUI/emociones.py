@@ -16,6 +16,7 @@ from google.cloud import vision
 from playsound import playsound
 from time import sleep
 
+valor = ""
 #Variables
 
 emocion_dominante = {
@@ -142,7 +143,7 @@ def detectar_emociones(imagen):
         parametros = [angulos_rostro]
         proceso2=threading.Thread(target=detectar_concentracion,args=parametros)
         proceso2.start()
-    except playsound.PlaysoundException: #No sirve esta vara, necesito que ignore el primer intento aunque sea
+    except:
         print("No se completaron correctamente los analisis de la foto")
         
         
@@ -301,27 +302,28 @@ def detectar_emociones(imagen):
                     print("Es muy probable que lleve sombrero")
 
 
+def enciclarSonido():
+    global valor
+    while valor!="ok":
+        playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
 
 def detectar_concentracion(dict):
     """funcion que detecta cambios en la inclinacion o giro de la cabeza
     args
     dict (diccionario) Recibe el diccionario con los angulos del rostro
     """
+    global valor
     if not(-20<dict['pan_angle']<20):
-        
-        playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
-        #print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
-        showwarning(message='Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!')
-
+        proceso3=threading.Thread(target=enciclarSonido)
+        proceso3.start()
+        valor = showwarning(message='Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!')
     elif not(-20<dict['tilt_angle']<20):
+        proceso3=threading.Thread(target=enciclarSonido)
+        proceso3.start()
+        valor = showwarning(message='Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!')
         
-        playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
-        #print("Hombre te me estas desconcetrando, deja de GIRAR LA CABEZA!")
-        showwarning(message='Hombre te me estas desconcetrando, deja de SUBIR Y BAJAR LA CABEZA!')
-
 # Retorna True, False o None.
-print()
-    
+
     
 """
     else:
