@@ -137,10 +137,14 @@ def detectar_emociones(imagen):
                         )
         faces_list.append(face_dict)
 
-    parametros = [angulos_rostro]
-    proceso=threading.Thread(target=detectar_concentracion,args=parametros)
-    proceso.start()
-    
+    try:
+        parametros = [angulos_rostro]
+        proceso=threading.Thread(target=detectar_concentracion,args=parametros)
+        proceso.start()
+    except playsound.PlaysoundException: #No sirve esta vara, necesito que ignore el primer intento aunque sea
+        print("No se completaron correctamente los analisis de la foto")
+        
+        
     if (len(faces_list) == 0) or (len(faces_list) > 1) :
         showerror(message='No se detectó ningún rostro o se detectó más de un rostro en la imagen')
 
