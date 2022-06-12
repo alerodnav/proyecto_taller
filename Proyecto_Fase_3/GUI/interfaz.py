@@ -19,10 +19,11 @@ v.title("Control De Actividades")
 lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
 # Variables
-#
-estado = True 
+estado = False
+estado_concentracion = False
 
-tiempo_fotos = 7
+
+tiempo_foto = 3 # CAMBIAR A 60 
 
 def f_login(v,fo):
     #Creación de objeto con lo básico del frame
@@ -95,8 +96,6 @@ def f_agregar_actividad(v,fo):
 
     #Funciones
 
-    
-
     def agregar_actividad():
         lista_actividades.insertar(c.Actividad(v_nombre.get(),v_c_asoc.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get()))
         lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
@@ -104,24 +103,57 @@ def f_agregar_actividad(v,fo):
 
     def iniciar_registro():
         global estado
-        
-        fecha_actual = datetime.datetime.now()
-        hora_actual = datetime.datetime.now().strftime('%H:%M')
-        actividad_actual = lista_actividades.buscar_x_fecha_hora(fecha_actual,hora_actual)
-        pass
-        estado=[True]
-        parametros=[estado]
-        proceso=threading.Thread(target=tarea_paralela,args=parametros)
-        proceso.start()
+        if not(estado):
+            fecha_actual = datetime.datetime.now()
+            hora_actual = datetime.datetime.now().strftime('%H:%M')
+            actividad_actual = lista_actividades.buscar_x_fecha_hora(fecha_actual,hora_actual)
+            pass
+            estado=[True]
+            parametros=[estado]
+            proceso=threading.Thread(target=tarea_paralela,args=parametros)
+            proceso.start()
 
     def tarea_paralela(estado):
-        global tiempo_fotos
+        global estado_concentracion
         mi_rostro= rostro()
         while estado[0]:
-            sleep(tiempo_fotos)
+            sleep(5)
             print('Tomando foto: ')
             imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
-            detectar_emociones(imagen)
+            if estado_concentracion:
+                detectar_emociones(imagen,True,True)
+            else:
+                detectar_emociones(imagen,False,True)
+            
+            
+    def iniciar_concentracion():
+        global estado_concentracion
+        if not(estado_concentracion):
+            fecha_actual = datetime.datetime.now()
+            hora_actual = datetime.datetime.now().strftime('%H:%M')
+            actividad_actual = lista_actividades.buscar_x_fecha_hora(fecha_actual,hora_actual)
+            pass
+            estado_concentracion=[True]
+            parametros=[estado_concentracion]
+            proceso=threading.Thread(target=concentracion_paralela,args=parametros)
+            proceso.start()
+
+    def concentracion_paralela(estado_concentracion):
+        global tiempo_foto,estado
+        mi_rostro= rostro()
+        while estado_concentracion[0]:
+            if usuario_concentrado():
+                sleep(tiempo_foto)
+                print('Tomando foto Concentracion...')
+                imagen = mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False)
+                if estado:
+                    detectar_emociones(imagen,True,True)
+                else:
+                    detectar_emociones(imagen,True,False)
+    
+    def detener_concentracion(): 
+        global estado_concentracion
+        estado_concentracion[0]=False  # Aca se detiene la toma de fotos
             
     def detener_registro(): 
         
@@ -174,10 +206,10 @@ def f_agregar_actividad(v,fo):
     btn_fotos_off = Button(f,text="Detener Registro",command=lambda: detener_registro())
     btn_fotos_off.config(bg="#e00104", fg="#ffffff",font=('Helvetica', 12, 'bold'))
     
-    btn_concentrarse_on = Button(f,text="Iniciar Concentracion",command=lambda:print("Funcion Detener Concetracion"))
+    btn_concentrarse_on = Button(f,text="Iniciar Concentracion",command=lambda:iniciar_concentracion())
     btn_concentrarse_on.config(bg="#02e80a", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
-    btn_concentrarse_off = Button(f,text="Detener Concentracion",command=lambda:print("Funcion Detener Concetracion"))
+    btn_concentrarse_off = Button(f,text="Detener Concentracion",command=lambda:detener_concentracion())
     btn_concentrarse_off.config(bg="#e00104", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 
@@ -197,12 +229,10 @@ def f_agregar_actividad(v,fo):
     lbl_estado.grid(row=3, column=0, sticky="e", padx=20, pady=20)
     txt_estado.grid(row=3, column=1, padx=20, pady=20)
     btn_agregar.grid(row=4, column=0,columnspan=2, padx=20, pady=20,sticky="e")
-
     btn_fotos_on.grid(row=4, column=2,columnspan=2,padx=20, pady=20,sticky="e")
     btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
     btn_concentrarse_on.grid(row=4, column=4,columnspan=2,padx=20, pady=20,sticky="e")
     btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="e")
-
     f.grid_propagate(False)
 
 f_login(v,f)
