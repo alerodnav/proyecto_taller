@@ -190,7 +190,5 @@ def f_agregar_actividad(v,fo):
 
     f.grid_propagate(False)
 
-
-
 f_login(v,f)
 v.mainloop()
