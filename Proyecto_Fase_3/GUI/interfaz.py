@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter.ttk import Combobox
 from clases import *
 from funciones_clases import *
 from emociones import *
@@ -17,10 +18,12 @@ v.title("Control De Actividades")
 
 # Listas
 lista_actividades = consultar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
+pass
 
 # Variables
 estado = False
 estado_concentracion = False
+actividad_actual = ''
 
 
 tiempo_foto = 3 # CAMBIAR A 60 
@@ -75,7 +78,7 @@ def f_agregar_actividad(v,fo):
     #Creación de objeto con lo básico del frame
     f = Frame(v)
     f.pack(fill = "both", expand=True)
-    f.config(bg = "#222", width= "1020",height= "500")
+    f.config(bg = "#222", width= "1400",height= "700")
     fo.destroy()
     
     # menu_estudiante(v,f)
@@ -93,16 +96,17 @@ def f_agregar_actividad(v,fo):
     v_h_final = StringVar()
     v_estado = StringVar()
     v_n_semana = StringVar()
+    v_curso = StringVar()
 
     #Funciones
 
     def agregar_actividad():
-        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_c_asoc.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get()))
+        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_curso.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get(),''))
         lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
 
     def iniciar_registro():
-        global estado
+        global estado,actividad_actual
         if not(estado):
             fecha_actual = datetime.datetime.now()
             hora_actual = datetime.datetime.now().strftime('%H:%M')
@@ -114,6 +118,7 @@ def f_agregar_actividad(v,fo):
             proceso.start()
 
     def tarea_paralela(estado):
+
         global estado_concentracion
         mi_rostro= rostro()
         while estado[0]:
@@ -157,10 +162,24 @@ def f_agregar_actividad(v,fo):
             
     def detener_registro(): 
         
-        global emocion_dominante,estado
+        global emocion_dominante,estado,lista_actividades,actividad_actual
         estado[0]=False  # Aca se detiene la toma de fotos
 
+        em = sorted(emocion_dominante.items(), key=lambda x: x[1]) 
+
+        lista_actividades.agregar_emocion(actividad_actual,em[6][0])
+
+        lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
+
+    def actualizar_cmb():
+        global lista_actividades
+
+        reportes_act = lista_actividades.listar_actividades()
+        cmb_reportes["values"]= reportes_act
+
+
         #Se procede a imprimir las emociones
+        """
         print('Alegre: '+ str(emocion_dominante['Alegre']))
         print('Triste: '+ str(emocion_dominante['Triste']))
         print('Enojado: '+ str(emocion_dominante['Enfadado']))
@@ -168,10 +187,10 @@ def f_agregar_actividad(v,fo):
         print('Bajo Expuesto: '+ str(emocion_dominante['Bajo Expuesto']))
         print('Borroso: '+ str(emocion_dominante['Borroso']))
         print('Sombrero: '+ str(emocion_dominante['Sombrero']))     
-         
+        """
 
-    # funcion de prueba 
- #   def imprimir_emociones():
+
+
         
 
 
@@ -197,6 +216,20 @@ def f_agregar_actividad(v,fo):
     lbl_estado = Label(f,text="Estado: ")
     lbl_estado.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
     txt_estado = Entry (f, textvariable=v_estado)
+
+    lbl_curso = Label(f,text="Curso Asociado: ")
+    lbl_curso.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
+    txt_curso = Entry (f, textvariable=v_curso)
+
+    lbl_reporte = Label(f,text="Reportes: ")
+    lbl_reporte.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
+
+
+    
+    cmb_reportes = Combobox(f,state="readonly",width=80)
+
+
+
     btn_agregar = Button(f,text="Agregar Actividad",command=lambda: agregar_actividad())
     btn_agregar.config(bg="#2196f3", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
@@ -209,8 +242,13 @@ def f_agregar_actividad(v,fo):
     btn_concentrarse_on = Button(f,text="Iniciar Concentracion",command=lambda:iniciar_concentracion())
     btn_concentrarse_on.config(bg="#02e80a", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
+    btn_act_c = Button(f,text="Actualizar",command=lambda: actualizar_cmb())
+    btn_act_c.config(bg="#2196f3", fg="#ffffff",font=('Helvetica', 12, 'bold'))
+
     btn_concentrarse_off = Button(f,text="Detener Concentracion",command=lambda:detener_concentracion())
     btn_concentrarse_off.config(bg="#e00104", fg="#ffffff",font=('Helvetica', 12, 'bold'))
+
+    
 
     #+++++++++++++++ Posiciones en grid ++++++++++++++++++ 
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse")
@@ -228,11 +266,21 @@ def f_agregar_actividad(v,fo):
     txt_h_final.grid(row=2, column=5, padx=20, pady=20)
     lbl_estado.grid(row=3, column=0, sticky="e", padx=20, pady=20)
     txt_estado.grid(row=3, column=1, padx=20, pady=20)
+
+    lbl_curso.grid(row=3, column=2, sticky="e", padx=20, pady=20)
+    txt_curso.grid(row=3, column=3, padx=20, pady=20)
+
+    lbl_reporte.grid(row=5, column=0, sticky="e", padx=20, pady=20)
+    cmb_reportes.grid(row=5,column=1, padx=20,pady=20,sticky="nsew")
+
+
     btn_agregar.grid(row=4, column=0,columnspan=2, padx=20, pady=20,sticky="e")
     btn_fotos_on.grid(row=4, column=2,columnspan=2,padx=20, pady=20,sticky="e")
     btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
     btn_concentrarse_on.grid(row=4, column=4,columnspan=2,padx=20, pady=20,sticky="e")
     btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="e")
+    btn_act_c.grid(row=7, column=1,columnspan=1,padx=20, pady=20,sticky="e")
+
     f.grid_propagate(False)
 
 f_login(v,f)

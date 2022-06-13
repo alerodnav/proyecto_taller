@@ -45,8 +45,9 @@ class Actividad(Lista):
     hora_inicio=None
     hora_final=None
     estado=None
+    emociones=None
 
-    def __init__(self,descripcion,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado):
+    def __init__(self,descripcion,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones):
         self.descripcion=descripcion
         self.curso_asociado=curso_asociado
         self.fecha_inicio=fecha_inicio
@@ -54,6 +55,7 @@ class Actividad(Lista):
         self.hora_inicio=hora_inicio
         self.hora_final=hora_final
         self.estado=estado
+        self.emociones=emociones
     
     def guardar_actividades(self,ruta):
         """Guarda las actividades en un archivo
@@ -71,6 +73,7 @@ class Actividad(Lista):
                 self.agregar_elemento(puntero.hora_inicio,ruta)
                 self.agregar_elemento(puntero.hora_final,ruta)
                 self.agregar_elemento(puntero.estado,ruta)
+                self.agregar_elemento(puntero.emociones,ruta)
                 while puntero.sig!=None:
                     puntero=puntero.sig
                     self.agregar_elemento(puntero.descripcion,ruta)
@@ -80,8 +83,27 @@ class Actividad(Lista):
                     self.agregar_elemento(puntero.hora_inicio,ruta)
                     self.agregar_elemento(puntero.hora_final,ruta)
                     self.agregar_elemento(puntero.estado,ruta)
+                    self.agregar_elemento(puntero.emociones,ruta)
         except FileNotFoundError as error:
             showerror(message='No se pudo guardar en el archivo de actividades')
+
+    def agregar_emocion(self,actividad,emocion):
+        aux = self
+
+        while(aux.sig != None):
+            if(aux.descripcion == actividad):
+                aux.emociones = emocion
+                return(True)
+            else:
+                aux = aux.sig
+
+        if(aux.descripcion == actividad):
+            aux.emociones = emocion
+            return(True)
+        else:
+            showerror(message='No se ha encontrado una actividad')
+
+
 
     def buscar_x_fecha_hora(self,fecha,hora):
         """Busca una actividad por la fecha y hora
@@ -118,6 +140,20 @@ class Actividad(Lista):
                 return aux.descripcion
         else:
                 showerror(message='No se ha encontrado una actividad')
+
+    def listar_actividades(self):
+        return(self.__listar_actividades(self))
+    
+    def __listar_actividades(self,l):
+        """Genera una lista de la carreras
+    args:
+        lista (lista): Lista de carreras      
+    """
+        datos=[]
+        if l!=None:
+            datos.append(' [Actividad:] '+l.descripcion +' [Curso:]'+l.curso_asociado+ ' [Estado de ánimo:] ' +l.emociones )
+            datos+=self.__listar_actividades(l.sig)
+        return (datos)
 
  #  
         

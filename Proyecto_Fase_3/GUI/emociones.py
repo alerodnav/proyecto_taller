@@ -341,8 +341,10 @@ def detectar_concentracion(dict):
     if cont == 7:
         proceso3=threading.Thread(target=enciclar_sonido)
         proceso3.start()
-        if cont == 3:
-            cont+=1
+        if cont == 7:
+            #cont+=1
+            cont = 0
+            estar_concentrado = True
             respuesta_sonido = showwarning(message='Mantén tu cabeza frente al monitor, no te distraigas!')
 # Retorna True, False o None.
 

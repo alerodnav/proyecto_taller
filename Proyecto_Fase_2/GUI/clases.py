@@ -79,7 +79,7 @@ class Estudiante (Lista):
         """
         puntero=self
         aux = self
-        print(self.carreras)
+
         try:
             with open(ruta,"tr") as lector:
                 while aux != None:

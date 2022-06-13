@@ -48,7 +48,8 @@ def consultar_actividades(ruta):
             hora_inicio=lector.readline()[:-1]
             hora_final=lector.readline()[:-1]
             estado=lector.readline()[:-1]
-            datos=c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado)
+            emociones=lector.readline()[:-1]
+            datos=c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
                 curso_asociado=lector.readline()[:-1]
@@ -57,8 +58,9 @@ def consultar_actividades(ruta):
                 hora_inicio=lector.readline()[:-1]
                 hora_final=lector.readline()[:-1]
                 estado=lector.readline()[:-1]
+                emociones=lector.readline()[:-1]
                 if (nombre!=''):
-                    datos.insertar(c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado))
+                    datos.insertar(c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones))
     except FileNotFoundError as error:
         lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
         if  lectura.lower()=="s":
