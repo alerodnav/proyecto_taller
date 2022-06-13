@@ -78,7 +78,7 @@ def f_agregar_actividad(v,fo):
     #Creación de objeto con lo básico del frame
     f = Frame(v)
     f.pack(fill = "both", expand=True)
-    f.config(bg = "#222", width= "1400",height= "700")
+    f.config(bg = "#222", width= "1020",height= "600")
     fo.destroy()
     
     # menu_estudiante(v,f)
@@ -106,6 +106,8 @@ def f_agregar_actividad(v,fo):
 
 
     def iniciar_registro():
+        btn_fotos_on.grid_forget()
+        btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global estado,actividad_actual
         if not(estado):
             fecha_actual = datetime.datetime.now()
@@ -131,7 +133,9 @@ def f_agregar_actividad(v,fo):
                 detectar_emociones(imagen,False,True)
             
             
-    def iniciar_concentracion():
+    def iniciar_concentracion():    
+        btn_concentrarse_on.grid_forget()
+        btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
         if not(estado_concentracion):
             fecha_actual = datetime.datetime.now()
@@ -157,11 +161,14 @@ def f_agregar_actividad(v,fo):
                     detectar_emociones(imagen,True,False)
     
     def detener_concentracion(): 
+        btn_concentrarse_off.grid_forget()
+        btn_concentrarse_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
         estado_concentracion[0]=False  # Aca se detiene la toma de fotos
             
     def detener_registro(): 
-        
+        btn_fotos_off.grid_forget()
+        btn_fotos_on.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global emocion_dominante,estado,lista_actividades,actividad_actual
         estado[0]=False  # Aca se detiene la toma de fotos
 
@@ -226,8 +233,7 @@ def f_agregar_actividad(v,fo):
 
     
     cmb_reportes = Combobox(f,state="readonly",width=80)
-
-
+  
     btn_agregar = Button(f,text="Agregar Actividad",command=lambda: agregar_actividad())
     btn_agregar.config(bg="#2196f3", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
@@ -268,16 +274,16 @@ def f_agregar_actividad(v,fo):
     lbl_curso.grid(row=3, column=2, sticky="e", padx=20, pady=20)
     txt_curso.grid(row=3, column=3, padx=20, pady=20)
 
-    lbl_reporte.grid(row=5, column=0, sticky="e", padx=20, pady=20)
-    cmb_reportes.grid(row=5,column=1, padx=20,pady=20,sticky="nsew")
+    lbl_reporte.grid(row=4, column=0, sticky="e", padx=20, pady=20)
+    cmb_reportes.grid(row=4,column=1,columnspan=3, padx=20,pady=20,sticky="nsew")
 
 
-    btn_agregar.grid(row=4, column=0,columnspan=2, padx=20, pady=20,sticky="e")
-    btn_fotos_on.grid(row=4, column=2,columnspan=2,padx=20, pady=20,sticky="e")
-    btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
-    btn_concentrarse_on.grid(row=4, column=4,columnspan=2,padx=20, pady=20,sticky="e")
-    btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="e")
-    btn_act_c.grid(row=7, column=1,columnspan=1,padx=20, pady=20,sticky="e")
+    btn_agregar.grid(row=3, column=4,columnspan=2, padx=20, pady=20,sticky="w")
+    btn_fotos_on.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
+    btn_fotos_off.grid_forget()
+    btn_concentrarse_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
+    btn_concentrarse_off.grid_forget()
+    btn_act_c.grid(row=4, column=4,padx=20, pady=20,sticky="w")
 
     f.grid_propagate(False)
 
