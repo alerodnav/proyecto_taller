@@ -224,10 +224,8 @@ def f_agregar_actividad(v,fo):
     lbl_reporte = Label(f,text="Reportes: ")
     lbl_reporte.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
 
-
     
     cmb_reportes = Combobox(f,state="readonly",width=80)
-
 
 
     btn_agregar = Button(f,text="Agregar Actividad",command=lambda: agregar_actividad())
