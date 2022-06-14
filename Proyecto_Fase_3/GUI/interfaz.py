@@ -83,7 +83,7 @@ def f_agregar_actividad(v,fo):
     #Creación de objeto con lo básico del frame
     f = Frame(v)
     f.pack(fill = "both", expand=True)
-    f.config(bg = "#222", width= "1020",height= "600")
+    f.config(bg = "#222", width= "1330",height= "600")
     fo.destroy()
     
     # menu_estudiante(v,f)
@@ -92,7 +92,7 @@ def f_agregar_actividad(v,fo):
     lbl_titulo.grid(row=0, column=0, columnspan=6, sticky="nwse",pady=20)
 
     #+++++++++++++++ Variables Agregar Actividad ++++++++++++++++++ 
-    global lista_cursos
+    global lista_cursos,lista_actividades
     v_nombre = StringVar()
     v_c_asoc = StringVar()
     v_f_inicio = StringVar()
@@ -208,6 +208,18 @@ def f_agregar_actividad(v,fo):
         reportes_act = lista_actividades.listar_actividades()
         cmb_reportes["values"]= reportes_act
 
+    def arbol_actividades():
+
+        global lista_actividades,datos
+        lista_actividades.arbol(lista_actividades)
+        
+        lista_actividades.listar_orden()
+        cmb_reporte_sem["values"]= datos
+        datos=[]
+       
+
+   
+
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")
     lbl_nombre.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
@@ -237,9 +249,14 @@ def f_agregar_actividad(v,fo):
 
     lbl_reporte = Label(f,text="Reportes: ")
     lbl_reporte.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
-
-    
     cmb_reportes = Combobox(f,state="readonly",width=80)
+    reportes_act = lista_actividades.listar_actividades()
+    cmb_reportes["values"]= reportes_act
+
+
+    lbl_reporte_sem = Label(f,text="Reportes Semanales: ")
+    lbl_reporte_sem.config(bg="#222",fg="#ffffff",font=('Helvetica', 11))
+    cmb_reporte_sem = Combobox(f,state="readonly",width=80)
   
     btn_agregar = Button(f,text="Agregar Actividad",command=lambda: agregar_actividad())
     btn_agregar.config(bg="#2196f3", fg="#ffffff",font=('Helvetica', 12, 'bold'))
@@ -258,6 +275,9 @@ def f_agregar_actividad(v,fo):
 
     btn_concentrarse_off = Button(f,text="Detener Concentracion",command=lambda:detener_concentracion())
     btn_concentrarse_off.config(bg="#e00104", fg="#ffffff",font=('Helvetica', 12, 'bold'))
+
+    btn_reporte_sem = Button(f,text="Ver Reporte Semanal",command=lambda: arbol_actividades())
+    btn_reporte_sem.config(bg="#2196f3", fg="#ffffff",font=('Helvetica', 12, 'bold'))
 
     
 
@@ -285,10 +305,19 @@ def f_agregar_actividad(v,fo):
     cmb_reportes.grid(row=4,column=1,columnspan=3, padx=20,pady=20,sticky="nsew")
 
 
+    cmb_reporte_sem.grid(row=5,column=1,columnspan=3, padx=20,pady=20,sticky="nsew")
+    lbl_reporte_sem.grid(row=5, column=0, sticky="e", padx=20, pady=20)
+    cmb_reportes.grid(row=4,column=1,columnspan=3, padx=20,pady=20,sticky="nsew")
+
+    btn_reporte_sem.grid(row=5, column=4, padx=20, pady=20,sticky="w") # BTN DE PRUEBA
+
+
     btn_agregar.grid(row=3, column=4,columnspan=2, padx=20, pady=20,sticky="w")
-    btn_fotos_on.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
+
+    btn_fotos_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="e")
     btn_fotos_off.grid_forget()
-    btn_concentrarse_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
+
+    btn_concentrarse_on.grid(row=5, column=6,columnspan=2,padx=20, pady=20,sticky="w")
     btn_concentrarse_off.grid_forget()
     btn_act_c.grid(row=4, column=4,padx=20, pady=20,sticky="w")
 

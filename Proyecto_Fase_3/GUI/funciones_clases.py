@@ -53,6 +53,7 @@ def consultar_actividades(ruta):
             datos=c.Actividad(nombre,semana,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
+                semana=lector.readline()[:-1]
                 curso_asociado=lector.readline()[:-1]
                 fecha_inicio=lector.readline()[:-1]
                 fecha_final=lector.readline()[:-1]
@@ -84,6 +85,7 @@ def nombre_actividades(ruta):
             hora_inicio=lector.readline()[:-1]
             hora_final=lector.readline()[:-1]
             estado=lector.readline()[:-1]
+            emociones=lector.readline()[:-1]
             datos.append(nombre)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
@@ -94,6 +96,7 @@ def nombre_actividades(ruta):
                 hora_inicio=lector.readline()[:-1]
                 hora_final=lector.readline()[:-1]
                 estado=lector.readline()[:-1]
+                emociones=lector.readline()[:-1]
                 if (nombre!=''):
                     datos.append(nombre)
     except FileNotFoundError as error:

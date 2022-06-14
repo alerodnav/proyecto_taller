@@ -1,5 +1,5 @@
 Estudiar Mate
-11
+14
 Mate General
 10-01-2022
 11-06-2022
@@ -7,12 +7,30 @@ Mate General
 19:00
 Pendiente
 Alegre
-Estudiar Quimica
-12
-Quimica Basica
-12-06-2022
-17-06-2022
-12:30
-13:40
+Estudiar Calculo
+6
+Mate General
+10-01-2022
+11-06-2022
+14:25
+19:00
 Pendiente
-
+Triste
+Estudiar Ciencias
+12
+Mate General
+10-01-2022
+11-06-2022
+14:25
+19:00
+Pendiente
+Enojado
+Estudiar Funda
+12
+Mate General
+10-01-2022
+11-06-2022
+14:25
+19:00
+Pendiente
+Alegre

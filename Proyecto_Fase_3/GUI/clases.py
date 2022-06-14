@@ -6,6 +6,8 @@ from funciones_clases import *
 from datetimerange import DateTimeRange
 import datetime
 
+datos = []
+
 class Lista:
     """Clase lista
     Atributos:
@@ -55,7 +57,6 @@ class Actividad(Lista):
         emociones(string) Emocion predominante
             
     """
-
     descripcion=None
     semana=None
     curso_asociado=None
@@ -65,6 +66,8 @@ class Actividad(Lista):
     hora_final=None
     estado=None
     emociones=None
+    iz=None
+    der=None
 
     def __init__(self,descripcion,semana,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones):
         self.descripcion=descripcion
@@ -181,4 +184,52 @@ class Actividad(Lista):
             datos.append(' [Actividad:] '+l.descripcion +' [Curso:]'+l.curso_asociado+ ' [Estado de ánimo:] ' +l.emociones )
             datos+=self.__listar_actividades(l.sig)
         return (datos)
+    
 
+
+        
+
+    def arbol (self,lista):
+        """Inserta una actividad
+        """
+        l = lista
+        raiz = Actividad(l.descripcion,l.semana,l.curso_asociado,l.fecha_inicio,l.fecha_final,l.hora_inicio,l.hora_final,l.estado,l.emociones)
+        pass
+        self.__arbol(self,l.sig)
+
+    def __arbol(self,raiz,nn):
+        """Inserta una actividad en el arbol (Por Semana)
+        Args
+        -raiz : (arbol) Raiz 
+        -nn: (instancia) Nueva Actividad
+        """
+        if nn == None:
+            return
+        else:
+            if (int(raiz.semana) > int(nn.semana)):
+                if raiz.iz==None:
+                    raiz.iz=nn
+                    self.__arbol(raiz.iz,nn.sig)
+                else:
+                    self.__arbol(raiz.iz,nn.sig)
+            else:
+                if raiz.der==None:
+                    raiz.der=nn
+                    self.__arbol(raiz.der,nn.sig)
+                else:
+                    self.__arbol(raiz.der,nn.sig)
+
+
+    def listar_orden(self):
+        """Imprime el Arbol en orden Alfabetico
+        """
+        self.__listar_orden(self)
+
+    def __listar_orden(self,raiz):
+        global datos
+        if raiz!=None:
+            self.__listar_orden(raiz.der)
+            datos.append('[Semana:]'+raiz.semana+' [Actividad:] '+raiz.descripcion +' [Curso:]'+raiz.curso_asociado+ ' [Estado de ánimo:] ' +raiz.emociones )
+            self.__listar_orden(raiz.iz)
+
+     
