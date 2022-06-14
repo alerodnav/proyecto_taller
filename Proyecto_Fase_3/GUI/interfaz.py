@@ -208,6 +208,7 @@ def f_agregar_actividad(v,fo):
         reportes_act = lista_actividades.listar_actividades()
         cmb_reportes["values"]= reportes_act
 
+
     def arbol_actividades():
 
         global lista_actividades,datos
