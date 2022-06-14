@@ -73,6 +73,11 @@ def f_login(v,fo):
     f.grid_propagate(False)
 
 def f_agregar_actividad(v,fo):
+    """Funcio que despliga ventana de agregar actividades
+    args:
+        v (instancia): Ventana
+        fo (instancia): Control ventana    
+    """
 
     
     #Creación de objeto con lo básico del frame
@@ -101,11 +106,15 @@ def f_agregar_actividad(v,fo):
     #Funciones
 
     def agregar_actividad():
-        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_curso.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get(),''))
+        """Esta función agrega una actividad en la lista y la almacena en un archivo    
+        """
+        lista_actividades.insertar(c.Actividad(v_nombre.get(),v_n_semana.get(),v_curso.get(),v_f_inicio.get(),v_f_final.get(),v_h_inicio.get(),v_h_final.get(),v_estado.get(),''))
         lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
 
     def iniciar_registro():
+        """Esta función inicia el registro de fotos   
+        """
         btn_fotos_on.grid_forget()
         btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global estado,actividad_actual
@@ -120,7 +129,10 @@ def f_agregar_actividad(v,fo):
             proceso.start()
 
     def tarea_paralela(estado):
-
+        """Funcion que inicia la tarea paralela para no detener el programa principal
+        args:
+            estado(bool): Estado de la tarea
+        """
         global estado_concentracion
         mi_rostro= rostro()
         while estado[0]:
@@ -133,7 +145,9 @@ def f_agregar_actividad(v,fo):
                 detectar_emociones(imagen,False,True)
             
             
-    def iniciar_concentracion():    
+    def iniciar_concentracion():   
+        """Función que inicia el control de concentración   
+        """ 
         btn_concentrarse_on.grid_forget()
         btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
@@ -148,6 +162,10 @@ def f_agregar_actividad(v,fo):
             proceso.start()
 
     def concentracion_paralela(estado_concentracion):
+        """Permite que la ejecución del control de concentración se ejecute de forma paralela 
+        args:
+            estado_concentracion(bool): Estado de la tarea  
+        """
         global tiempo_foto,estado
         mi_rostro= rostro()
         while estado_concentracion[0]:
@@ -161,12 +179,16 @@ def f_agregar_actividad(v,fo):
                     detectar_emociones(imagen,True,False)
     
     def detener_concentracion(): 
+        """Función que detiene el control de concentración   
+        """ 
         btn_concentrarse_off.grid_forget()
         btn_concentrarse_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
         estado_concentracion[0]=False  # Aca se detiene la toma de fotos
             
     def detener_registro(): 
+        """Función que detiene el registro de capturas y alamacena la emoción predominante   
+        """ 
         btn_fotos_off.grid_forget()
         btn_fotos_on.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global emocion_dominante,estado,lista_actividades,actividad_actual
@@ -179,27 +201,12 @@ def f_agregar_actividad(v,fo):
         lista_actividades.guardar_actividades('./Proyecto_Fase_3/datos/actividades.txt')
 
     def actualizar_cmb():
+        """Función que actualiza el combobox del reporte de actividades  
+        """ 
         global lista_actividades
 
         reportes_act = lista_actividades.listar_actividades()
         cmb_reportes["values"]= reportes_act
-
-
-        #Se procede a imprimir las emociones
-        """
-        print('Alegre: '+ str(emocion_dominante['Alegre']))
-        print('Triste: '+ str(emocion_dominante['Triste']))
-        print('Enojado: '+ str(emocion_dominante['Enfadado']))
-        print('Sorprendido: '+ str(emocion_dominante['Sorprendido']))
-        print('Bajo Expuesto: '+ str(emocion_dominante['Bajo Expuesto']))
-        print('Borroso: '+ str(emocion_dominante['Borroso']))
-        print('Sombrero: '+ str(emocion_dominante['Sombrero']))     
-        """
-
-
-
-        
-
 
     #+++++++++++++++ Widgets ++++++++++++++++++ 
     lbl_nombre = Label(f,text="Nombre: ")

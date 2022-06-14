@@ -42,6 +42,7 @@ def consultar_actividades(ruta):
     try:
         with open(ruta,"tr") as lector:
             nombre=lector.readline()[:-1]
+            semana=lector.readline()[:-1]
             curso_asociado=lector.readline()[:-1]
             fecha_inicio=lector.readline()[:-1]
             fecha_final=lector.readline()[:-1]
@@ -49,7 +50,7 @@ def consultar_actividades(ruta):
             hora_final=lector.readline()[:-1]
             estado=lector.readline()[:-1]
             emociones=lector.readline()[:-1]
-            datos=c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones)
+            datos=c.Actividad(nombre,semana,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
                 curso_asociado=lector.readline()[:-1]
@@ -60,7 +61,7 @@ def consultar_actividades(ruta):
                 estado=lector.readline()[:-1]
                 emociones=lector.readline()[:-1]
                 if (nombre!=''):
-                    datos.insertar(c.Actividad(nombre,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones))
+                    datos.insertar(c.Actividad(nombre,semana,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones))
     except FileNotFoundError as error:
         lectura=input("No hay un archivo con ese nombre, Desea crear uno? (s/n)")
         if  lectura.lower()=="s":
@@ -76,6 +77,7 @@ def nombre_actividades(ruta):
     try:
         with open(ruta,"tr") as lector:
             nombre=lector.readline()[:-1]
+            semana=lector.readline()[:-1]
             curso_asociado=lector.readline()[:-1]
             fecha_inicio=lector.readline()[:-1]
             fecha_final=lector.readline()[:-1]
@@ -85,6 +87,7 @@ def nombre_actividades(ruta):
             datos.append(nombre)
             while (nombre!=''):
                 nombre=lector.readline()[:-1]
+                semana=lector.readline()[:-1]
                 curso_asociado=lector.readline()[:-1]
                 fecha_inicio=lector.readline()[:-1]
                 fecha_final=lector.readline()[:-1]

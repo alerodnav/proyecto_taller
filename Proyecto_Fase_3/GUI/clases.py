@@ -7,6 +7,12 @@ from datetimerange import DateTimeRange
 import datetime
 
 class Lista:
+    """Clase lista
+    Atributos:
+        sig (objeto): Siguiente objeto de la lista 
+            
+    """
+
     sig=None
 
     def insertar (self,p):
@@ -37,8 +43,21 @@ class Lista:
                 archivo.writelines(elemento+"\n")
 
 class Actividad(Lista):
+    """Clase Actividades
+    Atributos:
+        descrpicion (string): Descripción de la actividad
+        semana(string): Numero de semana 
+        fecha_inicio(string): Fecha inicio 
+        fecha_final(string): Fecha final
+        hora_inicio(string): Hora de inicio
+        hora_final(string): Hora final
+        estado(string): Estado (Pendiente - Completada) 
+        emociones(string) Emocion predominante
+            
+    """
 
     descripcion=None
+    semana=None
     curso_asociado=None
     fecha_inicio=None
     fecha_final=None
@@ -47,8 +66,9 @@ class Actividad(Lista):
     estado=None
     emociones=None
 
-    def __init__(self,descripcion,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones):
+    def __init__(self,descripcion,semana,curso_asociado,fecha_inicio,fecha_final,hora_inicio,hora_final,estado,emociones):
         self.descripcion=descripcion
+        self.semana=semana
         self.curso_asociado=curso_asociado
         self.fecha_inicio=fecha_inicio
         self.fecha_final=fecha_final
@@ -67,6 +87,7 @@ class Actividad(Lista):
         try:
             with open(ruta,"tw") as archivo:
                 self.agregar_elemento(puntero.descripcion,ruta)
+                self.agregar_elemento(puntero.semana,ruta)
                 self.agregar_elemento(puntero.curso_asociado,ruta)
                 self.agregar_elemento(puntero.fecha_inicio,ruta)
                 self.agregar_elemento(puntero.fecha_final,ruta)
@@ -77,6 +98,7 @@ class Actividad(Lista):
                 while puntero.sig!=None:
                     puntero=puntero.sig
                     self.agregar_elemento(puntero.descripcion,ruta)
+                    self.agregar_elemento(puntero.semana,ruta)
                     self.agregar_elemento(puntero.curso_asociado,ruta)
                     self.agregar_elemento(puntero.fecha_inicio,ruta)
                     self.agregar_elemento(puntero.fecha_final,ruta)
@@ -88,6 +110,11 @@ class Actividad(Lista):
             showerror(message='No se pudo guardar en el archivo de actividades')
 
     def agregar_emocion(self,actividad,emocion):
+        """Agrega la emocion predominante a una actividad
+            args:
+            actividad (string): Descripcion de la actividad
+            emocion (string): Emocion predominante     
+        """
         aux = self
 
         while(aux.sig != None):
@@ -145,9 +172,9 @@ class Actividad(Lista):
         return(self.__listar_actividades(self))
     
     def __listar_actividades(self,l):
-        """Genera una lista de la carreras
+        """Genera una lista de la actividades
     args:
-        lista (lista): Lista de carreras      
+        lista (lista): Lista de actividades      
     """
         datos=[]
         if l!=None:
@@ -155,27 +182,3 @@ class Actividad(Lista):
             datos+=self.__listar_actividades(l.sig)
         return (datos)
 
- #  
-        
-
-        
-
-"""
-l_cursos = Actividad('Estudiar Mate Discreta','Mate','5 a 8','6 a 12','12 a 18',True)
-print(l_cursos.descripcion)
-#Pruebas con las clases
-l_estudiantes = Estudiante('Alejandro Rodriguez Navarro','arodnav','a123')
-
-l_estudiantes.insertar(Estudiante('Andres Carvajal','jcarv','j123'))
-
-l_administradores = Administrador('Marvin Angulo','mangulo','m123')
-
-l_carreras=Carrera("Ingeniería en Computación")
-l_carreras.insertar(Carrera("Ingeniería en Electrónica"))
-
-print(l_estudiantes.nombre)
-print(l_estudiantes.sig.nombre)
-print(l_administradores.nombre)
-print(l_carreras.nombre)
-    
-"""

@@ -20,6 +20,7 @@ estar_concentrado = True
 respuesta_sonido = ""
 cont = 0
 
+#Diccionario de emociones predominantes
 emocion_dominante = {
     'Alegre': 0 ,
     'Triste': 0 ,
@@ -31,11 +32,19 @@ emocion_dominante = {
 }
 
 class rostro ():
+    """ Clase Rostro
+    """
     
     def __init__(self) -> None:
         pass
 
     def capturar_imagen(self,vista,cuenta_regresiva):
+        """"Esta se encarga de capturar una imagen
+        args:
+        vista(bool): Mostrar foto 
+        cuenta_regresica(bool): Activar contador    
+  
+        """
 
         if cuenta_regresiva:
             cont=5
@@ -61,39 +70,27 @@ class rostro ():
 
 
 def tarea_paralela(estado):
+    """Esta funcion determina si la tarea paralela debe de seguir ejecutandose
+    args:
+        estado (bool): Estado de la tarea 
+    """
     mi_rostro=rostro()
     while estado[0]:
         print("Toma de imagen: ",mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=False))
         sleep(5)
 
-"""
-def menu():
-    estado=[True]
-    parametros=[estado]
-    proceso=threading.Thread(target=tarea_paralela,args=parametros)
-    proceso.start()
-
-    while True:
-        print ("1) Saludar\n2) Salir")
-        if (input ('Selección: ')=='1'):
-            lectura=input("Tu nombre: ")
-            print (f"Hola como estas, {lectura}")
-        else:
-            estado[0]=False
-            exit()
-            #break
-"""
-
-#menu()
-
-#mi_rostro=rostro()
-#imagen=mi_rostro.capturar_imagen(vista=False,cuenta_regresiva=True)
 
 def usuario_concentrado():
     global estar_concentrado
     return estar_concentrado
 
 def detectar_emociones(imagen,concentracion,emocion):
+    """Esta funcion detecta las emociones de la caputra
+    args:
+        imagen (instancia): Captura
+        concentracion(bool): Detectar concentracion
+        emocion(bool): Detectar emociones    
+    """
 
     os.environ['GOOGLE_APPLICATION_CREDENTIALS']= r'./Proyecto_Fase_3/GUI/key.json'
     client=vision.ImageAnnotatorClient()
@@ -310,11 +307,15 @@ def detectar_emociones(imagen,concentracion,emocion):
 
 
 def enciclar_sonido():
+    """Esta funcion reproduce un sonido hasta que el usuario presione el boton de detener
+    """
     global respuesta_sonido
     while respuesta_sonido!="ok":
         playsound('./Proyecto_Fase_3/GUI/sonido.mp3')
     
 def fotos_frecuentes():
+    """Esta funcion permita tomar capturas con mayor frecuencia     
+    """
     global estar_concentrado
     mi_rostro= rostro()
     estar_concentrado = False
@@ -347,19 +348,3 @@ def detectar_concentracion(dict):
             estar_concentrado = True
             respuesta_sonido = showwarning(message='Mantén tu cabeza frente al monitor, no te distraigas!')
 # Retorna True, False o None.
-
-    
-"""
-    else:
-        x1=faces_list[0]['vertices'][0]['x']
-        y1=faces_list[0]['vertices'][0]['y']
-        x2=faces_list[0]['vertices'][2]['x']
-        y2=faces_list[0]['vertices'][2]['y']
-
-        cv.rectangle(imagen,(x1,y1),(x2,y2),(0,255,0),3)
-        
-        cv.imshow('Toma de fotografia',imagen)
-
-        cv.waitKey(0)
-
-"""
