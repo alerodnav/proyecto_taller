@@ -83,7 +83,7 @@ def f_agregar_actividad(v,fo):
     #Creación de objeto con lo básico del frame
     f = Frame(v)
     f.pack(fill = "both", expand=True)
-    f.config(bg = "#222", width= "1330",height= "600")
+    f.config(bg = "#222", width= "1200",height= "600")
     fo.destroy()
     
     # menu_estudiante(v,f)
@@ -116,7 +116,7 @@ def f_agregar_actividad(v,fo):
         """Esta función inicia el registro de fotos   
         """
         btn_fotos_on.grid_forget()
-        btn_fotos_off.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
+        btn_fotos_off.grid(row=6, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global estado,actividad_actual
         if not(estado):
             fecha_actual = datetime.datetime.now()
@@ -149,7 +149,7 @@ def f_agregar_actividad(v,fo):
         """Función que inicia el control de concentración   
         """ 
         btn_concentrarse_on.grid_forget()
-        btn_concentrarse_off.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
+        btn_concentrarse_off.grid(row=6, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
         if not(estado_concentracion):
             fecha_actual = datetime.datetime.now()
@@ -182,7 +182,7 @@ def f_agregar_actividad(v,fo):
         """Función que detiene el control de concentración   
         """ 
         btn_concentrarse_off.grid_forget()
-        btn_concentrarse_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="w")
+        btn_concentrarse_on.grid(row=6, column=4,columnspan=2,padx=20, pady=20,sticky="w")
         global estado_concentracion
         estado_concentracion[0]=False  # Aca se detiene la toma de fotos
             
@@ -190,7 +190,7 @@ def f_agregar_actividad(v,fo):
         """Función que detiene el registro de capturas y alamacena la emoción predominante   
         """ 
         btn_fotos_off.grid_forget()
-        btn_fotos_on.grid(row=5, column=2,columnspan=2,padx=20, pady=20,sticky="e")
+        btn_fotos_on.grid(row=6, column=2,columnspan=2,padx=20, pady=20,sticky="e")
         global emocion_dominante,estado,lista_actividades,actividad_actual
         estado[0]=False  # Aca se detiene la toma de fotos
 
@@ -315,10 +315,10 @@ def f_agregar_actividad(v,fo):
 
     btn_agregar.grid(row=3, column=4,columnspan=2, padx=20, pady=20,sticky="w")
 
-    btn_fotos_on.grid(row=5, column=4,columnspan=2,padx=20, pady=20,sticky="e")
+    btn_fotos_on.grid(row=6, column=2,columnspan=2,padx=20, pady=20,sticky="e")
     btn_fotos_off.grid_forget()
 
-    btn_concentrarse_on.grid(row=5, column=6,columnspan=2,padx=20, pady=20,sticky="w")
+    btn_concentrarse_on.grid(row=6, column=4,columnspan=2,padx=20, pady=20,sticky="w")
     btn_concentrarse_off.grid_forget()
     btn_act_c.grid(row=4, column=4,padx=20, pady=20,sticky="w")
 
