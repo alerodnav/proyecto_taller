@@ -122,7 +122,7 @@ def f_agregar_actividad(v,fo):
             fecha_actual = datetime.datetime.now()
             hora_actual = datetime.datetime.now().strftime('%H:%M')
             actividad_actual = lista_actividades.buscar_x_fecha_hora(fecha_actual,hora_actual)
-            pass
+
             estado=[True]
             parametros=[estado]
             proceso=threading.Thread(target=tarea_paralela,args=parametros)
@@ -210,6 +210,8 @@ def f_agregar_actividad(v,fo):
 
 
     def arbol_actividades():
+        """Función que actualiza el combobox del reporte de actividades semanales  
+        """ 
 
         global lista_actividades,datos
         lista_actividades.arbol(lista_actividades)

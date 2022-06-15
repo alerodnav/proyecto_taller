@@ -81,6 +81,8 @@ def tarea_paralela(estado):
 
 
 def usuario_concentrado():
+    """Devuelve el valor de la variable global estar_concentrado
+    """
     global estar_concentrado
     return estar_concentrado
 
